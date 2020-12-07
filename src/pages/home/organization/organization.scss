@@ -1,0 +1,82 @@
+
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f3f3f7;
+  &_header{
+    margin-top: 2px;
+    display: flex;
+    height: 90px;
+    background-color: #fff;
+    align-items: center;
+    &_location{
+        display: flex;
+        padding-left:20px;
+        padding-right: 20px;
+        align-items: center;
+      &_marker{
+        width:34px;
+        height:43px;
+        margin-right: 10px;
+      }
+      &_city{
+        font-size: 28px;
+        color: #333;
+      }
+    }
+    &_wrap{
+      flex:1;
+      &_city{
+        flex:1;
+        background-color: transparent;
+      }
+    }
+  }
+  &_list_item{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 194px;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-bottom-width: 1px;
+    border-style: solid;
+    border-color: rgba(242, 242, 242, 1);
+    border-radius: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    &_pic{
+      width:244px;
+      height:154px;
+      margin-right: 20px;
+      border-radius: 10px;
+    }
+    &_desc{
+      flex:1;
+      display: flex;
+      flex-direction: column;
+        &_hospital{
+          font-size:26px;
+          color:#333;
+          flex:1;
+        }
+        &_item{
+          flex:1;
+          font-size:26px;
+          margin-top: 10px;
+          color:#333;
+        }
+        &_address{
+          flex:1;
+          margin-top: 20px;
+          font-size:24px;
+          color: #BCBCBC;
+        }
+    }
+  }
+}

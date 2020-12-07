@@ -1,0 +1,51 @@
+.container{
+  position: relative;
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  background-color: #f3f3f7;
+  &_header{
+    padding-top: 35px;
+    padding-bottom: 30px;
+    height:50%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &_orderSuccess{
+      font-size: 28px;
+      color: #333;
+      margin-top: 20px;
+    }
+    &_cancelOrder{
+      font-size: 28px;
+      margin-top: 10px;
+      color:#3399FF;
+    }
+  }
+  &_footer{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-left: 30px;
+    background-color: #fff;
+    flex:1;
+    &_item{
+      display: flex;
+      //flex-direction: column;
+      height: 60px;
+      align-items: center;
+      //justify-content: center;
+      &_label{
+        font-size: 28px;
+        color: #333;
+        margin-right: 20px;
+      }
+      &_value{
+        font-size: 28px;
+        color: #333;
+      }
+    }
+  }
+
+}

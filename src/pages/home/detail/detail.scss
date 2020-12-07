@@ -1,0 +1,35 @@
+.container{
+  position: relative;
+  background-color: #f3f7f7;
+  height: 100%;
+  padding-top: 2px;
+  &_header{
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    &_title{
+      font-size: 32px;
+    }
+  }
+  &_list{
+    display: flex;
+    height: 90px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #fff;
+    &_left{
+      font-size: 28px;
+      color: #999;
+    }
+    &_right{
+      font-size: 28px;
+      color:#333;
+    }
+  }
+
+
+}

@@ -1,0 +1,102 @@
+.container{
+  position: relative;
+  height: 100%;
+  flex: 1;
+  background-color: #f3f3f7;
+  &_section{
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  &_footer{
+    height:90px;
+    display: flex;
+    background-color: rgba(50, 152, 255, 1);
+    align-items: center;
+    justify-content: center;
+    &_next{
+      text-align: center;
+      font-size: 32px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+.insEscortStaff{
+  display: flex;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(50, 152, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
+  flex-direction: row;
+  height: 68px;
+  justify-content: center;
+  align-items: center;
+  &_text{
+    color:#3298ff;
+    font-size: 26px;
+  }
+}
+.listRow{
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(242, 242, 242, 1);
+  color: #333;
+  height: 96.5px;
+  line-height: 96.5px;
+  background-color: #fff;
+  font-size: 26px;
+  padding-left: 20px;
+  padding-right: 20px;
+  &_left{
+    float:left;
+    height: 96.5px;
+    line-height:96.5px;
+  }
+  &_right_{
+    float: right;
+    text-align: right;
+    height: 96.5px;
+    line-height: 96.5px;
+  }
+  &_right{
+    float:right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &_address{
+      margin-right: 10px;
+    }
+    &_relative{
+      margin-right: 10px;
+
+    }
+    &_arrow{
+      width: 12px;
+      height: 22px;
+    }
+    &_arrowDown{
+      width:16px ;
+      height:26px ;
+    }
+  }
+}
+.detail_address{
+  font-size:26px;
+  color:#999;
+  padding-left: 20px;
+  background-color: #fff;
+  height:68.25px;
+  width:100%;
+  margin-bottom: 20px;
+  //line-height:48.25px;
+}
+.insEscortStaff_wrap{
+  display: flex;
+  flex-direction: column;
+}

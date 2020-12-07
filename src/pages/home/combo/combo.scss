@@ -1,0 +1,178 @@
+.container{
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  background-color: #f3f3f7;
+  &_header{
+    background-color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    &_list_item{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color:white;
+      border: none;
+      border-radius: 12px;
+      -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.0470588235294118);
+      -webkit-box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
+      box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
+      height: 194px;
+      &_pic{
+        width:244px;
+        height:154px;
+        margin-right: 20px;
+        border-radius: 10px;
+      }
+      &_desc{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        &_hospital{
+          font-size:28px;
+          color:#333;
+          flex:1;
+        }
+        &_item{
+          flex:1;
+          font-size:26px;
+          margin-top: 10px;
+          color:#333;
+        }
+        &_address{
+          flex:1;
+          margin-top: 20px;
+          font-size:24px;
+          color:#BCBCBC;
+        }
+      }
+    }
+  }
+}
+
+.section {
+  padding: 30px 20px 30px 20px;
+  background-color: #fff;
+
+  &_orderTime {
+    font-size: 28px;
+  }
+
+}
+.scrollview{
+  margin-top: 20px;
+  white-space: nowrap;
+}
+.wrap{
+  display: inline-block;
+  &_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 118px;
+    height: 136px;
+    background: inherit;
+    background-color: transparent;
+    border: none;
+    border-radius: 7px;
+    &_week{
+      font-size: 24px;
+      color: #333;
+      line-height: 18px;
+    }
+    &_date{
+      font-size: 24px;
+      color: #666;
+      line-height: 18px;
+      margin-top: 20px;
+    }
+    &_status{
+      color: #999;
+      font-size: 24px;
+      line-height: 18px;
+      margin-top: 20px;
+    }
+  }
+}
+.footer{
+  margin-top: 20px;
+  flex:1;
+  padding:0 20px 0 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  &_combo{
+    padding:20px 0 20px 0;
+  }
+  &_comboList{
+    display: flex;
+    padding-left: 10px;
+    padding-right: 20px;
+    height: 104*2px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 1);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(232, 232, 232, 1);
+    border-radius: 10px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    &_leftLayout {
+      display: flex;
+      align-items: center;
+        &_doctor{
+          width: 174px;
+          height: 172px;
+          margin-right: 20px;
+        }
+        &_info{
+          display: flex;
+          flex-direction: column;
+            &_title{
+                color:#333;
+              font-size: 28px;
+            }
+             &_itemList{
+                display: flex;
+                flex-direction: column;
+               justify-content: center;
+             }
+              &_money{
+                font-size: 32px;
+                color: #3298ff;
+              }
+        }
+    }
+    &_choice{
+      //  width:50px;
+      //height: 50px;
+    }
+  }
+
+}
+.bottom_wrap{
+  display:flex;
+  justify-content:center;
+  height:102px;
+  align-items:center;
+  background-color:rgba(50, 152, 255, 1);
+}
+
+.yellow{
+  position: absolute;
+  bottom:21px;
+  right:100px;
+  background-color: yellow;
+  width:60px;
+  border-radius: 30px;
+  height:60px;
+  z-index: 99;
+  text-align: center;
+  line-height: 60px;
+}

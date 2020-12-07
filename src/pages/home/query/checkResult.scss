@@ -1,0 +1,49 @@
+.container{
+  position: relative;
+  height: 100%;
+  background-color: #f3f3f7;
+  padding-top: 20px;
+}
+.listItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 30px;
+  margin-bottom: 20px;
+  height:146px ;
+  background-color: #fff;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgba(242, 242, 242, 1);
+  align-items: center;
+    &_left{
+      display: flex;
+      flex-direction: column;
+        &_appoint{
+          font-size: 28px;
+          color: #000;
+        }
+        &_date{
+          margin-top: 20px;
+          font-size: 24px;
+          color: #666;
+        }
+
+    }
+  &_right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+      &_status{
+         color: #aaa;
+        font-size: 24px;
+      }
+
+      &_arrow{
+        width: 54px;
+        height:54px;
+      }
+  }
+
+}
+
