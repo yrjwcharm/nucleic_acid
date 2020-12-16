@@ -9,3 +9,6 @@ import Api from "../config/api";
 export  async  function queryComboListByOrgApi(payload){
   return request.get(Api.queryComboListByOrgApi,payload);
 }
+export  async  function  fetchSourceApi(payload){
+  return request.get(Api.fetchSourceApi,payload)
+}

@@ -8,7 +8,7 @@ import Checked from '@assets/home/combo/checked.svg'
 import './combo.scss'
 import React, {Component} from "react";
 import {getCurrentInstance} from "@tarojs/runtime";
-import {queryComboListByOrgApi} from "../../../services/combo";
+import {queryComboListByOrgApi,fetchSourceApi} from "../../../services/combo";
 import moment from 'moment';
 import Api from '../../../config/api'
 let max = 14;
@@ -21,28 +21,15 @@ class Combo extends Component {
     item: {},
     dateArr: [],
     comboList: [],
+    comboId:'',
   }
 
   componentDidMount() {
     let {orgId,item} = getCurrentInstance().router.params;
     this.setState({orgId, item:JSON.parse(item)}, () => {
-      let dateArr = [];
-      for (let i = 0; i <= max; i++) {
-        let date = moment().add('days',i).format('YYYY-MM-DD');
-        let week = this._getWeek(date);
-        dateArr.push({
-          id: i,
-          date,
-          week,
-          checked: false,
-        })
 
-      }
-
-
-      this.setState({dateArr}, () => {
         this._initData(this.state.orgId);
-      })
+
     })
 
   }
@@ -67,11 +54,41 @@ class Combo extends Component {
     }
   }
   _initData = async (orgId) => {
+    const startDate = moment().format('YYYY-MM-DD');
+    const endDate = moment().add('days',max).format('YYYY-MM-DD');
+    let dateArr = [];
+    for (let i = 0; i <= max; i++) {
+      let date = moment().add('days',i).format('YYYY-MM-DD');
+      let week = this._getWeek(date);
+      dateArr.push({
+        id: i,
+        date,
+        week,
+        checked: false,
+      })
 
+    }
     const res = await queryComboListByOrgApi({
       orgId
     })
-    console.log(333,res);
+
+    if(res.code===200) {
+      if (Array.isArray(res.data)) {
+        this._getSource(res.data[0].comboId,startDate,endDate);
+        res.data.map((item, index) => {
+          index === 0 ? item.checked = true : item.checked = false;
+        })
+        this.setState({comboList: res.data,comboId:res.data[0].comboId})
+      }
+    }
+  }
+  _getSource= async (comboId,startDate,endDate)=>{
+    const _res = await fetchSourceApi({
+      comboId,
+      startDate,
+      endDate
+    })
+    console.log(333,_res);
 
   }
   onScrollToUpper = () => {
@@ -79,7 +96,16 @@ class Combo extends Component {
   }
   onScroll = () => {
   }
-  _selectedCombo=()=>{
+  _selectedCombo=(item)=>{
+    this.state.comboList.map((_item,index)=>{
+
+        if(JSON.stringify(item)===JSON.stringify(_item)){
+
+           index===0? _item.checked = true:_item.checked = !item.checked;
+
+        }
+    })
+    this.setState({comboList:[...this.state.comboList]})
 
   }
   render() {
@@ -117,7 +143,7 @@ class Combo extends Component {
                         style={item.checked ? 'background-color:rgba(51, 153, 255, 0.698039215686274)' : 'background-color:white'}>
                     <Text className='wrap_content_week' style={item.checked ? 'color:#fff' : 'color:#333'}>{item.week}</Text>
                     <Text className='wrap_content_date' style={item.checked ? 'color:#fff' : 'color:#666'}>{month_day}</Text>
-                    <Text className='wrap_content_status' style={item.checked ? 'color: #fff' : 'color:#999'}></Text>
+                    <Text className='wrap_content_status' style={item.checked ? 'color: #fff' : 'color:#999'}/>
                   </View>
                 </View>
               )
@@ -128,34 +154,38 @@ class Combo extends Component {
           <Text className='footer_combo'>
             选择套餐
           </Text>
-          <View className='footer_comboList'>
-            <View className='footer_comboList_leftLayout'>
-              <Image src={Doctor} className='footer_comboList_leftLayout_doctor'/>
-              <View className='footer_comboList_leftLayout_info'>
-                <Text className='footer_comboList_leftLayout_info_title'>
-                  新冠核算检测套餐
-                </Text>
-                <View className='footer_comboList_leftLayout_info_itemList'>
-                  <View style={{display: 'flex', alignItems: 'center', marginTop: '5px'}}>
-                    <Image src={Dot} style={{width: '4px', height: '4px', borderRadius: '2px'}}/>
-                    <Text style={{color: '#666', marginLeft: '5px', fontSize: '12px'}}>新型冠状病毒核酸检测</Text>
-                  </View>
-                  <View style={{display: 'flex', alignItems: 'center'}}>
-                    <Image src={Dot} style={{width: '4px', height: '4px', borderRadius: '2px'}}/>
-                    <Text style={{color: '#666', marginLeft: '5px', fontSize: '12px'}}>预约挂号</Text>
+          {comboList.map((item,index)=>{
+            return(
+              <View className='footer_comboList' key={item.comboId+" "} onClick={()=>this._selectedCombo(item)}>
+                <View className='footer_comboList_leftLayout'>
+                  <Image src={Doctor} className='footer_comboList_leftLayout_doctor'/>
+                  <View className='footer_comboList_leftLayout_info'>
+                    <Text className='footer_comboList_leftLayout_info_title'>
+                      新冠核算检测套餐
+                    </Text>
+                    <View className='footer_comboList_leftLayout_info_itemList'>
+                      <View style={{display: 'flex', alignItems: 'center', marginTop: '5px'}}>
+                        <Image src={Dot} style={{width: '4px', height: '4px', borderRadius: '2px'}}/>
+                        <Text style={{color: '#666', marginLeft: '5px', fontSize: '12px'}}>{item.name}</Text>
+                      </View>
+                      <View style={{display: 'flex', alignItems: 'center'}}>
+                        <Image src={Dot} style={{width: '4px', height: '4px', borderRadius: '2px'}}/>
+                        <Text style={{color: '#666', marginLeft: '5px', fontSize: '12px'}}>预约挂号</Text>
+                      </View>
+                    </View>
+                    <Text className='footer_comboList_leftLayout_info_money' style={{marginTop: '5px'}}>
+                      ¥{item.price}
+                    </Text>
                   </View>
                 </View>
-                <Text className='footer_comboList_leftLayout_info_money' style={{marginTop: '5px'}}>
-                  ¥250
-                </Text>
-              </View>
-            </View>
-            <View className='choice' onClick={this._selectedCombo}>
-              <View className='choice_wrap'>
+                <View className='choice' >
+                  <View className='choice_wrap' style={item.checked?'background-color:#3298ff':'background-color:white'}>
 
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
+            )
+          })}
         </View>
         <View className='yellow'>
           <Text style={{fontSize: '13px'}}>1</Text>

@@ -25,5 +25,6 @@ export default {
   MyAppointApi:WxApiRoot + '/ncov/BaAppointmentController/getUserList',
   MyAuditRecord:WxApiRoot + '/ncov/BaAppointmentController/my/validate',
   queryOrgListByNameApi:WxApiRoot + '/ncov/baOrganization/getListByQueryName',
-  queryComboListByOrgApi:WxApiRoot + `/ncov/BaComboController/getList`
+  queryComboListByOrgApi:WxApiRoot + `/ncov/BaComboController/getList`,
+  fetchSourceApi:WxApiRoot +`/ncov/BaSourceController/getList`
 };
