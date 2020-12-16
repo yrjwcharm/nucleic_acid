@@ -36,7 +36,7 @@ class Organization extends Component {
   }
   goToCombo = (item) => {
     Taro.navigateTo({
-      url: `/pages/home/combo/combo?orgId=${item.orgId}&item=${item}`})
+      url: `/pages/home/combo/combo?orgId=${item.orgId}&item=${JSON.stringify(item)}`})
   }
     render(){
       // orgCode: "JMQZ100001030"

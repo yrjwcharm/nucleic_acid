@@ -8,9 +8,9 @@ import Checked from '@assets/home/combo/checked.svg'
 import './combo.scss'
 import React, {Component} from "react";
 import {getCurrentInstance} from "@tarojs/runtime";
-import {getResultQueryListApi} from "../../../services/result_query";
+import {queryComboListByOrgApi} from "../../../services/combo";
 import moment from 'moment';
-
+import Api from '../../../config/api'
 let max = 14;
 
 class Combo extends Component {
@@ -24,11 +24,11 @@ class Combo extends Component {
   }
 
   componentDidMount() {
-    let params = getCurrentInstance().router.params;
-    this.setState({orgId: params.orgId, item: params.item}, () => {
+    let {orgId,item} = getCurrentInstance().router.params;
+    this.setState({orgId, item:JSON.parse(item)}, () => {
       let dateArr = [];
       for (let i = 0; i <= max; i++) {
-        let date = moment().add('days',).format('YYYY-MM-DD');
+        let date = moment().add('days',i).format('YYYY-MM-DD');
         let week = this._getWeek(date);
         dateArr.push({
           id: i,
@@ -38,6 +38,8 @@ class Combo extends Component {
         })
 
       }
+
+
       this.setState({dateArr}, () => {
         this._initData(this.state.orgId);
       })
@@ -66,29 +68,31 @@ class Combo extends Component {
   }
   _initData = async (orgId) => {
 
-    const res = await getResultQueryListApi({
+    const res = await queryComboListByOrgApi({
       orgId
     })
-    console.log(33, orgId);
-  }
+    console.log(333,res);
 
+  }
   onScrollToUpper = () => {
 
   }
   onScroll = () => {
+  }
+  _selectedCombo=()=>{
 
   }
   render() {
-    const {dateArr, comboList} = this.state;
+    const {dateArr, comboList,item} = this.state;
     return (
       <View className='container'>
         <View className='container_header'>
           <View className='container_header_list_item'>
-            <Image src={Pic} className='container_header_list_item_pic'/>
+            <Image src={Api.imgUrl+item.url} className='container_header_list_item_pic'/>
             <View className='container_header_list_item_desc'>
-              <Text className='container_header_list_item_desc_hospital'>大厂回族自治县人民医院</Text>
+              <Text className='container_header_list_item_desc_hospital'>{item.orgName&&item.orgName}</Text>
               <Text className='container_header_list_item_desc_item'>核酸检测</Text>
-              <Text className='container_header_list_item_desc_address'>地址：北京市海淀区知春路53号</Text>
+              <Text className='container_header_list_item_desc_address'>{item.wholeAddress&&item.wholeAddress}</Text>
             </View>
           </View>
         </View>
@@ -146,8 +150,10 @@ class Combo extends Component {
                 </Text>
               </View>
             </View>
-            <View>
+            <View className='choice' onClick={this._selectedCombo}>
+              <View className='choice_wrap'>
 
+              </View>
             </View>
           </View>
         </View>
