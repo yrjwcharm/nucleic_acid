@@ -56,6 +56,22 @@ class Combo extends Component {
   _initData = async (orgId) => {
     const startDate = moment().format('YYYY-MM-DD');
     const endDate = moment().add('days',max).format('YYYY-MM-DD');
+    const res = await queryComboListByOrgApi({
+      orgId
+    })
+
+    if(res.code===200) {
+      if (Array.isArray(res.data)) {
+        res.data.map((item, index) => {
+          index === 0 ? item.checked = true : item.checked = false;
+        })
+        this.setState({comboList: res.data,comboId:res.data[0].comboId},()=>{
+          this._getSource(res.data[0].comboId,startDate,endDate);
+        })
+      }
+    }
+  }
+  _getSource= async (comboId,startDate,endDate)=>{
     let dateArr = [];
     for (let i = 0; i <= max; i++) {
       let date = moment().add('days',i).format('YYYY-MM-DD');
@@ -66,30 +82,12 @@ class Combo extends Component {
         week,
         checked: false,
       })
-
     }
-    const res = await queryComboListByOrgApi({
-      orgId
-    })
-
-    if(res.code===200) {
-      if (Array.isArray(res.data)) {
-        this._getSource(res.data[0].comboId,startDate,endDate);
-        res.data.map((item, index) => {
-          index === 0 ? item.checked = true : item.checked = false;
-        })
-        this.setState({comboList: res.data,comboId:res.data[0].comboId})
-      }
-    }
-  }
-  _getSource= async (comboId,startDate,endDate)=>{
     const _res = await fetchSourceApi({
       comboId,
       startDate,
       endDate
     })
-    console.log(333,_res);
-
   }
   onScrollToUpper = () => {
 
