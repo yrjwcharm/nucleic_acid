@@ -15,6 +15,7 @@ const AddPersonData = (props) => {
   const[sourceId,setSourceId] =useState('');
   const [orgId,setOrgId] =useState('');
   const[provinceid,setProvinceId] =useState('');
+  const [cityid,setCityId] =useState('');
   const [districtid,setDistrictId]=useState('');
   const [streetdesc,setStreetDesc] =useState('');
   const[docUrl,setDocUrl] = useState('');
@@ -33,17 +34,14 @@ const AddPersonData = (props) => {
   const [visible,setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
   const listItems = [
-    {label: '姓名', value: '',type:'text'},
-    {label: '电话', value: '',type :'number'},
-    {label: '请输入验证码', value: '',type :'number'},
-    {label: '身份证号', value: '',type:'number'},
+    {label: '姓名', value: '',type:'text',placeholder:'请输入姓名'},
+    {label: '电话', value: '',type :'number',placeholder: '请输入电话'},
+    {label: '请输入验证码', value: '',type :'number',placeholder: '请输入验证码'},
+    {label: '身份证号', value: '',type:'number',placeholder:'请输入身份证号'},
   ]
   useEffect(()=>{
    _initData();
   },[])
-  const handleChange = () => {
-
-  }
   const _initData = async ()=>{
     const {item,userType} =getCurrentInstance().router.params;
     const {userId } = Taro.getStorageSync('loginInfo');
@@ -56,32 +54,23 @@ const AddPersonData = (props) => {
   }
   const toggleAddressPicker = (areaInfo, disCoding) => {
     console.log(444, areaInfo + ' ' + disCoding);
+    let provinceId = disCoding.split(',')[0];
+    let cityId = disCoding.split(',')[1];
+    let area = disCoding.split(',')[2];
     setShowPicker(false);
     setArea(areaInfo);
 
+
   }
-  const goToImmediatelyOrder = () => {
-    Taro.navigateTo({
-      url: '/pages/home/immediate-order/immediateOrder',
-      events: {
-        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
-        },
-        someEvent: function (data) {
-          console.log(data)
-        }
-      },
-      success: function (res) {
-        // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit('acceptDataFromOpenerPage', {data: 'test'})
-      }
-    })
-  }
-  const _onChange = e => {
-    this.setState({
-      selectorChecked: this.state.selector[e.detail.value]
-    })
+  const nextStep = () => {
+    if(userType==1){
+
+    }else{
+
+    }
+    // Taro.navigateTo({
+    //   url: '/pages/home/immediate-order/immediateOrder',
+    // })
   }
   const insEscortStaffClick = () => {
     setInsEscortStaff(true);
@@ -96,9 +85,7 @@ const AddPersonData = (props) => {
           return (
             <View className='clearfix listRow' key={index.toString()}>
               <Text className='listRow_left'>{item.label}</Text>
-              <Input type={item.type} className='listRow_right_' placeholder='' value={item.value} maxLength='20'/>
-
-              {/*<Text className='listRow_right'>{item.value}</Text>*/}
+              <Input type={item.type} className='listRow_right_' placeholder={item.placeholder} value={item.value} maxLength='20'/>
             </View>
           )
         })}
@@ -117,7 +104,7 @@ const AddPersonData = (props) => {
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
-            <Input type='text' className='listRow_right_' placeholder='' value={entourageName} maxLength='20'/>
+            <Input type='text' className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='20'/>
           </View>
           <View className='relationship'>
             <Text className='relationship_left'>与患者关系</Text>
@@ -130,15 +117,15 @@ const AddPersonData = (props) => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>电话</Text>
-            <Input type='number' className='listRow_right_' placeholder='' value={entouragePhone} maxLength='20'/>
+            <Input type='number' className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone} maxLength='20'/>
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input type='number' className='listRow_right_' placeholder='' value={entourageIdCard} maxLength='20'/>
+            <Input type='number' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard} maxLength='20'/>
           </View>
         </View> : null}
       </View>
-      <View className='container__footer' onClick={goToImmediatelyOrder}>
+      <View className='container__footer' onClick={nextStep}>
         <View className='container_footer'>
           <Text className='container_footer_next'>下一步</Text>
         </View>

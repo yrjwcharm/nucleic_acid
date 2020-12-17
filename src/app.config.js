@@ -36,9 +36,4 @@ export default {
       text: "我的"
     }],
   },
-  "networkTimeout": {
-    "request": 10000,
-    "downloadFile": 10000
-  },
-  "debug": true,
 }
