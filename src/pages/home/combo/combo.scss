@@ -1,3 +1,4 @@
+@import "~taro-ui/dist/style/components/modal.scss";
 .container{
   position: relative;
   height: 100%;
@@ -161,17 +162,19 @@
   background-color:rgba(50, 152, 255, 1);
 }
 
-.yellow{
+.badge{
   position: absolute;
   bottom:21px;
   right:100px;
   background-color: yellow;
   width:60px;
+  display: flex;
   border-radius: 30px;
   height:60px;
   z-index: 99;
-  text-align: center;
-  line-height: 60px;
+  &_num{
+    margin: auto;
+  }
 }
 .choice{
   display: flex;
@@ -189,4 +192,42 @@
     border-radius: 12.5px;
   }
 }
+.payType{
+  display: flex;
+  height: 90px;
+  border-bottom-width: .5px;
+  border-bottom-style: solid;
+  border-bottom-color: #e0e0e0;
+  &_type{
+    margin: auto;
+    font-size: 28px;
+    color: #333;
+  }
+}
+.free{
+  height: 90px;
+  display: flex;
+  border-bottom-width: .5px;
+  border-bottom-style: solid;
+  border-bottom-color: #e0e0e0;
+
+  &_type{
+    margin: auto;
+    color: #333;
+    font-size: 24px;
+  }
+}
+.payFee{
+  height: 90px;
+  display: flex;
+  border-bottom-width: .5px;
+  border-bottom-style: solid;
+  border-bottom-color: #e0e0e0;
+  &_type{
+    font-size: 24px;
+    color: #333;
+    margin: auto;
+  }
+}
+
 

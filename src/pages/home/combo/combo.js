@@ -1,10 +1,8 @@
 import Taro from '@tarojs/taro'
 import {View, Text, ScrollView, Image} from '@tarojs/components'
-import {AtList, AtListItem} from "taro-ui"
-import Pic from '@assets/home/pic.svg'
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
 import Doctor from '@assets/home/combo/doctor.png'
 import Dot from '@assets/home/combo/dot.svg'
-import Checked from '@assets/home/combo/checked.svg'
 import './combo.scss'
 import React, {Component} from "react";
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -23,8 +21,10 @@ class Combo extends Component {
     dateArr: [],
     comboList: [],
     comboId: '',
-    startDate:'',
-    endDate:''
+    startDate: '',
+    endDate: '',
+    visible: false,
+    source:{}
   }
 
   componentDidMount() {
@@ -91,10 +91,10 @@ class Combo extends Component {
         id: i,
         date,
         week,
-        amount:0,
-        comboId:'',
-        orgId:'',
-        sourceId:'',
+        amount: 0,
+        comboId: '',
+        orgId: '',
+        sourceId: '',
         surplus: 0,
         checked: false,
       })
@@ -112,13 +112,13 @@ class Combo extends Component {
             if (item.date === date) {
               item.amount = _item.amount;
               item.surplus = _item.surplus;
-              item.comboId =_item.comboId;
+              item.comboId = _item.comboId;
               item.orgId = _item.orgId;
               item.sourceId = _item.sourceId;
             }
           })
         })
-        this.setState({dateArr: [...dateArr],startDate,endDate})
+        this.setState({dateArr: [...dateArr], startDate, endDate})
       }
     } else {
       this._initData(this.state.orgId);
@@ -136,7 +136,7 @@ class Combo extends Component {
 
       }
     })
-    this.setState({dateArr:[...this.state.dateArr]})
+    this.setState({dateArr: [...this.state.dateArr]})
   }
   onScroll = () => {
   }
@@ -147,24 +147,51 @@ class Combo extends Component {
    */
   _selectedCombo = (item) => {
     this.state.comboList.map((_item, index) => {
-        _item.checked  = false;
+      _item.checked = false;
       if (JSON.stringify(item) === JSON.stringify(_item)) {
 
-         _item.checked = !item.checked;
+        _item.checked = !item.checked;
 
       }
     })
-    this.setState({comboList: [...this.state.comboList]},()=>{
-        let comboId ='';
-        const {comboList} =this.state;
-        for (let i =0;i<comboList.length;i++){
-             if(comboList[i].checked){
-               comboId=comboList[i].comboId;
-             }
+    this.setState({comboList: [...this.state.comboList]}, () => {
+      let comboId = '';
+      const {comboList} = this.state;
+      for (let i = 0; i < comboList.length; i++) {
+        if (comboList[i].checked) {
+          comboId = comboList[i].comboId;
         }
-       this._getSource(comboId,this.state.startDate,this.state.endDate);
+      }
+      this._getSource(comboId, this.state.startDate, this.state.endDate);
     })
 
+  }
+  /**
+   * 下一步
+   * @private
+   */
+  _nextStep = () => {
+    const {dateArr} = this.state;
+    let item = {};
+    for (let i = 0; i < dateArr.length; i++) {
+      if (dateArr[i].checked) {
+        if (dateArr[i].surplus > 0) {
+          item = dateArr[i];
+          break;
+        }
+      }
+    }
+    Object.keys(item).length === 0 ? Taro.showToast({
+      title: '请选择有号源的预约时间',
+      icon: 'none'
+    }) : this.setState({visible: true,source:item})
+  }
+  _selectUserType=(userType)=>{
+    this.setState({visible:false},()=>{
+      Taro.navigateTo({
+        url:`/pages/home/write-person-info/AddPersonData?item=${JSON.stringify(this.state.item)}&userType=${userType}`
+      })
+    })
   }
 
   render() {
@@ -197,7 +224,7 @@ class Combo extends Component {
             {dateArr.map((item, index) => {
               let month_day = moment(item.date).format('MM-DD');
               return (
-                <View className='wrap' key={item.id + " "} onClick={()=>this._selectedSource(item)}>
+                <View className='wrap' key={item.id + " "} onClick={() => this._selectedSource(item)}>
                   <View className='wrap_content'
                         style={item.checked ? 'background-color:rgba(51, 153, 255, 0.698039215686274)' : 'background-color:white'}>
                     <Text className='wrap_content_week'
@@ -251,12 +278,25 @@ class Combo extends Component {
             )
           })}
         </View>
-        <View className='yellow'>
-          <Text style={{fontSize: '13px'}}>1</Text>
-        </View>
-        <View style={{position: 'absolute', bottom: 0, width: '100%'}}>
+        <AtModal closeOnClickOverlay={false} isOpened={this.state.visible}>
+          <AtModalContent>
+            <View className={'payType'}>
+              <Text className='payType_type'>请选择付费类型</Text>
+            </View>
+            <View className={'free'} onClick={()=>this._selectUserType(1)}>
+              <Text className='free_type'>免费患者(发热门诊或住院患者)</Text>
+            </View>
+            <View className={'payFee'} onClick={()=>this._selectUserType(2)}>
+              <Text className='payFee_type'>付费患者</Text>
+            </View>
+          </AtModalContent>
+        </AtModal>
+        <View style={{position: 'absolute', bottom: 0, width: '100%'}} onClick={this._nextStep}>
           <View className='bottom_wrap'>
             <Text style={{color: '#fff', fontSize: '16px'}}>立即预约</Text>
+          </View>
+          <View className='badge'>
+            <Text className='badge_num'>1</Text>
           </View>
         </View>
       </View>
