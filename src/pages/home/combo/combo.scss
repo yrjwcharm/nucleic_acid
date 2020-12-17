@@ -195,7 +195,7 @@
 .payType{
   display: flex;
   height: 90px;
-  border-bottom-width: .5px;
+  border-bottom-width: 1rpx;
   border-bottom-style: solid;
   border-bottom-color: #e0e0e0;
   &_type{
@@ -207,7 +207,7 @@
 .free{
   height: 90px;
   display: flex;
-  border-bottom-width: .5px;
+  border-bottom-width: 1rpx;
   border-bottom-style: solid;
   border-bottom-color: #e0e0e0;
 
@@ -220,7 +220,7 @@
 .payFee{
   height: 90px;
   display: flex;
-  border-bottom-width: .5px;
+  border-bottom-width: 1rpx;
   border-bottom-style: solid;
   border-bottom-color: #e0e0e0;
   &_type{

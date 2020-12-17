@@ -1,25 +1,56 @@
 import Taro  from '@tarojs/taro'
 import {View, Text, ScrollView, Image, Input, Textarea, Picker} from '@tarojs/components'
-import React,{Component,useState} from 'react'
+import React, {Component, useEffect, useState} from 'react';
+import { AtActionSheet, AtActionSheetItem } from "taro-ui"
+
 import './addPersonData.scss'
 import ArrowRight from '@assets/home/write-person-data/arrow_right.svg'
 import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import AddressPicker from "../../../components/address-picker/AddressPicker";
 const AddPersonData = (props) => {
-  const [detailAddress, setDetailAddress] = useState('');
-  const [selector, setSelector] = useState(['父亲', '朋友', '亲戚', '母亲'])
-  const [selectorChecked, setSelectorChecked] = useState('父亲');
+  const [userId,setUserId] =useState('');
+  const [userType,setUserType] =useState('');
+  const [date,setDate] =useState('');
+  const[sourceId,setSourceId] =useState('');
+  const [orgId,setOrgId] =useState('');
+  const[provinceid,setProvinceId] =useState('');
+  const [districtid,setDistrictId]=useState('');
+  const [streetdesc,setStreetDesc] =useState('');
+  const[docUrl,setDocUrl] = useState('');
+  const[name,setName] =useState('');
+  const [phone,setPhone] =useState('');
+  const [idCard,setIdCard] =useState('');
+  const[entourageIdCard,setEntourageIdCard] =useState('');
+  const [entourageName,setEntourageName] =useState('');
+  const [entouragePhone,setEntouragePhone] =useState('');
+  const [entourageRelation,setEntourageRelation] =useState('父亲');
+  // payType	支付方式 0 线上支付 1 线下支付
+  const [payType,setPayType] =useState(0);
+  const [relationList,setRelationList]=useState([{label:0,value:"父亲"},{label:1,value:'母亲'},{label:2,value:'亲戚'},{label:3,value:'朋友'}])
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择');
+  const [visible,setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
   const listItems = [
-    {label: '姓名', value: '闫瑞锋',type:'text'},
-    {label: '电话', value: '18311410379',type :'number'},
-    {label: '请输入验证码', value: '32123',type :'number'},
-    {label: '身份证号', value: '142601199412139117',type:'number'},
+    {label: '姓名', value: '',type:'text'},
+    {label: '电话', value: '',type :'number'},
+    {label: '请输入验证码', value: '',type :'number'},
+    {label: '身份证号', value: '',type:'number'},
   ]
+  useEffect(()=>{
+   _initData();
+  },[props])
   const handleChange = () => {
 
+  }
+  const _initData = async ()=>{
+    const {item,userType}=props;
+    console.log(333,item);
+    // const {sourceId,orgId,date,} =JSON.parse(item);
+    // setSourceId(sourceId);
+    // setOrgId(orgId);
+    // setDate(date);
+    // setUserId(userType);
   }
   const toggleAddressPicker = (areaInfo, disCoding) => {
     console.log(444, areaInfo + ' ' + disCoding);
@@ -84,22 +115,24 @@ const AddPersonData = (props) => {
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
-            <Input type='text' className='listRow_right_' placeholder='' value={'张三'} maxLength='20'/>
+            <Input type='text' className='listRow_right_' placeholder='' value={entourageName} maxLength='20'/>
           </View>
-          <View className='clearfix listRow'>
-            <Text className='listRow_left'>与患者关系</Text>
-            <View className='listRow_right'>
-              <Text className='listRow_right_relative'>父亲</Text>
-              <Image src={ArrowDown} style='transform: rotate(270deg);' className='listRow_right_arrowDown'/>
+          <View className='relationship'>
+            <Text className='relationship_left'>与患者关系</Text>
+            <View className='relationship_right' onClick={()=>{
+              setVisible(true);
+            }}>
+              <Text className='acc'>{entourageRelation}</Text>
+              <Image src={ArrowDown} style='transform: rotate(270deg);' className='arrow_down'/>
             </View>
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>电话</Text>
-            <Input type='number' className='listRow_right_' placeholder='' value='18311410379' maxLength='20'/>
+            <Input type='number' className='listRow_right_' placeholder='' value={entouragePhone} maxLength='20'/>
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input type='number' className='listRow_right_' placeholder='' value='142601199412139117' maxLength='20'/>
+            <Input type='number' className='listRow_right_' placeholder='' value={entourageIdCard} maxLength='20'/>
           </View>
         </View> : null}
       </View>
@@ -108,6 +141,20 @@ const AddPersonData = (props) => {
           <Text className='container_footer_next'>下一步</Text>
         </View>
       </View>
+      <AtActionSheet isOpened={visible} cancelText='取消'>
+        {relationList.map(item=>{
+          return(
+            <AtActionSheetItem key={item.label+""} onClick={()=>{
+              setVisible(false);
+              setEntourageRelation(item.value)
+            }
+            }>
+              {item.value}
+            </AtActionSheetItem>
+          )
+        })}
+      </AtActionSheet>
+
     </View>
   )
 }

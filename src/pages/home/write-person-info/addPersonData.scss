@@ -1,3 +1,4 @@
+@import "~taro-ui/dist/style/components/action-sheet.scss";
 .container{
   position: relative;
   height: 100%;
@@ -94,9 +95,39 @@
   height:68.25px;
   width:100%;
   margin-bottom: 20px;
-  //line-height:48.25px;
 }
 .insEscortStaff_wrap{
   display: flex;
   flex-direction: column;
+}
+.relationship{
+  display: flex;
+  height:96.5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(242, 242, 242, 1);
+
+  &_left{
+    color: #333;
+    font-size: 26px;
+
+  }
+  &_right{
+    color:#333;
+    font-size: 26px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .arrow_down{
+      margin-left: 10px;
+      width:18px;
+      height:27px;
+    }
+  }
 }

@@ -189,7 +189,7 @@ class Combo extends Component {
   _selectUserType=(userType)=>{
     this.setState({visible:false},()=>{
       Taro.navigateTo({
-        url:`/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.item)}&userType=${userType}`
+        url:`/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=${userType}`
       })
     })
   }
