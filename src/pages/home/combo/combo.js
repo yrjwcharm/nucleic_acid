@@ -8,9 +8,10 @@ import Checked from '@assets/home/combo/checked.svg'
 import './combo.scss'
 import React, {Component} from "react";
 import {getCurrentInstance} from "@tarojs/runtime";
-import {queryComboListByOrgApi,fetchSourceApi} from "../../../services/combo";
+import {queryComboListByOrgApi, fetchSourceApi} from "../../../services/combo";
 import moment from 'moment';
 import Api from '../../../config/api'
+
 let max = 14;
 
 class Combo extends Component {
@@ -21,14 +22,16 @@ class Combo extends Component {
     item: {},
     dateArr: [],
     comboList: [],
-    comboId:'',
+    comboId: '',
+    startDate:'',
+    endDate:''
   }
 
   componentDidMount() {
-    let {orgId,item} = getCurrentInstance().router.params;
-    this.setState({orgId, item:JSON.parse(item)}, () => {
+    let {orgId, item} = getCurrentInstance().router.params;
+    this.setState({orgId, item: JSON.parse(item)}, () => {
 
-        this._initData(this.state.orgId);
+      this._initData(this.state.orgId);
 
     })
 
@@ -55,68 +58,126 @@ class Combo extends Component {
   }
   _initData = async (orgId) => {
     const startDate = moment().format('YYYY-MM-DD');
-    const endDate = moment().add('days',max).format('YYYY-MM-DD');
+    const endDate = moment().add('days', max).format('YYYY-MM-DD');
     const res = await queryComboListByOrgApi({
       orgId
     })
 
-    if(res.code===200) {
+    if (res.code === 200) {
       if (Array.isArray(res.data)) {
         res.data.map((item, index) => {
           index === 0 ? item.checked = true : item.checked = false;
         })
-        this.setState({comboList: res.data,comboId:res.data[0].comboId},()=>{
-          this._getSource(res.data[0].comboId,startDate,endDate);
+        this.setState({comboList: res.data, comboId: res.data[0].comboId}, () => {
+          this._getSource(res.data[0].comboId, startDate, endDate);
         })
       }
     }
   }
-  _getSource= async (comboId,startDate,endDate)=>{
+  /**
+   * 初始化获取号源
+   * @param comboId
+   * @param startDate
+   * @param endDate
+   * @returns {Promise<void>}
+   * @private
+   */
+  _getSource = async (comboId, startDate, endDate) => {
     let dateArr = [];
     for (let i = 0; i <= max; i++) {
-      let date = moment().add('days',i).format('YYYY-MM-DD');
+      let date = moment().add('days', i).format('YYYY-MM-DD');
       let week = this._getWeek(date);
       dateArr.push({
         id: i,
         date,
         week,
+        amount:0,
+        comboId:'',
+        orgId:'',
+        sourceId:'',
+        surplus: 0,
         checked: false,
       })
     }
-    const _res = await fetchSourceApi({
-      comboId,
-      startDate,
-      endDate
-    })
+    if (comboId) {
+      const _res = await fetchSourceApi({
+        comboId,
+        startDate,
+        endDate
+      })
+      if (_res.code === 200) {
+        Array.isArray(_res.data) && _res.data.map(_item => {
+          dateArr.map(item => {
+            let date = moment(_item.date).format('YYYY-MM-DD');
+            if (item.date === date) {
+              item.amount = _item.amount;
+              item.surplus = _item.surplus;
+              item.comboId =_item.comboId;
+              item.orgId = _item.orgId;
+              item.sourceId = _item.sourceId;
+            }
+          })
+        })
+        this.setState({dateArr: [...dateArr],startDate,endDate})
+      }
+    } else {
+      this._initData(this.state.orgId);
+    }
   }
   onScrollToUpper = () => {
 
   }
+  _selectedSource = (item) => {
+    this.state.dateArr.map((_item, index) => {
+      _item.checked = false;
+      if (JSON.stringify(item) === JSON.stringify(_item)) {
+
+        _item.checked = !item.checked;
+
+      }
+    })
+    this.setState({dateArr:[...this.state.dateArr]})
+  }
   onScroll = () => {
   }
-  _selectedCombo=(item)=>{
-    this.state.comboList.map((_item,index)=>{
+  /**
+   * 选择套餐
+   * @param item
+   * @private
+   */
+  _selectedCombo = (item) => {
+    this.state.comboList.map((_item, index) => {
+        _item.checked  = false;
+      if (JSON.stringify(item) === JSON.stringify(_item)) {
 
-        if(JSON.stringify(item)===JSON.stringify(_item)){
+         _item.checked = !item.checked;
 
-           index===0? _item.checked = true:_item.checked = !item.checked;
-
-        }
+      }
     })
-    this.setState({comboList:[...this.state.comboList]})
+    this.setState({comboList: [...this.state.comboList]},()=>{
+        let comboId ='';
+        const {comboList} =this.state;
+        for (let i =0;i<comboList.length;i++){
+             if(comboList[i].checked){
+               comboId=comboList[i].comboId;
+             }
+        }
+       this._getSource(comboId,this.state.startDate,this.state.endDate);
+    })
 
   }
+
   render() {
-    const {dateArr, comboList,item} = this.state;
+    const {dateArr, comboList, item} = this.state;
     return (
       <View className='container'>
         <View className='container_header'>
           <View className='container_header_list_item'>
-            <Image src={Api.imgUrl+item.url} className='container_header_list_item_pic'/>
+            <Image src={Api.imgUrl + item.url} className='container_header_list_item_pic'/>
             <View className='container_header_list_item_desc'>
-              <Text className='container_header_list_item_desc_hospital'>{item.orgName&&item.orgName}</Text>
+              <Text className='container_header_list_item_desc_hospital'>{item.orgName && item.orgName}</Text>
               <Text className='container_header_list_item_desc_item'>核酸检测</Text>
-              <Text className='container_header_list_item_desc_address'>{item.wholeAddress&&item.wholeAddress}</Text>
+              <Text className='container_header_list_item_desc_address'>{item.wholeAddress && item.wholeAddress}</Text>
             </View>
           </View>
         </View>
@@ -136,12 +197,16 @@ class Combo extends Component {
             {dateArr.map((item, index) => {
               let month_day = moment(item.date).format('MM-DD');
               return (
-                <View className='wrap' key={item.id + " "}>
+                <View className='wrap' key={item.id + " "} onClick={()=>this._selectedSource(item)}>
                   <View className='wrap_content'
                         style={item.checked ? 'background-color:rgba(51, 153, 255, 0.698039215686274)' : 'background-color:white'}>
-                    <Text className='wrap_content_week' style={item.checked ? 'color:#fff' : 'color:#333'}>{item.week}</Text>
-                    <Text className='wrap_content_date' style={item.checked ? 'color:#fff' : 'color:#666'}>{month_day}</Text>
-                    <Text className='wrap_content_status' style={item.checked ? 'color: #fff' : 'color:#999'}/>
+                    <Text className='wrap_content_week'
+                          style={item.checked ? 'color:#fff' : 'color:#333'}>{item.week}</Text>
+                    <Text className='wrap_content_date'
+                          style={item.checked ? 'color:#fff' : 'color:#666'}>{month_day}</Text>
+                    <Text className='wrap_content_status' style={item.checked ? 'color: #fff' : 'color:#999'}>
+                      {'剩余' + item.surplus}
+                    </Text>
                   </View>
                 </View>
               )
@@ -152,9 +217,9 @@ class Combo extends Component {
           <Text className='footer_combo'>
             选择套餐
           </Text>
-          {comboList.map((item,index)=>{
-            return(
-              <View className='footer_comboList' key={item.comboId+" "} onClick={()=>this._selectedCombo(item)}>
+          {comboList.map((item, index) => {
+            return (
+              <View className='footer_comboList' key={item.comboId + " "} onClick={() => this._selectedCombo(item)}>
                 <View className='footer_comboList_leftLayout'>
                   <Image src={Doctor} className='footer_comboList_leftLayout_doctor'/>
                   <View className='footer_comboList_leftLayout_info'>
@@ -176,8 +241,9 @@ class Combo extends Component {
                     </Text>
                   </View>
                 </View>
-                <View className='choice' >
-                  <View className='choice_wrap' style={item.checked?'background-color:#3298ff':'background-color:white'}>
+                <View className='choice'>
+                  <View className='choice_wrap'
+                        style={item.checked ? 'background-color:#3298ff' : 'background-color:white'}>
 
                   </View>
                 </View>
