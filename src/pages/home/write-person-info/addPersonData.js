@@ -46,11 +46,13 @@ const AddPersonData = (props) => {
   }
   const _initData = async ()=>{
     const {item,userType} =getCurrentInstance().router.params;
+    const {userId } = Taro.getStorageSync('loginInfo');
      const {sourceId,orgId,date,} =JSON.parse(item);
      setSourceId(sourceId);
      setOrgId(orgId);
      setDate(date);
-     setUserId(userType);
+     setUserType(userType);
+     setUserId(userId)
   }
   const toggleAddressPicker = (areaInfo, disCoding) => {
     console.log(444, areaInfo + ' ' + disCoding);
@@ -109,7 +111,7 @@ const AddPersonData = (props) => {
         </View>
         <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
         <Textarea value={''} placeholder={'请输入详细地址'} className='detail_address'/>
-        {!insEscortStaff ? <View className='insEscortStaff' onClick={insEscortStaffClick}>
+        {userType==1 ? <View className='insEscortStaff' onClick={insEscortStaffClick}>
           <Text className='insEscortStaff_text'>+增加陪同人员</Text>
         </View> : null}
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
