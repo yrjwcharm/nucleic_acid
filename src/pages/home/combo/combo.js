@@ -187,6 +187,7 @@ class Combo extends Component {
     }) : this.setState({visible: true,source:item})
   }
   _selectUserType=(userType)=>{
+    console.log(111,this.state.source);
     this.setState({visible:false},()=>{
       Taro.navigateTo({
         url:`/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=${userType}`

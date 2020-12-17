@@ -7,6 +7,7 @@ import './addPersonData.scss'
 import ArrowRight from '@assets/home/write-person-data/arrow_right.svg'
 import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import AddressPicker from "../../../components/address-picker/AddressPicker";
+import {getCurrentInstance} from "@tarojs/runtime";
 const AddPersonData = (props) => {
   const [userId,setUserId] =useState('');
   const [userType,setUserType] =useState('');
@@ -39,18 +40,17 @@ const AddPersonData = (props) => {
   ]
   useEffect(()=>{
    _initData();
-  },[props])
+  },[])
   const handleChange = () => {
 
   }
   const _initData = async ()=>{
-    const {item,userType}=props;
-    console.log(333,item);
-    // const {sourceId,orgId,date,} =JSON.parse(item);
-    // setSourceId(sourceId);
-    // setOrgId(orgId);
-    // setDate(date);
-    // setUserId(userType);
+    const {item,userType} =getCurrentInstance().router.params;
+     const {sourceId,orgId,date,} =JSON.parse(item);
+     setSourceId(sourceId);
+     setOrgId(orgId);
+     setDate(date);
+     setUserId(userType);
   }
   const toggleAddressPicker = (areaInfo, disCoding) => {
     console.log(444, areaInfo + ' ' + disCoding);
