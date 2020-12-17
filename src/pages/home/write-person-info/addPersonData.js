@@ -8,6 +8,8 @@ import ArrowRight from '@assets/home/write-person-data/arrow_right.svg'
 import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import AddressPicker from "../../../components/address-picker/AddressPicker";
 import {getCurrentInstance} from "@tarojs/runtime";
+import {isEmpty} from "../../../utils/EmptyUtil";
+import {isIdCard, isMobile} from "../../../utils/RegUtil";
 const AddPersonData = (props) => {
   const [userId,setUserId] =useState('');
   const [userType,setUserType] =useState('');
@@ -53,19 +55,72 @@ const AddPersonData = (props) => {
      setUserId(userId)
   }
   const toggleAddressPicker = (areaInfo, disCoding) => {
-    console.log(444, areaInfo + ' ' + disCoding);
     let provinceId = disCoding.split(',')[0];
     let cityId = disCoding.split(',')[1];
-    let area = disCoding.split(',')[2];
+    let districtId = disCoding.split(',')[2];
+    setProvinceId(provinceId);
+    setCityId(cityId);
+    setDistrictId(districtId);
     setShowPicker(false);
     setArea(areaInfo);
 
 
   }
   const nextStep = () => {
+    if(isEmpty(name)){
+       Taro.showToast({
+         title:'姓名不能为空',
+         icon:'none'
+       })
+      return;
+    }
+    if(isMobile(phone)){
+      Taro.showToast({
+        title:'手机号不能为空',
+        icon:'none',
+      })
+      return;
+    }
+    if(isIdCard(idCard)){
+      Taro.showToast({
+        title:'身份证号不能为空',
+        icon:'none',
+      })
+      return;
+    }
+
     if(userType==1){
+      setEntourageRelation('');
 
     }else{
+      if(isEmpty(entourageName)){
+        Taro.showToast({
+          icon:'none',
+          title:'陪同人姓名不能为空'
+        })
+        return;
+      }
+      if(isEmpty(entourageRelation)){
+        Taro.showToast({
+          title:'陪同人关系不能为空',
+          icon:'none',
+        })
+        return;
+      }
+      if(isMobile(entouragePhone)){
+        Taro.showToast({
+          title:'陪同人手机号不能为空',
+          icon:'none',
+        })
+        return;
+      }
+      if(isIdCard(entourageIdCard)){
+        Taro.showToast({
+          title:'陪同人身份证号不能为空'
+        })
+        return;
+      }
+
 
     }
     // Taro.navigateTo({
@@ -85,7 +140,7 @@ const AddPersonData = (props) => {
           return (
             <View className='clearfix listRow' key={index.toString()}>
               <Text className='listRow_left'>{item.label}</Text>
-              <Input type={item.type} className='listRow_right_' placeholder={item.placeholder} value={item.value} maxLength='20'/>
+              <Input type={item.type}  className='listRow_right_' placeholder={item.placeholder} value={item.value} maxLength='20'/>
             </View>
           )
         })}
@@ -104,7 +159,7 @@ const AddPersonData = (props) => {
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
-            <Input type='text' className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='20'/>
+            <Input type='text'  className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='20'/>
           </View>
           <View className='relationship'>
             <Text className='relationship_left'>与患者关系</Text>
@@ -121,7 +176,7 @@ const AddPersonData = (props) => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input type='number' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard} maxLength='20'/>
+            <Input type='text' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard} maxLength='20'/>
           </View>
         </View> : null}
       </View>
