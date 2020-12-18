@@ -66,7 +66,7 @@ const AddPersonData = () => {
   }
   const nextStep = () => {
 
-    console.log(333,name,phone);
+    console.log(333, name, phone);
     if (isEmpty(name)) {
       Taro.showToast({
         title: '姓名不能为空',
@@ -74,10 +74,10 @@ const AddPersonData = () => {
       })
       return;
     }
-    if(isEmpty(phone)){
+    if (isEmpty(phone)) {
       Taro.showToast({
-        title:'手机号不能为空',
-        icon:'none',
+        title: '手机号不能为空',
+        icon: 'none',
       })
       return;
     }
@@ -88,10 +88,10 @@ const AddPersonData = () => {
       })
       return;
     }
-    if(isEmpty(idCard)){
+    if (isEmpty(idCard)) {
       Taro.showToast({
-        title:'身份证号不能为空',
-        icon:'none',
+        title: '身份证号不能为空',
+        icon: 'none',
       })
       return;
     }
@@ -109,11 +109,15 @@ const AddPersonData = () => {
       })
       return;
     }
+    if(isEmpty(streetdesc)){
+      Taro.showToast({
+        title:'详细地址不能为空',
+        icon:'none',
+      })
+      return;
+    }
 
     if (userType == 1) {
-      setEntourageRelation('');
-
-    } else {
       if (isEmpty(entourageName)) {
         Taro.showToast({
           icon: 'none',
@@ -128,10 +132,10 @@ const AddPersonData = () => {
         })
         return;
       }
-      if(isEmpty(entouragePhone)){
+      if (isEmpty(entouragePhone)) {
         Taro.showToast({
-          title:'陪同人手机号不能为空',
-          icon:'none',
+          title: '陪同人手机号不能为空',
+          icon: 'none',
         })
         return;
       }
@@ -142,34 +146,33 @@ const AddPersonData = () => {
         })
         return;
       }
-      if(isEmpty(entouragePhone)){
+      if (isEmpty(entourageIdCard)) {
         Taro.showToast({
-          title:'陪同人身份证号不能为空',
-          icon:'none',
+          title: '陪同人身份证号不能为空',
+          icon: 'none',
         })
         return;
       }
       if (!isIdCard(entourageIdCard)) {
         Taro.showToast({
           title: '陪同人身份证号格式不正确',
-          icon:'none',
+          icon: 'none',
         })
-        return;
       }
 
 
+    } else {
+      setEntourageRelation('');
+
+
     }
-    // Taro.navigateTo({
-    //   url: '/pages/home/immediate-order/immediateOrder',
-    // })
+
   }
   const insEscortStaffClick = () => {
     setInsEscortStaff(true);
   }
   const showAreaPicker = () => {
     setShowPicker(true);
-  }
-  const _input = (value) => {
   }
   const ListRow = (props) => {
     const {label, type, onBlur, value, placeholder, maxLength} = props;
@@ -248,7 +251,7 @@ const AddPersonData = () => {
           <Text className='container_footer_next'>下一步</Text>
         </View>
       </View>
-      <AtActionSheet isOpened={visible} cancelText='取消'>
+      <AtActionSheet isOpened={visible}  cancelText='取消'>
         {relationList.map(item => {
           return (
             <AtActionSheetItem key={item.label + ""} onClick={() => {
