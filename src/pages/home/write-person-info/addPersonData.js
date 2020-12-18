@@ -65,6 +65,8 @@ const AddPersonData = () => {
 
   }
   const nextStep = () => {
+
+    console.log(333,name,phone);
     if (isEmpty(name)) {
       Taro.showToast({
         title: '姓名不能为空',
