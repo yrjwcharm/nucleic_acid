@@ -149,7 +149,8 @@ const AddPersonData = () => {
       }
       if (!isIdCard(entourageIdCard)) {
         Taro.showToast({
-          title: '陪同人身份证号格式不正确'
+          title: '陪同人身份证号格式不正确',
+          icon:'none',
         })
         return;
       }
