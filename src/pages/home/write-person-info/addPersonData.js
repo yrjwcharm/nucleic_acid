@@ -72,16 +72,37 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (isMobile(phone)) {
+    if(isEmpty(phone)){
       Taro.showToast({
-        title: '手机号不能为空',
+        title:'手机号不能为空',
+        icon:'none',
+      })
+      return;
+    }
+    if (!isMobile(phone)) {
+      Taro.showToast({
+        title: '手机号格式不正确',
         icon: 'none',
       })
       return;
     }
-    if (isIdCard(idCard)) {
+    if(isEmpty(idCard)){
       Taro.showToast({
-        title: '身份证号不能为空',
+        title:'身份证号不能为空',
+        icon:'none',
+      })
+      return;
+    }
+    if (!isIdCard(idCard)) {
+      Taro.showToast({
+        title: '身份证号格式不正确',
+        icon: 'none',
+      })
+      return;
+    }
+    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
+      Taro.showToast({
+        title: '请选择省市区',
         icon: 'none',
       })
       return;
@@ -105,16 +126,30 @@ const AddPersonData = () => {
         })
         return;
       }
-      if (isMobile(entouragePhone)) {
+      if(isEmpty(entouragePhone)){
         Taro.showToast({
-          title: '陪同人手机号不能为空',
+          title:'陪同人手机号不能为空',
+          icon:'none',
+        })
+        return;
+      }
+      if (!isMobile(entouragePhone)) {
+        Taro.showToast({
+          title: '陪同人手机号格式不正确',
           icon: 'none',
         })
         return;
       }
-      if (isIdCard(entourageIdCard)) {
+      if(isEmpty(entouragePhone)){
         Taro.showToast({
-          title: '陪同人身份证号不能为空'
+          title:'陪同人身份证号不能为空',
+          icon:'none',
+        })
+        return;
+      }
+      if (!isIdCard(entourageIdCard)) {
+        Taro.showToast({
+          title: '陪同人身份证号格式不正确'
         })
         return;
       }
@@ -134,26 +169,27 @@ const AddPersonData = () => {
   const _input = (value) => {
   }
   const ListRow = (props) => {
-    const {label, type,onInput, value, placeholder, maxLength} = props;
+    const {label, type, onBlur, value, placeholder, maxLength} = props;
     return (
       <View className='clearfix listRow'>
         <Text className='listRow_left'>{label}</Text>
-        <Input type={type}  onInput={onInput} className='listRow_right_' placeholder={placeholder} value={value} maxLength={maxLength}/>
+        <Input type={type} onBlur={onBlur} className='listRow_right_' placeholder={placeholder} value={value}
+               maxLength={maxLength}/>
       </View>
     )
   }
   return (
     <View className='container'>
       <View className='container_section'>
-        <ListRow type='text' label='姓名' onInput={(event) => {
+        <ListRow type='text' label='姓名' onBlur={(event) => {
           const {value} = event.detail;
           setName(value);
         }} value={name} placeholder='请输入姓名' maxLength={6}/>
-        <ListRow type='number' label='电话' onInput={(event) => {
+        <ListRow type='number' label='电话' onBlur={(event) => {
           const {value} = event.detail;
           setPhone(value);
         }} value={phone} placeholder='请输入电话' maxLength={11}/>
-        <ListRow type='idcard' label='身份证号' onInput={(event) => {
+        <ListRow type='idcard' label='身份证号' onBlur={(event) => {
           const {value} = event.detail;
           setIdCard(value);
         }} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
@@ -173,7 +209,7 @@ const AddPersonData = () => {
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
             <Input type='text' onInput={(event => {
-              const {value} =event.detail;
+              const {value} = event.detail;
               setEntourageName(value)
             })} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
           </View>
@@ -188,7 +224,7 @@ const AddPersonData = () => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>电话</Text>
-            <Input type='number' onInput={(event)=>{
+            <Input type='number' onInput={(event) => {
               const {value} = event.detail;
               setEntouragePhone(value);
             }} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
@@ -196,7 +232,7 @@ const AddPersonData = () => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input onInput={(event)=>{
+            <Input onInput={(event) => {
               const {value} = event.detail;
               setEntourageIdCard(value)
             }} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
