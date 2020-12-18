@@ -207,7 +207,10 @@ const AddPersonData = () => {
           </View>
         </View>
         <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
-        <Textarea value={''} placeholder={'请输入详细地址'} className='detail_address'/>
+        <Textarea value={streetdesc} onBlur={(event)=>{
+          const {value} = event.detail;
+          setStreetDesc(value);
+        }} placeholder={'请输入详细地址'} className='detail_address'/>
         {userType == 1 && !insEscortStaff ? <View className='insEscortStaff' onClick={insEscortStaffClick}>
           <Text className='insEscortStaff_text'>+增加陪同人员</Text>
         </View> : null}
