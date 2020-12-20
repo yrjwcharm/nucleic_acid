@@ -6,7 +6,6 @@ import {AtActionSheet, AtActionSheetItem} from "taro-ui"
 import './addPersonData.scss'
 import ArrowRight from '@assets/home/write-person-data/arrow_right.svg'
 import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
-import AddressPicker from "../../../components/address-picker/AddressPicker";
 import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
@@ -52,15 +51,16 @@ const AddPersonData = () => {
     setUserType(userType);
     setUserId(userId)
   }
-  const toggleAddressPicker = (areaInfo, disCoding) => {
-    let provinceId = disCoding.split(',')[0];
-    let cityId = disCoding.split(',')[1];
-    let districtId = disCoding.split(',')[2];
-    setProvinceId(provinceId);
-    setCityId(cityId);
-    setDistrictId(districtId);
-    setShowPicker(false);
-    setArea(areaInfo);
+  const toggleAddressPicker = (areaInfo) => {
+    console.log(333,areaInfo);
+    // let provinceId = disCoding.split(',')[0];
+    // let cityId = disCoding.split(',')[1];
+    // let districtId = disCoding.split(',')[2];
+    // setProvinceId(provinceId);
+    // setCityId(cityId);
+    // setDistrictId(districtId);
+    // setShowPicker(false);
+    // setArea(areaInfo);
 
 
   }
@@ -206,7 +206,7 @@ const AddPersonData = () => {
             <Image src={ArrowRight} className='listRow_right_arrow'/>
           </View>
         </View>
-        <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
+
         <Textarea value={streetdesc} onBlur={(event)=>{
           const {value} = event.detail;
           setStreetDesc(value);
