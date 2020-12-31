@@ -5,6 +5,8 @@ import './home.scss';
 import React, {Component, useEffect} from 'react'
 import Banner from './banner'
 import Carousel from '@assets/home/banner.png'
+import Order from '@assets/home/yuyue.png'
+import Query from '@assets/home/query.png'
 import {get} from "../../global_data";
 const RECOMMEND_SIZE = 20
 
@@ -51,7 +53,7 @@ export default  class Home  extends Component {
         <View className='container_section'>
           <View className='home_wrap' onClick={this.goToOrganization}>
             <Image className='home_wrap_img'
-                   src={'http://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png'}/>
+                   src={Order}/>
             <View className='home_wrap_desp'>
               <Text className='home_wrap_desp_title'>个人核酸检测预约</Text>
               <Text className='home_wrap_desp_detail'>快速预约,安心筛选</Text>
@@ -59,7 +61,7 @@ export default  class Home  extends Component {
           </View>
           <View className='home_wrap' onClick={this._goToCheck_Result}>
             <Image className='home_wrap_img'
-                   src={'http://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png'}/>
+                   src={Query}/>
             <View className='home_wrap_desp'>
               <Text className='home_wrap_desp_title'>检验结果查询</Text>
               <Text className='home_wrap_desp_detail'>最快24小时出结果</Text>
