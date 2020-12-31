@@ -35,11 +35,11 @@ class Organization extends Component {
 
   }
   goToCombo = (item) => {
-    // Taro.navigateTo({
-    //   url: `/pages/home/combo/combo?orgId=${item.orgId}&item=${JSON.stringify(item)}`})
     Taro.navigateTo({
-      url:'/pages/home/certification/certification'
-    })
+      url: `/pages/home/combo/combo?orgId=${item.orgId}&item=${JSON.stringify(item)}`})
+    // Taro.navigateTo({
+    //   url:'/pages/home/certification/certification'
+    // })
   }
     render(){
       // orgCode: "JMQZ100001030"

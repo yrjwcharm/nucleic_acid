@@ -49,7 +49,7 @@ export default  class Home  extends Component {
   render() {
     return (
       <View className='container'>
-        <Banner list={[{rank: 0, img: Carousel}, {rank: 1, img: Carousel}, {rank: 2, img: Carousel}]}/>
+        <Banner list={[{rank: 0, img: Carousel}]}/>
         <View className='container_section'>
           <View className='home_wrap' onClick={this.goToOrganization}>
             <Image className='home_wrap_img'

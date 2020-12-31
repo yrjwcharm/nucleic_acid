@@ -15,8 +15,8 @@ export default class SwiperBanner extends Component {
           className='home-banner__swiper'
           circular
           autoplay
-          indicatorDots
-          indicatorActiveColor='rgb(178, 42, 49)'
+          // indicatorDots
+          // indicatorActiveColor='rgb(178, 42, 49)'
           // TODO 目前 H5、RN 暂不支持 previousMargin、nextMargin
           // previousMargin
           // nextMargin
