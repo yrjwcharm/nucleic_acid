@@ -27,5 +27,6 @@ export default {
   queryOrgListByNameApi:WxApiRoot + '/ncov/baOrganization/getListByQueryName',
   queryComboListByOrgApi:WxApiRoot + `/ncov/BaComboController/getList`,
   fetchSourceApi:WxApiRoot +`/ncov/BaSourceController/getList`,
+  appointDetect:WxApiRoot+'/ncov/BaAppointmentController/add',
   uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
 };

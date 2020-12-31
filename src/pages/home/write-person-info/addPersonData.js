@@ -9,6 +9,7 @@ import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
+import {fetchAppointDetectApi, fetchSourceApi} from "../../../services/combo";
 
 const AddPersonData = () => {
   const [userId, setUserId] = useState('');
@@ -29,7 +30,7 @@ const AddPersonData = () => {
   const [entouragePhone, setEntouragePhone] = useState('');
   const [entourageRelation, setEntourageRelation] = useState('父亲');
   // payType	支付方式 0 线上支付 1 线下支付
-  const [payType, setPayType] = useState(0);
+  const [payType, setPayType] = useState(1);
   const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'}, {
     label: 2,
     value: '亲戚'
@@ -51,7 +52,7 @@ const AddPersonData = () => {
     setUserType(userType);
     setUserId(userId)
   }
-  const nextStep = () => {
+  const nextStep = async () => {
 
     console.log(333, name, phone);
     if (isEmpty(name)) {
@@ -152,7 +153,27 @@ const AddPersonData = () => {
 
     } else {
       setEntourageRelation('');
-
+      const res  = await  fetchAppointDetectApi({
+        cityid,
+        date,
+        districtid,
+        docUrl,
+        entourageIdCard,
+        entourageName,
+        entouragePhone,
+        entourageRelation,
+        idCard,
+        name,
+        orgId,
+        payType,
+        phone,
+        provinceid,
+        sourceId,
+        streetdesc,
+        userId,
+        userType,
+      })
+      console.log(333,res);
 
     }
 
