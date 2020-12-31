@@ -11,6 +11,7 @@ export default {
     'pages/home/organization/organization',
     'pages/home/write-person-info/addPersonData',
     'pages/home/combo/combo',
+    'pages/home/certification/certification'
 
   ],
   window: {

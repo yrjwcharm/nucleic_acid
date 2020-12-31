@@ -26,5 +26,6 @@ export default {
   MyAuditRecord:WxApiRoot + '/ncov/BaAppointmentController/my/validate',
   queryOrgListByNameApi:WxApiRoot + '/ncov/baOrganization/getListByQueryName',
   queryComboListByOrgApi:WxApiRoot + `/ncov/BaComboController/getList`,
-  fetchSourceApi:WxApiRoot +`/ncov/BaSourceController/getList`
+  fetchSourceApi:WxApiRoot +`/ncov/BaSourceController/getList`,
+  uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
 };

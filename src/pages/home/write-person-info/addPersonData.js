@@ -16,9 +16,9 @@ const AddPersonData = () => {
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [orgId, setOrgId] = useState('');
-  const [provinceid, setProvinceId] = useState('');
-  const [cityid, setCityId] = useState('');
-  const [districtid, setDistrictId] = useState('');
+  const [provinceid, setProvinceId] = useState('140000');
+  const [cityid, setCityId] = useState('140100');
+  const [districtid, setDistrictId] = useState('140105');
   const [streetdesc, setStreetDesc] = useState('');
   const [docUrl, setDocUrl] = useState('');
   const [name, setName] = useState('');
@@ -50,19 +50,6 @@ const AddPersonData = () => {
     setDate(date);
     setUserType(userType);
     setUserId(userId)
-  }
-  const toggleAddressPicker = (areaInfo) => {
-    console.log(333,areaInfo);
-    // let provinceId = disCoding.split(',')[0];
-    // let cityId = disCoding.split(',')[1];
-    // let districtId = disCoding.split(',')[2];
-    // setProvinceId(provinceId);
-    // setCityId(cityId);
-    // setDistrictId(districtId);
-    // setShowPicker(false);
-    // setArea(areaInfo);
-
-
   }
   const nextStep = () => {
 
@@ -159,7 +146,9 @@ const AddPersonData = () => {
           icon: 'none',
         })
       }
-
+      Taro.navigateTo({
+        url:'/pages/home/certification/certification'
+      })
 
     } else {
       setEntourageRelation('');

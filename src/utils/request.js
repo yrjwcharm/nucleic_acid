@@ -60,5 +60,21 @@ request.get = (url, data) => {
 request.post = (url, data) => {
   return request(url, data, 'POST');
 }
+request.uploadFile=(url,data)=>{
+  return new Promise(function (resolve,reject){
+    Taro.uploadFile({
+      url, //仅为示例，非真实的接口地址
+      filePath: data[0],
+      name: 'file',
+      formData: {
+        'user': 'test'
+      },
+      success (res){
+        const data = res.data
+        //do something
+      }
+    })
+  })
+}
 
 export default request;
