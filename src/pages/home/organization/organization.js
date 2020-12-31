@@ -28,7 +28,6 @@ class Organization extends Component {
     getQueryOrgListByNameApi({
       queryName:this.state.queryName,
     }).then(res => {
-      console.log(444,res);
         this.setState({list:Array.isArray(res)?res:[]})
       Taro.hideLoading();
     })
