@@ -9,21 +9,24 @@ import React, {useState, useEffect, Component} from 'react'
 import {get} from "../../global_data";
 const events = new Events()
 class User  extends Component {
-  state = {
-    hasLogin: false,
-    userInfo:null,
-    listItems: [
-      {label: '审核记录', id: 0, onPress: () => this._goToAuditRecord()},
-      {label: '我的预约', id: 1, onPress: () => this.goToAdvanceOrder()}
-    ]
+  constructor() {
+    super();
+    this.state = {
+      hasLogin: false,
+      userInfo:null,
+      listItems: [
+        {label: '审核记录', id: 0, onPress: () => this._goToAuditRecord()},
+        {label: '我的预约', id: 1, onPress: () => this.goToAdvanceOrder()}
+      ]
+    }
   }
   componentDidMount() {
     Taro.eventCenter.on('_trigger',(arg1,arg2) => {
       console.log(111,arg1,arg2);
       this.setState({userInfo:arg1,hasLogin:arg2})
     })
-    const userInfo = Taro.getStorageSync('userInfo');
-    userInfo&&this.setState({hasLogin:true,userInfo})
+     const userInfo = Taro.getStorageSync('userInfo');
+     userInfo&&this.setState({hasLogin:true,userInfo})
   }
   componentWillUnmount() {
     Taro.eventCenter.off();

@@ -2,9 +2,9 @@
 // 局域网测试使用
 // var WxApiRoot = 'http://localhost:8082/wx/';
 // 云平台部署时使用
-let WxApiRoot = 'http://192.168.100.90:8090';
+let WxApiRoot = 'http://hstest.youjiankang.net:8081';
 export default {
-  imgUrl :'http://192.168.100.90:8080',
+  imgUrl :'http://hstest.youjiankang.net/',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口
   AboutUrl: WxApiRoot + 'home/about', //介绍信息
   CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口
@@ -28,5 +28,6 @@ export default {
   queryComboListByOrgApi:WxApiRoot + `/ncov/BaComboController/getList`,
   fetchSourceApi:WxApiRoot +`/ncov/BaSourceController/getList`,
   appointDetect:WxApiRoot+'/ncov/BaAppointmentController/add',
+  generateQrcode :WxApiRoot + `/ncov/BaAppointmentController/my/qrcode`,
   uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
 };

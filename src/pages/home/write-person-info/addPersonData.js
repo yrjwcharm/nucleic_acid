@@ -9,7 +9,8 @@ import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
-import {fetchAppointDetectApi, fetchSourceApi} from "../../../services/combo";
+import {fetchAppointDetectApi, fetchAppointSuccessQrCodeApi, fetchSourceApi} from "../../../services/combo";
+import AddressPicker from "../../../components/addressPicker";
 
 const AddPersonData = () => {
   const [userId, setUserId] = useState('');
@@ -174,8 +175,25 @@ const AddPersonData = () => {
         userType,
       })
       console.log(333,res);
+     res.code ===200&&Taro.showToast({
+       title:'预约成功',
+       icon:'none'
+     })
+      //  const _res = await  fetchAppointSuccessQrCodeApi({
+      //   appointId:
+      // })
 
     }
+
+  }
+  const toggleAddressPicker=(areaInfo,coding)=>{
+    const _coding = coding.split(',');
+    console.log(333,areaInfo,coding);
+    setArea(areaInfo);
+    setProvinceId(_coding[0]);
+    setCityId(_coding[1]);
+    setDistrictId(_coding[2]);
+    setShowPicker(false);
 
   }
   const insEscortStaffClick = () => {
@@ -213,11 +231,12 @@ const AddPersonData = () => {
           <Text className='listRow_left'>地址</Text>
           <View className='listRow_right'>
             <Text className='listRow_right_address' style='color:#999'>{area}</Text>
+            <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
             <Image src={ArrowRight} className='listRow_right_arrow'/>
           </View>
         </View>
 
-        <Textarea value={streetdesc} onBlur={(event)=>{
+        <Textarea value={streetdesc} onFocus={(event)=>{
           const {value} = event.detail;
           setStreetDesc(value);
         }} placeholder={'请输入详细地址'} className='detail_address'/>

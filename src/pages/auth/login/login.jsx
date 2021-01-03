@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   wxLogin =(e) => {
-    let appId = "wxae2ca77ab20990ea";
+    let appId = "wxd5d6f7b3a0c905ca";
     console.log('e', e);
     if (e.detail.userInfo) {
       user.loginByWeixin({appid: appId}).then(loginRes=>{

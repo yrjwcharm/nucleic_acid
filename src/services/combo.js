@@ -14,5 +14,8 @@ export  async  function  fetchSourceApi(payload){
 }
 
 export  async  function fetchAppointDetectApi(payload){
-  return request.get(Api.appointDetect,payload)
+  return request.put(Api.appointDetect,payload)
+}
+export  async  function  fetchAppointSuccessQrCodeApi(payload){
+  return request.get(Api.generateQrcode,payload);
 }
