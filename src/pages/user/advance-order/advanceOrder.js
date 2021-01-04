@@ -132,6 +132,9 @@ export class AdvanceOrder extends Component {
         return '周六'
     }
   }
+  _orderOp=()=>{
+
+  }
   render() {
     const {current, tabList,list} = this.state;
     console.log(333,list);
@@ -157,7 +160,7 @@ export class AdvanceOrder extends Component {
                             <Image src={ArrowRight} className='listItem_right_arrow'/>
                           </View>
                         </View>
-                        <View className='wrap_footer'>
+                        <View className='wrap_footer' onClick={this._orderOp}>
                           <View className='op_btn_1'>
                             <Text>{_item.state ==1?'取消预约':'再次预约'}</Text>
                           </View>

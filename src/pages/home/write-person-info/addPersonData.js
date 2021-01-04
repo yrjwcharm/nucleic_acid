@@ -174,14 +174,22 @@ const AddPersonData = () => {
         userId,
         userType,
       })
-      console.log(333,res);
-     res.code ===200&&Taro.showToast({
-       title:'预约成功',
-       icon:'none'
-     })
-      //  const _res = await  fetchAppointSuccessQrCodeApi({
-      //   appointId:
-      // })
+      if(res.code===200){
+        Taro.showToast({
+          title:'预约成功',
+          icon:'none'
+        })
+         const _res = await  fetchAppointSuccessQrCodeApi({
+          appointId:res.data
+        })
+        console.log(333,_res.data);
+        _res.code ===200&&Taro.navigateTo({
+          url:`/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(_res.data)}`,
+
+        })
+      }
+
+
 
     }
 
@@ -194,7 +202,6 @@ const AddPersonData = () => {
     setCityId(_coding[1]);
     setDistrictId(_coding[2]);
     setShowPicker(false);
-
   }
   const insEscortStaffClick = () => {
     setInsEscortStaff(true);

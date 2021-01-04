@@ -1,4 +1,7 @@
 @import "~taro-ui/dist/style/components/modal.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
+
 .container{
   position: relative;
   height: 100%;
@@ -192,42 +195,110 @@
     border-radius: 12.5px;
   }
 }
+//.payType{
+//  display: flex;
+//  height: 90px;
+//  border-bottom-width: 1rpx;
+//  border-bottom-style: solid;
+//  border-bottom-color: #e0e0e0;
+//  &_type{
+//    margin: auto;
+//    font-size: 28px;
+//    color: #333;
+//  }
+//}
+//.free{
+//  height: 90px;
+//  display: flex;
+//  border-bottom-width: 1rpx;
+//  border-bottom-style: solid;
+//  border-bottom-color: #e0e0e0;
+//
+//  &_type{
+//    margin: auto;
+//    color: #333;
+//    font-size: 24px;
+//  }
+//}
+//.payFee{
+//  height: 90px;
+//  display: flex;
+//  border-bottom-width: 1rpx;
+//  border-bottom-style: solid;
+//  border-bottom-color: #e0e0e0;
+//  &_type{
+//    font-size: 24px;
+//    color: #333;
+//    margin: auto;
+//  }
+//}
 .payType{
   display: flex;
-  height: 90px;
-  border-bottom-width: 1rpx;
-  border-bottom-style: solid;
-  border-bottom-color: #e0e0e0;
-  &_type{
-    margin: auto;
-    font-size: 28px;
-    color: #333;
-  }
+  flex-direction: column;
 }
-.free{
-  height: 90px;
+.payType_title{
+  text-align: center;
+  font-size: 28px;
+  color: #666666;
+}
+.pay_row{
   display: flex;
-  border-bottom-width: 1rpx;
-  border-bottom-style: solid;
-  border-bottom-color: #e0e0e0;
+  align-items: center;
+  flex-direction: row;
+}
+.pay_row_top{
+  margin-top: 20px;
+}
+.pay_row__top{
+  margin-top: 40px;
+}
+.radio{
+  display: flex;
+  width: 30px;
+  height:30px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #3298ff;
+  border-radius: 15px;
+}
+.radio_wrap{
+  margin: auto;
+  width: 16px;
+  height:16px;
+  border-radius: 8px;
+  //background-color: #3298ff;
+}
+.radio_desc{
+  margin-left: 10px;
+  font-size: 24px;
+}
 
-  &_type{
-    margin: auto;
-    color: #333;
-    font-size: 24px;
-  }
-}
-.payFee{
-  height: 90px;
+.container_action{
   display: flex;
-  border-bottom-width: 1rpx;
-  border-bottom-style: solid;
-  border-bottom-color: #e0e0e0;
-  &_type{
+  flex-direction: row;
+  flex:1,
+}
+.cancel{
+  display: flex;
+  flex: 1;
+  height:90px;
+  &_text{
     font-size: 24px;
-    color: #333;
     margin: auto;
+    color: #3298ff;
   }
 }
+.confirm{
+  display: flex;
+  flex: 1;
+  background-color: #3399FF;
+  height:90px;
+  &_text{
+    font-size:24px;
+    margin: auto;
+    color: white;
+  }
+}
+
 
 
