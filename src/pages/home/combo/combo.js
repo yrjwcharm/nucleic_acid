@@ -218,6 +218,9 @@ class Combo extends Component {
       icon:'none'
     })
   }
+  _cancelPayType=()=>{
+    this.setState({visible:false})
+  }
   render() {
     const {dateArr, comboList, item} = this.state;
     console.log(333, item);
@@ -323,7 +326,7 @@ class Combo extends Component {
           </AtModalContent>
           <AtModalAction>
             <View className='container_action'>
-              <View className='cancel'>
+              <View className='cancel' onClick={this._cancelPayType}>
                 <Text className='cancel_text'>取消</Text>
               </View>
               <View className='confirm' onClick={this._confirmPayType}>
