@@ -12,7 +12,6 @@ class User  extends Component {
   constructor() {
     super();
     this.state = {
-      hasLogin: false,
       userInfo:null,
       listItems: [
         {label: '审核记录', id: 0, onPress: () => this._goToAuditRecord()},
@@ -21,19 +20,11 @@ class User  extends Component {
     }
   }
   componentDidMount() {
-    Taro.eventCenter.on('_trigger',(arg1,arg2) => {
-      console.log(111,arg1,arg2);
-      this.setState({userInfo:arg1,hasLogin:arg2})
-    })
-     const userInfo = Taro.getStorageSync('userInfo');
-     userInfo&&this.setState({hasLogin:true,userInfo})
+    const userInfo = Taro.getStorageSync('userInfo')
+     this.setState({userInfo});
   }
-  componentWillUnmount() {
-    Taro.eventCenter.off();
-  }
-
   goToAdvanceOrder = () => {
-    if(this.state.hasLogin){
+    if(this.state.userInfo){
       Taro.navigateTo({
         url: '/pages/user/advance-order/advanceOrder',
       })
@@ -45,19 +36,19 @@ class User  extends Component {
 
   }
   _goToAuditRecord=()=>{
-    if(this.state.hasLogin){
+    if(this.state.userInfo){
       Taro.navigateTo({
         url:'/pages/user/audit-record/auditRecord'
       })
     }else{
-      Taro.navigateTo({
+      Taro.redirectTo({
         url:'/pages/auth/login/login'
       })
     }
 
   }
    _goToAuth=()=>{
-   !this.state.hasLogin&&Taro.navigateTo({
+   !this.state.userInfo&&Taro.redirectTo({
         url:'/pages/auth/login/login'
       })
   }
@@ -74,9 +65,9 @@ class User  extends Component {
       <View className='container'>
         <View className='header'>
           <View className='header_wrap' onClick={this._goToAuth}>
-            <Image src={hasLogin ? userInfo&&userInfo.avatarUrl : DefaultAvatar} className='header_wrap_avatar'/>
-            <Text className='header_wrap_username'>{hasLogin ?userInfo&&userInfo.nickName : '请先登录'}</Text>
-            {!hasLogin && <Image src={Arrow} className='header_wrap_arrow'/>}
+            <Image src={userInfo ? userInfo&&userInfo.avatarUrl : DefaultAvatar} className='header_wrap_avatar'/>
+            <Text className='header_wrap_username'>{userInfo ?userInfo&&userInfo.nickName : '请先登录'}</Text>
+            {!userInfo && <Image src={Arrow} className='header_wrap_arrow'/>}
           </View>
         </View>
         {listItems.map((item, index) => {

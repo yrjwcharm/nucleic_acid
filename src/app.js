@@ -7,7 +7,7 @@ import {loginByWXApi} from "./services/auth";
 class App extends Component {
 
   componentWillMount() {
-
+    this.update();
   }
 
   update = () => {
@@ -29,7 +29,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-     this.update();
+    user.loginByWeixin({appid:'wxd5d6f7b3a0c905ca'}).then(res=>{
+      if(res.code===200){
+        Taro.setStorageSync('loginInfo', res.data);
+        Taro.getUserInfo({
+          success: function(res) {
+            let userInfo = res.userInfo
+            Taro.setStorageSync('userInfo',userInfo);
+          }
+        }).catch(()=> {
+           Taro.redirectTo({
+             url:'/pages/auth/login/login',
+           })
+        })
+      }
+    })
   }
   componentDidHide () {}
 

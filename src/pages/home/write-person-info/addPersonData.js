@@ -257,11 +257,9 @@ const AddPersonData = () => {
               setEntourageName(value)
             })} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
           </View>
-          <View className='relationship'>
+          <View className='relationship' onClick={()=>setVisible(true)}>
             <Text className='relationship_left'>与患者关系</Text>
-            <View className='relationship_right' onClick={() => {
-              setVisible(true);
-            }}>
+            <View className='relationship_right'>
               <Text className='acc'>{entourageRelation}</Text>
               <Image src={ArrowDown} style='transform: rotate(270deg);' className='arrow_down'/>
             </View>
@@ -289,7 +287,7 @@ const AddPersonData = () => {
           <Text className='container_footer_next'>下一步</Text>
         </View>
       </View>
-      <AtActionSheet isOpened={visible}  cancelText='取消'>
+      <AtActionSheet  isOpened={visible} onCancel={()=>setVisible(false)}   onClose={()=>setVisible(false)} cancelText='取消'>
         {relationList.map(item => {
           return (
             <AtActionSheetItem key={item.label + ""} onClick={() => {

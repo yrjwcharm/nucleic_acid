@@ -12,34 +12,34 @@ const RECOMMEND_SIZE = 20
 
 // @connect(state => state.home, { ...actions, dispatchCartNum })
 export default  class Home  extends Component {
-  state={
-    hasLogin:false
+  constructor() {
+    super();
+    this.state={
+      userInfo:null,
+    }
   }
     componentDidMount() {
-      Taro.eventCenter.on('_trigger',(arg1,arg2) => {
-        this.setState({hasLogin:arg2})
-      })
-      const userInfo = Taro.getStorageSync('userInfo');
-      userInfo&&this.setState({hasLogin:true})
+     const userInfo = Taro.getStorageSync('userInfo');
+     this.setState({userInfo});
     }
   _goToCheck_Result = () => {
-    if(this.state.hasLogin) {
+    if(this.state.userInfo) {
       Taro.navigateTo({
         url: '/pages/home/query/checkResult',
       })
     }else{
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/auth/login/login',
       })
     }
   }
    goToOrganization = () => {
-    if(this.state.hasLogin){
+    if(this.state.userInfo){
       Taro.navigateTo({
         url: '/pages/home/organization/organization',
       })
     }else{
-      Taro.navigateTo({
+      Taro.redirectTo({
         url: '/pages/auth/login/login',
       })
     }
