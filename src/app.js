@@ -45,6 +45,10 @@ class App extends Component {
         })
       }
     })
+    // Taro.requestSubscribeMessage({
+    //   tmplIds: [''],
+    //   success: function (res) { }
+    // })
   }
   componentDidHide () {}
 
