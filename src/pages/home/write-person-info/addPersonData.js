@@ -154,6 +154,9 @@ const AddPersonData = () => {
 
     } else {
       setEntourageRelation('');
+      console.log(333,
+        streetdesc,
+      );
       const res  = await  fetchAppointDetectApi({
         cityid,
         date,
@@ -224,11 +227,11 @@ const AddPersonData = () => {
       <View className='container_section'>
         <ListRow type='text' label='姓名' onBlur={(event) => {
           const {value} = event.detail;
-          setName(value);
+           setName(value);
         }} value={name} placeholder='请输入姓名' maxLength={6}/>
         <ListRow type='number' label='电话' onBlur={(event) => {
           const {value} = event.detail;
-          setPhone(value);
+           setPhone(value);
         }} value={phone} placeholder='请输入电话' maxLength={11}/>
         <ListRow type='idcard' label='身份证号' onBlur={(event) => {
           const {value} = event.detail;
@@ -242,9 +245,10 @@ const AddPersonData = () => {
           </View>
         </View>
 
-        <Textarea value={streetdesc} onFocus={(event)=>{
-          const {value} = event.detail;
-          setStreetDesc(value);
+        <Textarea value={streetdesc} onInput={(event)=>{
+           const {value} = event.detail;
+           console.log('333',event)
+           setStreetDesc(value);
         }} placeholder={'请输入详细地址'} className='detail_address'/>
         {userType == 1 && !insEscortStaff ? <View className='insEscortStaff' onClick={insEscortStaffClick}>
           <Text className='insEscortStaff_text'>+增加陪同人员</Text>
@@ -252,7 +256,7 @@ const AddPersonData = () => {
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
-            <Input type='text' onInput={(event => {
+            <Input type='text' onBlur={(event => {
               const {value} = event.detail;
               setEntourageName(value)
             })} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
@@ -266,7 +270,7 @@ const AddPersonData = () => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>电话</Text>
-            <Input type='number' onInput={(event) => {
+            <Input type='number' onBlur={(event) => {
               const {value} = event.detail;
               setEntouragePhone(value);
             }} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
@@ -274,7 +278,7 @@ const AddPersonData = () => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input onInput={(event) => {
+            <Input onBlur={(event) => {
               const {value} = event.detail;
               setEntourageIdCard(value)
             }} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
