@@ -36,11 +36,12 @@ class App extends Component {
           success: function(res) {
             let userInfo = res.userInfo
             Taro.setStorageSync('userInfo',userInfo);
+          },
+          fail:function (res) {
+            Taro.redirectTo({
+              url:'/pages/auth/login/login',
+            })
           }
-        }).catch(()=> {
-           Taro.redirectTo({
-             url:'/pages/auth/login/login',
-           })
         })
       }
     })

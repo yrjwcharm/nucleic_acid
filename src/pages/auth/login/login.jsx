@@ -10,9 +10,10 @@ class Login extends Component {
   wxLogin =(e) => {
     if (e.detail.userInfo) {
       Taro.setStorageSync('userInfo',e.detail.userInfo)
-       Taro.navigateTo({
-         url:'/pages/home/home'
-       })
+      Taro.reLaunch({
+        url: '/pages/home/home'
+      })
+
     }
 
   }
