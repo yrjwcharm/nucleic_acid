@@ -27,4 +27,7 @@ export async  function  getAuditRecordApi(payload){
   return request.get(Api.MyAuditRecord,payload);
 
 }
+export async  function  fetchCancelOrderApi(payload){
+  return request.delete(Api.cancelOrder,payload)
+}
 

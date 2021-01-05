@@ -62,11 +62,6 @@ class Check_Result extends Component {
       return false;
     }
   }
-
-  listItems = [
-    {label: '预约人：金灿灿', value: '立即查看', date: '2019-01-10  周四', onClick: this._goToDetail},
-    {label: '预约人：金灿灿', value: '结果正在生成中', date: '2019-01-10  周四'}
-  ]
   _goToDetail = () => {
     Taro.navigateTo({
       url: '/pages/home/detail/detail',

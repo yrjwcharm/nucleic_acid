@@ -60,8 +60,8 @@ request.get = (url, data) => {
 request.post = (url, data) => {
   return request(url, data, 'POST');
 }
-request.put = (url,data)=>{
-  return request(url,data,'PUT');
+request.delete = (url,data)=>{
+  return request(url,data,'DELETE');
 }
 
 export default request;

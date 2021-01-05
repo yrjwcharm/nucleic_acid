@@ -3,9 +3,10 @@ import {View, Text, ScrollView, Image} from '@tarojs/components'
 import {AtList, AtTabs, AtTabsPane, AtButton, AtListItem,} from "taro-ui"
 import './advanceOrder.scss'
 import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
-import {getMyAppointListApi} from "../../../services/user";
+import {fetchCancelOrderApi, getMyAppointListApi} from "../../../services/user";
 import moment from "moment";
 import React, { Component } from 'react'
+import Api from '../../../config/api';
 
 export class AdvanceOrder extends Component {
   state = {
@@ -132,7 +133,26 @@ export class AdvanceOrder extends Component {
         return '周六'
     }
   }
-  _orderOp=()=>{
+  _orderOp=async (item)=>{
+    console.log(333,item);
+    if(item.state==1){
+      Taro.request({
+        url:Api.cancelOrder+`?id=${item.id}`, //仅为示例，并非真实的接口地址
+        data: {
+
+        },
+        method:'DELETE',
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: (res)=> {
+          res.code===200&& this.setState({current: value,state,page:1,list:[]},()=>{
+            this._getList();
+          })
+        }
+      })
+
+    }
 
   }
   render() {
@@ -160,7 +180,7 @@ export class AdvanceOrder extends Component {
                             <Image src={ArrowRight} className='listItem_right_arrow'/>
                           </View>
                         </View>
-                        <View className='wrap_footer' onClick={this._orderOp}>
+                        <View className='wrap_footer' onClick={()=>this._orderOp(_item)}>
                           <View className='op_btn_1'>
                             <Text>{_item.state ==1?'取消预约':'再次预约'}</Text>
                           </View>
