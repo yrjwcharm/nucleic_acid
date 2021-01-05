@@ -147,9 +147,28 @@ const AddPersonData = () => {
           title: '陪同人身份证号格式不正确',
           icon: 'none',
         })
+        return;
       }
       Taro.navigateTo({
-        url:'/pages/home/certification/certification'
+        url:`/pages/home/certification/certification?item=${JSON.stringify({
+          cityid,
+          date,
+          docUrl,
+          entourageIdCard,
+          entourageName,
+          entouragePhone,
+          entourageRelation,
+          idCard,
+          name,
+          orgId,
+          payType,
+          phone,
+          provinceid,
+          sourceId,
+          streetdesc,
+          userId,
+          userType,
+        })}`
       })
 
     } else {

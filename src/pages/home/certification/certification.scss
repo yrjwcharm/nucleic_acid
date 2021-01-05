@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   flex:1;
+  padding-top: 40px;
 }
 .footer{
   display: flex;
@@ -26,3 +27,15 @@
   }
 
 }
+.section{
+  display: flex;
+  &_img{
+    border-width: 1px;
+    border-style: solid;
+    width: 375px;
+    height:480px;
+    margin: auto;
+   }
+}
+
+
