@@ -199,7 +199,7 @@ const AddPersonData = () => {
       })
       if(res.code===200){
         Taro.showToast({
-          title:'预约成功',
+          title:'已预约',
           icon:'none'
         })
          const _res = await  fetchAppointSuccessQrCodeApi({
@@ -249,15 +249,15 @@ const AddPersonData = () => {
         <ListRow type='text' label='姓名' onInput={debounce( (e)=>{
           const {value} =e.detail;
           setName(value);
-        },3000)} value={name} placeholder='请输入姓名' maxLength={6}/>
+        },1000)} value={name} placeholder='请输入姓名' maxLength={6}/>
         <ListRow type='number' label='电话' onInput={debounce((event)=> {
           const {value} = event.detail;
            setPhone(value);
-        },3000)} value={phone} placeholder='请输入电话' maxLength={11}/>
+        },1000)} value={phone} placeholder='请输入电话' maxLength={11}/>
         <ListRow type='idcard' label='身份证号' onInput={debounce((event) => {
           const {value} = event.detail;
           setIdCard(value);
-        },3000)} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
+        },1000)} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
         <View className='clearfix listRow' style='border:none;' onClick={showAreaPicker}>
           <Text className='listRow_left'>地址</Text>
           <View className='listRow_right'>
@@ -280,7 +280,7 @@ const AddPersonData = () => {
             <Input type='text' onInput={debounce(event => {
               const {value} = event.detail;
               setEntourageName(value)
-            },3000)} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
+            },1000)} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
           </View>
           <View className='relationship' onClick={()=>setVisible(true)}>
             <Text className='relationship_left'>与患者关系</Text>
@@ -294,7 +294,7 @@ const AddPersonData = () => {
             <Input type='number' onInput={debounce((event) => {
               const {value} = event.detail;
               setEntouragePhone(value);
-            },3000)} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
+            },1000)} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
                    maxLength='11'/>
           </View>
           <View className='clearfix listRow'>
@@ -302,7 +302,7 @@ const AddPersonData = () => {
             <Input onInput={debounce((event) => {
               const {value} = event.detail;
               setEntourageIdCard(value)
-            },3000)} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
+            },1000)} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
                    maxLength='18'/>
           </View>
         </View> : null}
