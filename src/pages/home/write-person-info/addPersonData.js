@@ -11,6 +11,7 @@ import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import {fetchAppointDetectApi, fetchAppointSuccessQrCodeApi, fetchSourceApi} from "../../../services/combo";
 import AddressPicker from "../../../components/addressPicker";
+import {debounce, throttle} from "../../../utils/common";
 
 const AddPersonData = () => {
   const [userId, setUserId] = useState('');
@@ -232,30 +233,31 @@ const AddPersonData = () => {
     setShowPicker(true);
   }
   const ListRow = (props) => {
-    const {label, type, onBlur, value, placeholder, maxLength} = props;
+    const {label, type, onInput, value, placeholder, maxLength} = props;
     return (
       <View className='clearfix listRow'>
         <Text className='listRow_left'>{label}</Text>
-        <Input type={type} onBlur={onBlur} className='listRow_right_' placeholder={placeholder} value={value}
+        <Input controlled type={type} onInput={onInput} className='listRow_right_' placeholder={placeholder} value={value}
                maxLength={maxLength}/>
       </View>
     )
   }
+
   return (
     <View className='container'>
       <View className='container_section'>
-        <ListRow type='text' label='姓名' onBlur={(event) => {
-          const {value} = event.detail;
-           setName(value);
-        }} value={name} placeholder='请输入姓名' maxLength={6}/>
-        <ListRow type='number' label='电话' onBlur={(event) => {
+        <ListRow type='text' label='姓名' onInput={debounce( (e)=>{
+          const {value} =e.detail;
+          setName(value);
+        },3000)} value={name} placeholder='请输入姓名' maxLength={6}/>
+        <ListRow type='number' label='电话' onInput={debounce((event)=> {
           const {value} = event.detail;
            setPhone(value);
-        }} value={phone} placeholder='请输入电话' maxLength={11}/>
-        <ListRow type='idcard' label='身份证号' onBlur={(event) => {
+        },3000)} value={phone} placeholder='请输入电话' maxLength={11}/>
+        <ListRow type='idcard' label='身份证号' onInput={debounce((event) => {
           const {value} = event.detail;
           setIdCard(value);
-        }} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
+        },3000)} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
         <View className='clearfix listRow' style='border:none;' onClick={showAreaPicker}>
           <Text className='listRow_left'>地址</Text>
           <View className='listRow_right'>
@@ -275,10 +277,10 @@ const AddPersonData = () => {
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>姓名</Text>
-            <Input type='text' onBlur={(event => {
+            <Input type='text' onInput={debounce(event => {
               const {value} = event.detail;
               setEntourageName(value)
-            })} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
+            },3000)} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
           </View>
           <View className='relationship' onClick={()=>setVisible(true)}>
             <Text className='relationship_left'>与患者关系</Text>
@@ -289,18 +291,18 @@ const AddPersonData = () => {
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>电话</Text>
-            <Input type='number' onBlur={(event) => {
+            <Input type='number' onInput={debounce((event) => {
               const {value} = event.detail;
               setEntouragePhone(value);
-            }} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
+            },3000)} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
                    maxLength='11'/>
           </View>
           <View className='clearfix listRow'>
             <Text className='listRow_left'>身份证号</Text>
-            <Input onBlur={(event) => {
+            <Input onInput={debounce((event) => {
               const {value} = event.detail;
               setEntourageIdCard(value)
-            }} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
+            },3000)} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
                    maxLength='18'/>
           </View>
         </View> : null}
