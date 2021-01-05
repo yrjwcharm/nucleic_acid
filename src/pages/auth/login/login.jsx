@@ -23,7 +23,7 @@ class Login extends Component {
       <View className='container'>
         <View className='login-box'>
           <Button type='primary' openType='getUserInfo' className='wx-login-btn'
-                  onGetUserInfo={this.wxLogin}>微信一键授权</Button>
+                  onGetUserInfo={this.wxLogin}>用户授权</Button>
         </View>
       </View>
     );
