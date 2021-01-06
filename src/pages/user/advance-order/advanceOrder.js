@@ -149,19 +149,42 @@ export class AdvanceOrder extends Component {
     }
   }
   _orderOp=async (item)=>{
-      item.state==3&&Taro.request({
+      item.state==1&&Taro.request({
         url:Api.cancelOrder+`?id=${item.id}`, //仅为示例，并非真实的接口地址
         data: {
 
         },
-        method:'DELETE',
+        method:'POST',
         header: {
           'content-type': 'application/json' // 默认值
         },
         success: (res)=> {
           console.log(333,res);
+          const _res = res.data;
+          _res.code==200&& this.setState({page:1,list:[]},()=>{
+            this._getList();
+          })
         }
       })
+
+  }
+  _deleteOrder=(item)=>{
+    Taro.request({
+      url:Api.deleteOrder+`?id=${item.id}`, //仅为示例，并非真实的接口地址
+      data: {
+
+      },
+      method:'DELETE',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: (res)=> {
+        const _res = res.data;
+        _res.code==200&& this.setState({page:1,list:[]},()=>{
+          this._getList();
+        })
+      }
+    })
   }
   render() {
     const {current, tabList,list} = this.state;
@@ -192,7 +215,7 @@ export class AdvanceOrder extends Component {
                           <View className='op_btn_1'>
                             <Text>{_item.state ==1?'取消预约':'再次预约'}</Text>
                           </View>
-                          {_item.state ==3&&<View className='op_btn_2'>
+                          {_item.state ==3&&<View className='op_btn_2' onClick={()=>this._deleteOrder(_item)}>
                             <Text>删除</Text>
                           </View>}
                         </View>

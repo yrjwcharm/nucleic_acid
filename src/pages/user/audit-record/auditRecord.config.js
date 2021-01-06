@@ -1,3 +1,3 @@
 export  default {
-  navigationBarTitleText: '我的预约'
+  navigationBarTitleText: '我的审核'
 }

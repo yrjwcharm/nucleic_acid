@@ -30,5 +30,6 @@ export default {
   appointDetect:WxApiRoot+'/ncov/BaAppointmentController/add',
   generateQrcode :WxApiRoot + `/ncov/BaAppointmentController/my/qrcode`,
   uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
-  cancelOrder:WxApiRoot + `/ncov/BaAppointmentController/delete`
+  deleteOrder:WxApiRoot + `/ncov/BaAppointmentController/delete`,
+  cancelOrder :WxApiRoot + `/ncov/BaAppointmentController/cancel`
 };
