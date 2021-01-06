@@ -73,7 +73,7 @@ export  default  class UploadCertification extends Component{
           success (res){
             const data =JSON.parse(res.data) ;
             console.log(333,data.data);
-            data.code===200&&that.setState({url:data.data},()=>{
+            data.code===200&&that.setState({url:Api.imgUrl+data.data},()=>{
               Taro.showToast({
                 title:'上传成功',
                 icon:'none'
@@ -94,7 +94,7 @@ export  default  class UploadCertification extends Component{
         <View className='main'>
           <View className='section' onClick={this._chooseImage}>
             <View className='section_img'>
-              <Image src={url} className='img'/>
+              <Image src={url} className='section_pic' />
             </View>
           </View>
         </View>

@@ -28,6 +28,6 @@ export async  function  getAuditRecordApi(payload){
 
 }
 export async  function  fetchCancelOrderApi(payload){
-  return request.delete(Api.cancelOrder,payload)
+  return request.put(Api.cancelOrder,payload)
 }
 

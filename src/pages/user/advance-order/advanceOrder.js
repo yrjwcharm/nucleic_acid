@@ -149,9 +149,7 @@ export class AdvanceOrder extends Component {
     }
   }
   _orderOp=async (item)=>{
-    console.log(333,item);
-    if(item.state==1){
-      Taro.request({
+      item.state==3&&Taro.request({
         url:Api.cancelOrder+`?id=${item.id}`, //仅为示例，并非真实的接口地址
         data: {
 
@@ -161,14 +159,9 @@ export class AdvanceOrder extends Component {
           'content-type': 'application/json' // 默认值
         },
         success: (res)=> {
-          res.code===200&& this.setState({page:1,list:[]},()=>{
-            this._getList();
-          })
+          console.log(333,res);
         }
       })
-
-    }
-
   }
   render() {
     const {current, tabList,list} = this.state;
