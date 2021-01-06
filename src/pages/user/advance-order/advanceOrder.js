@@ -28,9 +28,15 @@ export class AdvanceOrder extends Component {
   _initData=()=>{
     user.loginByWeixin({appid:Config.appid}).then(res => {
       if (res.code === 200) {
+        console.log(333,res);
         const {userId, wxid, unionid, sectionKey} =res.data;
         this.setState({userId}, () => {
           this._getList();
+        })
+      }else{
+        Taro.showToast({
+          title:res.msg,
+          icon:'none'
         })
       }
     })

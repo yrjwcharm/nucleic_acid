@@ -25,10 +25,16 @@ export class AuditRecord extends Component {
   }
   _initData=()=>{
     user.loginByWeixin({appid:Config.appid}).then(res => {
+      console.log(333,res);
       if (res.code === 200) {
         const {userId, wxid, unionid, sectionKey} =res.data;
         this.setState({userId}, () => {
           this._getList();
+        })
+      }else{
+        Taro.showToast({
+          title:res.msg,
+          icon:'none'
         })
       }
     })
