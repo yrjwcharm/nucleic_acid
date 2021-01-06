@@ -29,9 +29,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    user.loginByWeixin({appid:'wxd5d6f7b3a0c905ca'}).then(res=>{
-      if(res.code===200){
-        Taro.setStorageSync('loginInfo', res.data);
         Taro.getUserInfo({
           success: function(res) {
             let userInfo = res.userInfo
@@ -43,12 +40,14 @@ class App extends Component {
             })
           }
         })
-      }
-    })
+
     // Taro.requestSubscribeMessage({
     //   tmplIds: [''],
     //   success: function (res) { }
     // })
+  }
+  componentDidShow(){
+
   }
   componentDidHide () {}
 

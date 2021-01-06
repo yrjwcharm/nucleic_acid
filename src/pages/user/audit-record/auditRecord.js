@@ -6,6 +6,8 @@ import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
 import {getAuditRecordApi} from "../../../services/user";
 import moment from "moment";
 import React, { Component } from 'react'
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 export class AuditRecord extends Component {
   state = {
     current: 0,
@@ -19,9 +21,16 @@ export class AuditRecord extends Component {
   }
 
   componentDidMount() {
-    const {userId, wxid, unionid, sectionKey} = Taro.getStorageSync('loginInfo');
-    this.setState({userId}, () => {
-      this._getList();
+     this._initData();
+  }
+  _initData=()=>{
+    user.loginByWeixin({appid:Config.appid}).then(res => {
+      if (res.code === 200) {
+        const {userId, wxid, unionid, sectionKey} =res.data;
+        this.setState({userId}, () => {
+          this._getList();
+        })
+      }
     })
   }
 

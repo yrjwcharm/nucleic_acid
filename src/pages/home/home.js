@@ -1,44 +1,46 @@
 import Taro from '@tarojs/taro'
-import {View, Text, Image, ScrollView, Swiper} from '@tarojs/components'
-import {getWindowHeight} from '@utils/style'
+import {Image, Text, View} from '@tarojs/components'
 import './home.scss';
-import React, {Component, useEffect} from 'react'
+import React, {Component} from 'react'
 import Banner from './banner'
 import Carousel from '@assets/home/banner.png'
 import Order from '@assets/home/yuyue.png'
 import Query from '@assets/home/query.png'
-import {get} from "../../global_data";
+import * as user from "../../utils/user";
+import Config from '../../../project.config.json'
 const RECOMMEND_SIZE = 20
 
 // @connect(state => state.home, { ...actions, dispatchCartNum })
-export default  class Home  extends Component {
+export default class Home extends Component {
   constructor() {
     super();
-    this.state={
-      userInfo:null,
+    this.state = {
+      userInfo: null,
     }
   }
-    componentDidMount() {
-     const userInfo = Taro.getStorageSync('userInfo');
-     this.setState({userInfo});
-    }
+
+  componentDidMount() {
+    const userInfo = Taro.getStorageSync('userInfo');
+
+    this.setState({userInfo});
+  }
   _goToCheck_Result = () => {
-    if(this.state.userInfo) {
+    if (this.state.userInfo) {
       Taro.navigateTo({
         url: '/pages/home/query/checkResult',
       })
-    }else{
+    } else {
       Taro.redirectTo({
         url: '/pages/auth/login/login',
       })
     }
   }
-   goToOrganization = () => {
-    if(this.state.userInfo){
+  goToOrganization = () => {
+    if (this.state.userInfo) {
       Taro.navigateTo({
         url: '/pages/home/organization/organization',
       })
-    }else{
+    } else {
       Taro.redirectTo({
         url: '/pages/auth/login/login',
       })
@@ -46,6 +48,7 @@ export default  class Home  extends Component {
 
 
   }
+
   render() {
     return (
       <View className='container'>

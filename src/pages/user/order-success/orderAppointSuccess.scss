@@ -14,12 +14,12 @@
     align-items: center;
     justify-content: center;
     &_orderSuccess{
-      font-size: 28px;
+      font-size: 26px;
       color: #333;
       margin-top: 20px;
     }
     &_cancelOrder{
-      font-size: 28px;
+      font-size: 26px;
       margin-top: 10px;
       color:#3399FF;
     }
@@ -37,12 +37,12 @@
       align-items: center;
       //justify-content: center;
       &_label{
-        font-size: 28px;
+        font-size: 26px;
         color: #333;
         margin-right: 20px;
       }
       &_value{
-        font-size: 28px;
+        font-size: 26px;
         color: #333;
       }
     }

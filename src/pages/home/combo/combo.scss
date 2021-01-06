@@ -35,7 +35,7 @@
         display: flex;
         flex-direction: column;
         &_hospital{
-          font-size:28px;
+          font-size:26px;
           color:#333;
           flex:1;
         }
@@ -48,7 +48,7 @@
         &_address{
           flex:1;
           margin-top: 20px;
-          font-size:24px;
+          font-size:26px;
           color:#BCBCBC;
         }
       }
@@ -61,7 +61,7 @@
   background-color: #fff;
 
   &_orderTime {
-    font-size: 28px;
+    font-size: 26px;
   }
 
 }
@@ -83,19 +83,19 @@
     border: none;
     border-radius: 7px;
     &_week{
-      font-size: 24px;
+      font-size: 26px;
       color: #333;
       line-height: 18px;
     }
     &_date{
-      font-size: 24px;
+      font-size: 26px;
       color: #666;
       line-height: 18px;
       margin-top: 20px;
     }
     &_status{
       color: #999;
-      font-size: 24px;
+      font-size: 26px;
       line-height: 18px;
       margin-top: 20px;
     }
@@ -140,7 +140,7 @@
           flex-direction: column;
             &_title{
                 color:#333;
-              font-size: 28px;
+              font-size: 26px;
             }
              &_itemList{
                 display: flex;
@@ -148,7 +148,7 @@
                justify-content: center;
              }
               &_money{
-                font-size: 32px;
+                font-size: 26px;
                 color: #3298ff;
               }
         }
@@ -203,7 +203,7 @@
 //  border-bottom-color: #e0e0e0;
 //  &_type{
 //    margin: auto;
-//    font-size: 28px;
+//    font-size: 26px;
 //    color: #333;
 //  }
 //}
@@ -217,7 +217,7 @@
 //  &_type{
 //    margin: auto;
 //    color: #333;
-//    font-size: 24px;
+//    font-size: 26px;
 //  }
 //}
 //.payFee{
@@ -227,7 +227,7 @@
 //  border-bottom-style: solid;
 //  border-bottom-color: #e0e0e0;
 //  &_type{
-//    font-size: 24px;
+//    font-size: 26px;
 //    color: #333;
 //    margin: auto;
 //  }
@@ -238,7 +238,7 @@
 }
 .payType_title{
   text-align: center;
-  font-size: 28px;
+  font-size: 26px;
   color: #666666;
 }
 .pay_row{
@@ -270,7 +270,7 @@
 }
 .radio_desc{
   margin-left: 10px;
-  font-size: 24px;
+  font-size: 26px;
 }
 
 .container_action{
@@ -283,7 +283,7 @@
   flex: 1;
   height:90px;
   &_text{
-    font-size: 24px;
+    font-size: 26px;
     margin: auto;
     color: #3298ff;
   }
@@ -294,7 +294,7 @@
   background-color: #3399FF;
   height:90px;
   &_text{
-    font-size:24px;
+    font-size:26px;
     margin: auto;
     color: white;
   }

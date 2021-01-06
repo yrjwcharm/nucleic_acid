@@ -7,6 +7,8 @@ import {fetchCancelOrderApi, getMyAppointListApi} from "../../../services/user";
 import moment from "moment";
 import React, { Component } from 'react'
 import Api from '../../../config/api';
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 
 export class AdvanceOrder extends Component {
   state = {
@@ -21,9 +23,16 @@ export class AdvanceOrder extends Component {
   }
 
   componentDidMount() {
-    const {userId, wxid, unionid, sectionKey} = Taro.getStorageSync('loginInfo');
-    this.setState({userId}, () => {
-      this._getList();
+    this._initData();
+  }
+  _initData=()=>{
+    user.loginByWeixin({appid:Config.appid}).then(res => {
+      if (res.code === 200) {
+        const {userId, wxid, unionid, sectionKey} =res.data;
+        this.setState({userId}, () => {
+          this._getList();
+        })
+      }
     })
   }
 
@@ -146,7 +155,7 @@ export class AdvanceOrder extends Component {
           'content-type': 'application/json' // 默认值
         },
         success: (res)=> {
-          res.code===200&& this.setState({current: value,state,page:1,list:[]},()=>{
+          res.code===200&& this.setState({page:1,list:[]},()=>{
             this._getList();
           })
         }
