@@ -38,7 +38,6 @@ const OrderAppointSuccess =(props)=>{
             typeNumber={2}
           />
           <Text className='container_header_orderSuccess'>预约成功</Text>
-          {/*<Text className='container_header_cancelOrder'>取消预约</Text>*/}
         </View>
       <View className='container_devider'/>
       <View className='container_footer'>

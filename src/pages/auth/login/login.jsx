@@ -9,6 +9,7 @@ import React, {Component} from "react";
 class Login extends Component {
   wxLogin =(e) => {
     if (e.detail.userInfo) {
+      console.log(333,e);
       Taro.setStorageSync('userInfo',e.detail.userInfo)
       Taro.reLaunch({
         url: '/pages/home/home'

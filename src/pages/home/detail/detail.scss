@@ -1,8 +1,9 @@
 .container{
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex:1;
   background-color: #f3f7f7;
-  height: 100%;
-  padding-top: 2px;
+  padding-top: 1px;
   &_header{
     display: flex;
     background-color: #fff;
@@ -10,7 +11,7 @@
     justify-content: center;
     height: 120px;
     &_title{
-      font-size: 26px;
+      font-size: 28px;
     }
   }
   &_list{
@@ -22,11 +23,11 @@
     padding-right: 30px;
     background-color: #fff;
     &_left{
-      font-size: 26px;
+      font-size: 28px;
       color: #999;
     }
     &_right{
-      font-size: 26px;
+      font-size: 28px;
       color:#333;
     }
   }
