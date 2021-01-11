@@ -1,6 +1,6 @@
-@import "@styles/theme.scss";
 .container {
   display: flex;
+  height: 100%;
   flex-direction: column;
   padding-top: 1px;
   background-color: #f3f3f7;
@@ -40,9 +40,9 @@
   flex-direction: column;
   justify-content: center;
   background-color: #fff;
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgba(242, 242, 242, 1);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(242, 242, 242, 1);
    &_wrap{
      display: flex;
      flex-direction: row;

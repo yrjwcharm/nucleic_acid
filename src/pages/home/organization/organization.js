@@ -110,6 +110,7 @@ class Organization extends Component {
               </View>
             )
           })}
+
         </View>
 
       )

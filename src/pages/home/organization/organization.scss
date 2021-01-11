@@ -1,9 +1,9 @@
 
 .container{
   display: flex;
-  //flex:1;
+  height: 100%;
   flex-direction: column;
-  background-color: #f3f3f7;
+  background-color: #f3f7f7;
   padding-top: 1px;
   &_header{
     display: flex;

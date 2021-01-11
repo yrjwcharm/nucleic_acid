@@ -345,9 +345,6 @@ class Combo extends Component {
           <View className='bottom_wrap'>
             <Text style={{color: '#fff', fontSize: '16px'}}>立即预约</Text>
           </View>
-          <View className='badge'>
-            <Text className='badge_num'>1</Text>
-          </View>
         </View>
       </View>
     )

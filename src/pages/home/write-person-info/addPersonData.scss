@@ -1,7 +1,7 @@
 @import "~taro-ui/dist/style/components/action-sheet.scss";
 .container{
   display: flex;
-  flex: 1;
+  height: 100%;
   flex-direction: column;
   background-color: #f3f3f7;
   padding-top: 1px;
@@ -29,6 +29,8 @@
   }
 }
 .insEscortStaff{
+  margin-left: 20px;
+  margin-right: 20px;
   display: flex;
   border-width: 1px;
   border-style: solid;
@@ -44,7 +46,7 @@
   }
 }
 .listRow{
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: rgba(242, 242, 242, 1);
   color: #333;
