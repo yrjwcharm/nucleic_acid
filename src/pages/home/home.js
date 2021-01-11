@@ -6,6 +6,7 @@ import Banner from './banner'
 import Carousel from '@assets/home/banner.png'
 import Order from '@assets/home/yuyue.png'
 import Query from '@assets/home/query.png'
+import Free from '@assets/home/free.png'
 import * as user from "../../utils/user";
 import Config from '../../../project.config.json'
 const RECOMMEND_SIZE = 20
@@ -64,7 +65,7 @@ export default class Home extends Component {
           </View>
           <View className='home_wrap' onClick={()=>this.goToOrganization(1)}>
             <Image className='home_wrap_img'
-                   src={Order}/>
+                   src={Free}/>
             <View className='home_wrap_desp'>
               <Text className='home_wrap_desp_title'>免费核酸检测预约</Text>
               <Text className='home_wrap_desp_detail'>发热门诊或住院患者可免费预约核酸检测</Text>

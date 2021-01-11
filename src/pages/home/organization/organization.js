@@ -21,40 +21,48 @@ class Organization extends Component {
       })
   }
   componentDidMount() {
-      this._getCity();
+      this._getAuthorize();
       this._getList();
   }
-  _getCity=()=>{
+  _getAuthorize=()=>{
+    let _this =this;
     Taro.getSetting({
       success: function (res) {
         if (!res.authSetting['scope.userLocation']) {
           Taro.authorize({
             scope: 'scope.userLocation',
             success: function () {
-              // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
-              Taro.getLocation({
-                type: 'gcj02', //返回可以用于 Taro.openLocation的经纬度
-                success: function (res) {
-                  const latitude = res.latitude
-                  const longitude = res.longitude
-
-                  //下载qqmap-wx-jssdk,然后引入其中的js文件
-                  let qqmapsdk = new QQMapWX({
-                    key: '4HCBZ-ERO6U-AQTVJ-BMVJH-FCJI6-WFB2T'// 必填
-                  });
-
-                  //逆地址解析,通过经纬度获取位置等信息
-                  qqmapsdk.reverseGeocoder({
-                    location:{latitude,longitude},
-                    success: (res) =>{
-                      // 获取当前城市
-                      this.setState({city:res.result.address_component.city});
-                    }
-                  })
-                }
-              })            }
+              _this._getLocation();
+            }
           })
+        }else{
+          _this._getLocation();
         }
+      }
+    })
+  }
+  _getLocation=()=>{
+    // 用户已经同意小程序使用录音功能，后续调用 Taro.startRecord 接口不会弹窗询问
+    Taro.getLocation({
+      type: 'gcj02', //返回可以用于 Taro.openLocation的经纬度
+      success: function (res) {
+        const latitude = res.latitude
+        const longitude = res.longitude
+        console.log(222,res);
+        //下载qqmap-wx-jssdk,然后引入其中的js文件
+        let qqmapsdk = new QQMapWX({
+          key: '4HCBZ-ERO6U-AQTVJ-BMVJH-FCJI6-WFB2T'// 必填
+        });
+
+        //逆地址解析,通过经纬度获取位置等信息
+        qqmapsdk.reverseGeocoder({
+          location:{latitude,longitude},
+          success: (res) =>{
+            console.log(333,res);
+            // 获取当前城市
+            this.setState({city:res.result.address_component.city});
+          }
+        })
       }
     })
   }

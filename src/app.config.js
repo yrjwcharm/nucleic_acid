@@ -38,4 +38,10 @@ export default {
     }],
   },
 
+  "permission": {
+    "scope.userLocation": {
+      "desc": "是否允许?"
+    }
+  }
+
 }
