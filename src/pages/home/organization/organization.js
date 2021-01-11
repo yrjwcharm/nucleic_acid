@@ -99,7 +99,6 @@ class Organization extends Component {
             </View>
           </View>
           {list&&list.map((item,index)=>{
-            console.log(222,item);
             return(
               <View className='container_list_item' onClick={()=>this.goToCombo(item)} key={item.orgId+" "}>
                 <Image src={item.url?Api.imgUrl+item.url:Pic} className='container_list_item_pic'/>

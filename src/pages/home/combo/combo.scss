@@ -1,7 +1,6 @@
 @import "~taro-ui/dist/style/components/modal.scss";
 @import "~taro-ui/dist/style/components/button.scss";
 @import "~taro-ui/dist/style/components/loading.scss";
-
 .container{
   display: flex;
   flex-direction: column;
@@ -9,21 +8,24 @@
   padding-top: 1px;
   background-color: #f3f3f7;
   &_header{
+    position: relative;
     background-color: #fff;
     padding-left: 20px;
     padding-right: 20px;
+    background-image:url("../../../assets/home/shadow.png") ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    height: 234px;
+    justify-content: center;
     &_list_item{
       display: flex;
       flex-direction: row;
       align-items: center;
-      background-color:white;
-      border: none;
-      border-radius: 12px;
-      -moz-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.0470588235294118);
-      -webkit-box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
-      box-shadow: 0 5px 5px rgba(0, 0 ,0 ,0.05);
       height: 194px;
       &_pic{
+        margin-left: 20px;
         width:244px;
         height:154px;
         margin-right: 20px;
@@ -34,7 +36,7 @@
         display: flex;
         flex-direction: column;
         &_hospital{
-          font-size:26px;
+          font-size:28px;
           color:#333;
           flex:1;
         }
@@ -194,43 +196,15 @@
     border-radius: 12.5px;
   }
 }
-//.payType{
-//  display: flex;
-//  height: 90px;
-//  border-bottom-width: 1rpx;
-//  border-bottom-style: solid;
-//  border-bottom-color: #e0e0e0;
-//  &_type{
-//    margin: auto;
-//    font-size: 26px;
-//    color: #333;
-//  }
-//}
-//.free{
-//  height: 90px;
-//  display: flex;
-//  border-bottom-width: 1rpx;
-//  border-bottom-style: solid;
-//  border-bottom-color: #e0e0e0;
-//
-//  &_type{
-//    margin: auto;
-//    color: #333;
-//    font-size: 26px;
-//  }
-//}
-//.payFee{
-//  height: 90px;
-//  display: flex;
-//  border-bottom-width: 1rpx;
-//  border-bottom-style: solid;
-//  border-bottom-color: #e0e0e0;
-//  &_type{
-//    font-size: 26px;
-//    color: #333;
-//    margin: auto;
-//  }
-//}
+.bg{
+  position: absolute;
+  left :0;
+  right: 0;
+  top:0;
+  bottom: 0;
+  margin: auto;
+  z-index: -9999;
+}
 .payType{
   display: flex;
   flex-direction: column;
@@ -275,7 +249,7 @@
 .container_action{
   display: flex;
   flex-direction: row;
-  flex:1,
+  flex:1
 }
 .cancel{
   display: flex;

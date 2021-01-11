@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, ScrollView, Text, View} from '@tarojs/components'
+import {CoverImage, Image, ScrollView, Text, View} from '@tarojs/components'
 import {AtModal, AtModalAction, AtModalContent} from "taro-ui"
 
 import Doctor from '@assets/home/combo/doctor.png'
@@ -10,6 +10,7 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import {fetchSourceApi, queryComboListByOrgApi} from "../../../services/combo";
 import moment from 'moment';
 import Api from '../../../config/api'
+import Shadow from '@assets/home/Shadow.png'
 
 let max = 14;
 
@@ -26,8 +27,8 @@ class Combo extends Component {
     endDate: '',
     visible: false,
     source: {},
-    isFree:true,
-    isSelfPay:false,
+    isFree: true,
+    isSelfPay: false,
   }
 
   componentDidMount() {
@@ -190,14 +191,14 @@ class Combo extends Component {
     }) : this.setState({visible: true, source: item})
   }
 
-  _choiceFree=()=>{
-    this.setState({isFree:true,isSelfPay:false})
+  _choiceFree = () => {
+    this.setState({isFree: true, isSelfPay: false})
   }
-  _choiceSelfPay=()=>{
-    this.setState({isFree:false,isSelfPay:true})
+  _choiceSelfPay = () => {
+    this.setState({isFree: false, isSelfPay: true})
   }
-  _confirmPayType=()=>{
-    if(this.state.isFree){
+  _confirmPayType = () => {
+    if (this.state.isFree) {
       this.setState({visible: false}, () => {
         Taro.navigateTo({
           url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=1`
@@ -205,7 +206,7 @@ class Combo extends Component {
       })
       return;
     }
-    if(this.state.isSelfPay){
+    if (this.state.isSelfPay) {
       this.setState({visible: false}, () => {
         Taro.navigateTo({
           url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=2`
@@ -214,13 +215,14 @@ class Combo extends Component {
       return;
     }
     Taro.showToast({
-      title:'请选择付费类型',
-      icon:'none'
+      title: '请选择付费类型',
+      icon: 'none'
     })
   }
-  _cancelPayType=()=>{
-    this.setState({visible:false})
+  _cancelPayType = () => {
+    this.setState({visible: false})
   }
+
   render() {
     const {dateArr, comboList, item} = this.state;
     console.log(333, item);
@@ -232,7 +234,8 @@ class Combo extends Component {
             <View className='container_header_list_item_desc'>
               <Text className='container_header_list_item_desc_hospital'>{item.orgName && item.orgName}</Text>
               <Text className='container_header_list_item_desc_item'>核酸检测</Text>
-              <Text className='container_header_list_item_desc_address'>{item.wholeAddress && item.wholeAddress}</Text>
+              <Text
+                className='container_header_list_item_desc_address'>{item.wholeAddress && item.wholeAddress}</Text>
             </View>
           </View>
         </View>
@@ -312,13 +315,15 @@ class Combo extends Component {
               <Text className='payType_title'>请选择付费类型</Text>
               <View className='pay_row pay_row_top' onClick={this._choiceFree}>
                 <View className='radio'>
-                  <View className='radio_wrap' style={this.state.isFree?'background-color:#3399FF':'background-color:#fff'}/>
+                  <View className='radio_wrap'
+                        style={this.state.isFree ? 'background-color:#3399FF' : 'background-color:#fff'}/>
                 </View>
                 <Text className='radio_desc'>免费患者(发热门诊或住院患者)</Text>
               </View>
-              <View className='pay_row pay_row__top' onClick={this._choiceSelfPay} >
+              <View className='pay_row pay_row__top' onClick={this._choiceSelfPay}>
                 <View className='radio'>
-                  <View className='radio_wrap' style={this.state.isSelfPay?'background-color:#3399FF':'background-color:#fff'}/>
+                  <View className='radio_wrap'
+                        style={this.state.isSelfPay ? 'background-color:#3399FF' : 'background-color:#fff'}/>
                 </View>
                 <Text className='radio_desc'>自费付费患者</Text>
               </View>
