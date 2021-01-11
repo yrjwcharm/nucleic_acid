@@ -261,7 +261,7 @@ const AddPersonData = () => {
         <View className='clearfix listRow' style='border:none;' onClick={showAreaPicker}>
           <Text className='listRow_left'>地址</Text>
           <View className='listRow_right'>
-            <Text  className='listRow_right_address' style='color:#999'>{area}</Text>
+            <Text  className='listRow_right_address' style='color:#333'>{area}</Text>
             <Image src={ArrowRight} className='listRow_right_arrow'/>
           </View>
         </View>

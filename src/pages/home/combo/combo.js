@@ -23,6 +23,7 @@ class Combo extends Component {
     dateArr: [],
     comboList: [],
     comboId: '',
+    userType:'',
     startDate: '',
     endDate: '',
     visible: false,
@@ -32,8 +33,8 @@ class Combo extends Component {
   }
 
   componentDidMount() {
-    let {orgId, item} = getCurrentInstance().router.params;
-    this.setState({orgId, item: JSON.parse(item)}, () => {
+    let {orgId, item,userType} = getCurrentInstance().router.params;
+    this.setState({orgId,userType, item: JSON.parse(item)}, () => {
 
       this._initData(this.state.orgId);
 
@@ -175,7 +176,8 @@ class Combo extends Component {
    * @private
    */
   _nextStep = () => {
-    const {dateArr} = this.state;
+    const {dateArr,userType} = this.state;
+    console.log(333,userType);
     let item = {};
     for (let i = 0; i < dateArr.length; i++) {
       if (dateArr[i].checked) {
@@ -188,39 +190,9 @@ class Combo extends Component {
     Object.keys(item).length === 0 ? Taro.showToast({
       title: '请选择有号源的预约时间',
       icon: 'none'
-    }) : this.setState({visible: true, source: item})
-  }
-
-  _choiceFree = () => {
-    this.setState({isFree: true, isSelfPay: false})
-  }
-  _choiceSelfPay = () => {
-    this.setState({isFree: false, isSelfPay: true})
-  }
-  _confirmPayType = () => {
-    if (this.state.isFree) {
-      this.setState({visible: false}, () => {
-        Taro.navigateTo({
-          url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=1`
-        })
-      })
-      return;
-    }
-    if (this.state.isSelfPay) {
-      this.setState({visible: false}, () => {
-        Taro.navigateTo({
-          url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=2`
-        })
-      })
-      return;
-    }
-    Taro.showToast({
-      title: '请选择付费类型',
-      icon: 'none'
+    }) :  Taro.navigateTo({
+      url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}&userType=${userType}`
     })
-  }
-  _cancelPayType = () => {
-    this.setState({visible: false})
   }
 
   render() {
@@ -309,38 +281,6 @@ class Combo extends Component {
             )
           })}
         </View>
-        <AtModal closeOnClickOverlay={false} isOpened={this.state.visible}>
-          <AtModalContent>
-            <View className='payType'>
-              <Text className='payType_title'>请选择付费类型</Text>
-              <View className='pay_row pay_row_top' onClick={this._choiceFree}>
-                <View className='radio'>
-                  <View className='radio_wrap'
-                        style={this.state.isFree ? 'background-color:#3399FF' : 'background-color:#fff'}/>
-                </View>
-                <Text className='radio_desc'>免费患者(发热门诊或住院患者)</Text>
-              </View>
-              <View className='pay_row pay_row__top' onClick={this._choiceSelfPay}>
-                <View className='radio'>
-                  <View className='radio_wrap'
-                        style={this.state.isSelfPay ? 'background-color:#3399FF' : 'background-color:#fff'}/>
-                </View>
-                <Text className='radio_desc'>自费付费患者</Text>
-              </View>
-            </View>
-          </AtModalContent>
-          <AtModalAction>
-            <View className='container_action'>
-              <View className='cancel' onClick={this._cancelPayType}>
-                <Text className='cancel_text'>取消</Text>
-              </View>
-              <View className='confirm' onClick={this._confirmPayType}>
-                <Text className='confirm_text'>确定</Text>
-              </View>
-            </View>
-          </AtModalAction>
-
-        </AtModal>
         <View style={{position: 'absolute', bottom: 0, width: '100%'}} onClick={this._nextStep}>
           <View className='bottom_wrap'>
             <Text style={{color: '#fff', fontSize: '16px'}}>立即预约</Text>

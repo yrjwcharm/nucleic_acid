@@ -7,6 +7,7 @@ import Api from '../../../config/api'
 import './organization.scss'
 import React, { Component } from 'react'
 import {getQueryOrgListByNameApi} from "../../../services/home";
+import {getCurrentInstance} from "@tarojs/runtime";
 let QQMapWX = require('../../../utils/qqmap-wx-jssdk.min');
 class Organization extends Component {
   state={
@@ -20,6 +21,7 @@ class Organization extends Component {
       })
   }
   componentDidMount() {
+      this._getCity();
       this._getList();
   }
   _getCity=()=>{
@@ -69,8 +71,9 @@ class Organization extends Component {
 
   }
   goToCombo = (item) => {
+    const {userType} =getCurrentInstance().router.params;
     Taro.navigateTo({
-      url: `/pages/home/combo/combo?orgId=${item.orgId}&item=${JSON.stringify(item)}`})
+      url: `/pages/home/combo/combo?userType=${userType}&orgId=${item.orgId}&item=${JSON.stringify(item)}`})
     // Taro.navigateTo({
     //   url:'/pages/home/certification/certification'
     // })

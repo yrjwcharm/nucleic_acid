@@ -35,10 +35,10 @@ export default class Home extends Component {
       })
     }
   }
-  goToOrganization = () => {
+  goToOrganization = (userType) => {
     if (this.state.userInfo) {
       Taro.navigateTo({
-        url: '/pages/home/organization/organization',
+        url: `/pages/home/organization/organization?userType=${userType}`,
       })
     } else {
       Taro.redirectTo({
@@ -54,7 +54,15 @@ export default class Home extends Component {
       <View className='container'>
         <Banner list={[{rank: 0, img: Carousel}]}/>
         <View className='container_section'>
-          <View className='home_wrap' onClick={this.goToOrganization}>
+          <View className='home_wrap' onClick={()=>this.goToOrganization(1)}>
+            <Image className='home_wrap_img'
+                   src={Order}/>
+            <View className='home_wrap_desp'>
+              <Text className='home_wrap_desp_title'>个人核酸检测预约</Text>
+              <Text className='home_wrap_desp_detail'>快速预约,安心筛选</Text>
+            </View>
+          </View>
+          <View className='home_wrap' onClick={()=>this.goToOrganization(2)}>
             <Image className='home_wrap_img'
                    src={Order}/>
             <View className='home_wrap_desp'>
