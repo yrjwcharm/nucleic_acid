@@ -108,48 +108,26 @@ const AddPersonData = () => {
     }
 
     if (userType == 1) {
-      if (isEmpty(entourageName)) {
-        Taro.showToast({
-          icon: 'none',
-          title: '陪同人姓名不能为空'
-        })
-        return;
+      if (!isEmpty(entouragePhone)) {
+        if (!isMobile(entouragePhone)) {
+          Taro.showToast({
+            title: '陪同人手机号格式不正确',
+            icon: 'none',
+          })
+          return;
+        }
       }
-      if (isEmpty(entourageRelation)) {
-        Taro.showToast({
-          title: '陪同人关系不能为空',
-          icon: 'none',
-        })
-        return;
-      }
-      if (isEmpty(entouragePhone)) {
-        Taro.showToast({
-          title: '陪同人手机号不能为空',
-          icon: 'none',
-        })
-        return;
-      }
-      if (!isMobile(entouragePhone)) {
-        Taro.showToast({
-          title: '陪同人手机号格式不正确',
-          icon: 'none',
-        })
-        return;
-      }
+
       if (isEmpty(entourageIdCard)) {
-        Taro.showToast({
-          title: '陪同人身份证号不能为空',
-          icon: 'none',
-        })
-        return;
+        if (!isIdCard(entourageIdCard)) {
+          Taro.showToast({
+            title: '陪同人身份证号格式不正确',
+            icon: 'none',
+          })
+          return;
+        }
       }
-      if (!isIdCard(entourageIdCard)) {
-        Taro.showToast({
-          title: '陪同人身份证号格式不正确',
-          icon: 'none',
-        })
-        return;
-      }
+
       Taro.navigateTo({
         url:`/pages/home/certification/certification?item=${JSON.stringify({
           cityid,
@@ -174,9 +152,6 @@ const AddPersonData = () => {
 
     } else {
       setEntourageRelation('');
-      console.log(333,
-        streetdesc,
-      );
       const res  = await  fetchAppointDetectApi({
         cityid,
         date,
@@ -198,6 +173,7 @@ const AddPersonData = () => {
         userType,
       })
       if(res.code===200){
+
         Taro.showToast({
           title:'已预约',
           icon:'none'
@@ -205,7 +181,6 @@ const AddPersonData = () => {
          const _res = await  fetchAppointSuccessQrCodeApi({
           appointId:res.data
         })
-        console.log(333,_res.data);
         _res.code ===200&&Taro.navigateTo({
           url:`/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(_res.data)}`,
 

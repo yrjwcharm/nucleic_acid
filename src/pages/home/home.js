@@ -54,7 +54,7 @@ export default class Home extends Component {
       <View className='container'>
         <Banner list={[{rank: 0, img: Carousel}]}/>
         <View className='container_section'>
-          <View className='home_wrap' onClick={()=>this.goToOrganization(1)}>
+          <View className='home_wrap' onClick={()=>this.goToOrganization(2)}>
             <Image className='home_wrap_img'
                    src={Order}/>
             <View className='home_wrap_desp'>
@@ -62,12 +62,12 @@ export default class Home extends Component {
               <Text className='home_wrap_desp_detail'>快速预约,安心筛选</Text>
             </View>
           </View>
-          <View className='home_wrap' onClick={()=>this.goToOrganization(2)}>
+          <View className='home_wrap' onClick={()=>this.goToOrganization(1)}>
             <Image className='home_wrap_img'
                    src={Order}/>
             <View className='home_wrap_desp'>
-              <Text className='home_wrap_desp_title'>个人核酸检测预约</Text>
-              <Text className='home_wrap_desp_detail'>快速预约,安心筛选</Text>
+              <Text className='home_wrap_desp_title'>免费核酸检测预约</Text>
+              <Text className='home_wrap_desp_detail'>发热门诊或住院患者可免费预约核酸检测</Text>
             </View>
           </View>
           <View className='home_wrap' onClick={this._goToCheck_Result}>
