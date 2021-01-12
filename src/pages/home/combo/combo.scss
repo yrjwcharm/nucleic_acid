@@ -17,6 +17,7 @@
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
+    height: 244px;
     justify-content: center;
     &_list_item{
       display: flex;
@@ -35,20 +36,20 @@
         display: flex;
         flex-direction: column;
         &_hospital{
-          font-size:28px;
+          font-size:30px;
           color:#333;
           flex:1;
         }
         &_item{
           flex:1;
-          font-size:26px;
+          font-size:30px;
           margin-top: 10px;
           color:#333;
         }
         &_address{
           flex:1;
           margin-top: 20px;
-          font-size:24px;
+          font-size:26px;
           color:#BCBCBC;
         }
       }
@@ -266,7 +267,7 @@
   background-color: #3399FF;
   height:90px;
   &_text{
-    font-size:26px;
+    font-size:30px;
     margin: auto;
     color: white;
   }

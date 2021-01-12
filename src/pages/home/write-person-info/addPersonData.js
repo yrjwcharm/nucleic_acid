@@ -172,20 +172,20 @@ const AddPersonData = () => {
         userId,
         userType,
       })
-      if(res.code===200){
-
-        Taro.showToast({
-          title:'已预约',
-          icon:'none'
-        })
-         const _res = await  fetchAppointSuccessQrCodeApi({
-          appointId:res.data
-        })
-        _res.code ===200&&Taro.navigateTo({
-          url:`/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(_res.data)}`,
-
-        })
-      }
+      // if(res.code===200){
+      //
+      //   Taro.showToast({
+      //     title:'已预约',
+      //     icon:'none'
+      //   })
+      //    const _res = await  fetchAppointSuccessQrCodeApi({
+      //     appointId:res.data
+      //   })
+      //   _res.code ===200&&Taro.navigateTo({
+      //     url:`/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(_res.data)}`,
+      //
+      //   })
+      // }
 
 
 
@@ -201,8 +201,8 @@ const AddPersonData = () => {
     setDistrictId(_coding[2]);
     setShowPicker(false);
   }
-  const insEscortStaffClick = () => {
-    setInsEscortStaff(true);
+  const insEscortStaffClick = (flag) => {
+    setInsEscortStaff(flag);
   }
   const showAreaPicker = () => {
     setShowPicker(true);
@@ -246,7 +246,7 @@ const AddPersonData = () => {
            console.log('333',event)
            setStreetDesc(value);
         }} placeholder={'请输入详细地址'} className='detail_address'/>
-        {userType == 1 && !insEscortStaff ? <View className='insEscortStaff' onClick={insEscortStaffClick}>
+        {userType == 1 && !insEscortStaff ? <View className='insEscortStaff' onClick={()=>insEscortStaffClick(true)}>
           <Text className='insEscortStaff_text'>+增加陪同人员</Text>
         </View> : null}
         {insEscortStaff ? <View className='insEscortStaff_wrap'>
@@ -280,6 +280,9 @@ const AddPersonData = () => {
             },1000)} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
                    maxLength='18'/>
           </View>
+          {userType == 1 && insEscortStaff ? <View className='insEscortStaff cancelAcc' onClick={()=>insEscortStaffClick(false)}>
+            <Text className='insEscortStaff_text'>-取消陪同人员</Text>
+          </View> : null}
         </View> : null}
       </View>
       <View className='container__footer' onClick={nextStep}>

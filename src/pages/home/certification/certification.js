@@ -6,6 +6,7 @@ import {AtActionSheet, AtActionSheetItem} from "taro-ui"
 import Api from "../../../config/api";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {getCurrentInstance} from "@tarojs/runtime";
+import {fetchAppointDetectApi} from "../../../services/combo";
 export  default  class UploadCertification extends Component{
   constructor() {
     super();
@@ -19,10 +20,12 @@ export  default  class UploadCertification extends Component{
   /**
    * 提交审核
    */
-  _submitAudit=()=>{
+  _submitAudit=async ()=>{
+    const {url} =this.state;
     let {
       cityid,
       date,
+      districtid,
       docUrl,
       entourageIdCard,
       entourageName,
@@ -38,7 +41,6 @@ export  default  class UploadCertification extends Component{
       streetdesc,
       userId,
       userType,} = getCurrentInstance().router.params;
-    const {url} =this.state;
     if(isEmpty(url)){
       Taro.showToast({
         title:'请先上传证明',
@@ -46,11 +48,25 @@ export  default  class UploadCertification extends Component{
       })
       return;
     }
-    Taro.showToast({
-      title:'提交成功\n' +
-        '\n' +
-        '证明已上传成功，医生会在一个工作日内返回结果',
-      icon:'none'
+    const res  = await  fetchAppointDetectApi({
+      cityid,
+      date,
+      districtid,
+      docUrl:url,
+      entourageIdCard,
+      entourageName,
+      entouragePhone,
+      entourageRelation,
+      idCard,
+      name,
+      orgId,
+      payType,
+      phone,
+      provinceid,
+      sourceId,
+      streetdesc,
+      userId,
+      userType,
     })
 
   }
