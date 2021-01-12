@@ -88,7 +88,6 @@ export  default  class UploadCertification extends Component{
           },
           success (res){
             const data =JSON.parse(res.data) ;
-            console.log(333,data.data);
             data.code===200&&that.setState({url:Api.imgUrl+data.data},()=>{
               Taro.showToast({
                 title:'上传成功',
@@ -103,7 +102,7 @@ export  default  class UploadCertification extends Component{
   }
 
   render() {
-    const {url,visible}=this.state;
+    const {url}=this.state;
     return(
       <View className='container'>
 

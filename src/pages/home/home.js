@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro'
 import {Image, Text, View} from '@tarojs/components'
 import './home.scss';
 import React, {Component} from 'react'
-import Banner from './banner'
 import Carousel from '@assets/home/banner.png'
 import Order from '@assets/home/yuyue.png'
 import Query from '@assets/home/query.png'
@@ -53,14 +52,14 @@ export default class Home extends Component {
   render() {
     return (
       <View className='container'>
-        <Banner list={[{rank: 0, img: Carousel}]}/>
+        <Image src={Carousel} className='carousel'/>
         <View className='container_section'>
           <View className='home_wrap' onClick={()=>this.goToOrganization(2)}>
             <Image className='home_wrap_img'
                    src={Order}/>
             <View className='home_wrap_desp'>
               <Text className='home_wrap_desp_title'>个人核酸检测预约</Text>
-              <Text className='home_wrap_desp_detail'>快速预约,安心筛选</Text>
+              <Text className='home_wrap_desp_detail'>快速自费预约入口，安心筛选</Text>
             </View>
           </View>
           <View className='home_wrap' onClick={()=>this.goToOrganization(1)}>
@@ -83,7 +82,16 @@ export default class Home extends Component {
         <View className='container_footer'>
           <Text className='container_footer_title'>预约服务说明</Text>
           <Text
-            className='container_footer_desp'>请根据个人实际情况填写资料进行预约检测，个人预约仅限公民使用本人身份证预约不可待办预约，平台仅提供线上预约请预约后到医院线下缴费，具体服务费用请按照卫生部门及医疗机构公布为准</Text>
+            className='container_footer_desp'>
+            1.  请您根据个人实际情况选择预约检测入口，个人自费核酸检
+            测预约入口所有人均可预约， 个人免费核酸检测预约必须是发
+            热门诊或住院患者，同时需要拍照上传证明资料， 同时陪同家
+            属有一个免费检测名额；
+            2. 个人预约仅限公民使用本人身份预约不可代办，核酸检测取
+            样前需要出示身份证核实身份，冒用身份需承担法律责任；
+            3. 核酸检测结果单最快是24小时返回, 超过72小时仍未收到检
+            测结果的，请与医院管理员联系；
+          </Text>
         </View>
       </View>
     )

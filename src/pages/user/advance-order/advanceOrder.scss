@@ -1,9 +1,9 @@
 .container{
   display: flex;
   flex-direction: column;
-  background-color: #f3f3f7;
+  background-color: #f5f6f9;
   height: 100%;
-  padding-top: 1px;
+  border-top: 1px solid #eee;
   }
 
 .wrap{;
@@ -17,7 +17,7 @@
     height: 90px;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 20px;
+    padding-right: 40px;
   }
 }
 .listItem{
@@ -26,7 +26,7 @@
   justify-content: space-between;
   border-bottom-width: 2px;
   border-bottom-style: solid;
-  border-bottom-color: rgba(242, 242, 242, 1);
+ border-bottom-color:#F1F1F1;
   height:134px ;
   margin-left: 20px;
   margin-right:20px;

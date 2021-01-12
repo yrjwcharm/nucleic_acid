@@ -1,74 +1,91 @@
 @import "~taro-ui/dist/style/components/modal.scss";
 @import "~taro-ui/dist/style/components/button.scss";
 @import "~taro-ui/dist/style/components/loading.scss";
-.container{
+.container-box{
   display: flex;
   flex-direction: column;
-  flex:1;
-  padding-top: 1px;
-  background-color: #f3f3f7;
-  &_header{
-    position: relative;
-    background-color: #fff;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-image:url("../../../assets/home/shadow.png") ;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    height: 244px;
-    justify-content: center;
-    &_list_item{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 194px;
-      &_pic{
-        margin-left: 20px;
-        width:244px;
-        height:154px;
-        margin-right: 20px;
-        border-radius: 10px;
-      }
-      &_desc{
-        flex:1;
-        display: flex;
-        flex-direction: column;
-        &_hospital{
-          font-size:30px;
-          color:#333;
-          flex:1;
-        }
-        &_item{
-          flex:1;
-          font-size:30px;
-          margin-top: 10px;
-          color:#333;
-        }
-        &_address{
-          flex:1;
-          margin-top: 20px;
-          font-size:26px;
-          color:#BCBCBC;
-        }
-      }
-    }
-  }
+  //flex:1;
+  position: relative;
+  height: 100%;
+  border-top: 1px solid #eee;
+  background-color: #f5f6f9;
+
+}
+.main{
+  background:#fff;
+
+}
+.list-row-bg{
+  padding-left: 20px;
+  padding-right: 20px;
+  //background-size: cover;
+  //background-image: url("../../../assets/home/Shadow.png");
+}
+.list-row{
+    //padding-left: 30px;
+  padding-left: 50px;
+  background-size: cover;
+  background-image: url("../../../assets/home/Shadow.png");
+  display: flex;
+  flex-direction: column;
+  height: 224px;
+  justify-content: center;
+}
+.description{
+  margin-left: 30px;
+}
+.img{
+  width: 202px;
+  height:128px;
+  border-radius: 10px;
+}
+.hospital-title{
+  font-size: 32px;
+  color: #333333;
+}
+.sub-title{
+  font-size: 24px;
+  color: #666666;
+  margin-top: 2px;
+}
+.detail-address{
+  margin-top: 22px;
+  font-size: 24px;
+  color: #999999;
+}
+
+.order-time{
+  margin-top: 10px;
+  font-size: 32px;
+  color: #222222;
+  margin-left: 40px;
 }
 
 .section {
-  padding: 30px 20px 30px 20px;
-  background-color: #fff;
-
-  &_orderTime {
-    font-size: 26px;
-  }
+  position: relative;
+  padding:12px 40px 20px 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.prev{
+  width: 16px;
+  height:28.4px ;
+  position: absolute;
+  z-index: 9999;
+  left:40px;
+}
+.next{
+  width: 16px;
+  height:28.4px;
+  position: absolute;
+  right:40px;
 
 }
-.scrollview{
-  margin-top: 20px;
+.scrollView{
   white-space: nowrap;
+
 }
 .wrap{
   display: inline-block;
@@ -77,201 +94,96 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 118px;
-    height: 136px;
+    width: 108px;
+    height: 126px;
     background: inherit;
     background-color: transparent;
     border: none;
-    border-radius: 7px;
+    border-radius: 10px;
     &_week{
-      font-size: 26px;
-      color: #333;
-      line-height: 18px;
+      font-size: 28px;
+      color: #666;
     }
     &_date{
-      font-size: 26px;
+      font-size: 28px;
       color: #666;
-      line-height: 18px;
-      margin-top: 20px;
     }
     &_status{
-      color: #999;
-      font-size: 26px;
-      line-height: 18px;
-      margin-top: 20px;
+      color: #666;
+      font-size: 28px;
     }
   }
+}
+.am-wrap{
+  height: 84px;
+  padding-left: 40px;
+  line-height: 84px;
+  background: #F5F6F9;
+}
+.am{
+  font-size: 32px;
+  color: #222222;
+}
+.pm-wrap{
+  padding-left: 40px;
+  height: 84px;
+  background: #F5F6F9;
+  line-height: 42px;
+}
+.pm{
+  font-size: 32px;
+  color: #222222;
+}
+.combo{
+  display: flex;
+  padding-left: 40px;
+  padding-right: 40px;
+  flex-direction: column;
+  justify-content: center;
+  height: 108px;
+}
+.combo-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.title{
+  font-size: 28px;
+  color: #333333;
+  text-align: center;
+}
+.price{
+  font-size: 28px;
+  color: #333333;
+  text-align: center;
+}
+.btn-wrap{
+  display: flex;
+  width: 144px;
+  height: 60px;
+  background: #3299FF;
+  border-radius: 30px;
+}
+.btn{
+  margin: auto;
+  font-size: 28px;
+  color: #FFFFFF;
+}
+.bottom-wrap{
+  height:80px;
+  background: #3299FF;
+  display: flex;
+
 }
 .footer{
-  margin-top: 20px;
-  flex:1;
-  padding:0 20px 0 20px;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  &_combo{
-    padding:20px 0 20px 0;
-  }
-  &_comboList{
-    display: flex;
-    padding-left: 10px;
-    padding-right: 20px;
-    height: 104*2px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgba(255, 255, 255, 1);
-    box-sizing: border-box;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgba(232, 232, 232, 1);
-    border-radius: 10px;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    &_leftLayout {
-      display: flex;
-      align-items: center;
-        &_doctor{
-          width: 174px;
-          height: 172px;
-          margin-right: 20px;
-        }
-        &_info{
-          display: flex;
-          flex-direction: column;
-            &_title{
-                color:#333;
-              font-size: 26px;
-            }
-             &_itemList{
-                display: flex;
-                flex-direction: column;
-               justify-content: center;
-             }
-              &_money{
-                font-size: 26px;
-                color: #3298ff;
-              }
-        }
-    }
-
-  }
-
-}
-.bottom_wrap{
-  display:flex;
-  justify-content:center;
-  height:102px;
-  align-items:center;
-  background-color:rgba(50, 152, 255, 1);
-}
-
-.badge{
   position: absolute;
-  bottom:21px;
-  right:100px;
-  background-color: yellow;
-  width:60px;
-  display: flex;
-  border-radius: 30px;
-  height:60px;
-  z-index: 99;
-  &_num{
-    margin: auto;
-  }
+  bottom:0;
+  width: 100%;
 }
-.choice{
-  display: flex;
-  width: 50px;
-  height:50px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #3298ff;
-  border-radius: 25px;
-  &_wrap{
-    margin: auto;
-    width:25px;
-    background-color: #3298ff;
-    height:25px;
-    border-radius: 12.5px;
-  }
+.next-wrap{
+  font-size: 32px;
+  color: #FFFFFF;
 }
-.bg{
-  position: absolute;
-  left :0;
-  right: 0;
-  top:0;
-  bottom: 0;
-  margin: auto;
-  z-index: -9999;
-}
-.payType{
-  display: flex;
-  flex-direction: column;
-}
-.payType_title{
-  text-align: center;
-  font-size: 26px;
-  color: #666666;
-}
-.pay_row{
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-}
-.pay_row_top{
-  margin-top: 20px;
-}
-.pay_row__top{
-  margin-top: 40px;
-}
-.radio{
-  display: flex;
-  width: 30px;
-  height:30px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #3298ff;
-  border-radius: 15px;
-}
-.radio_wrap{
-  margin: auto;
-  width: 16px;
-  height:16px;
-  border-radius: 8px;
-  //background-color: #3298ff;
-}
-.radio_desc{
-  margin-left: 10px;
-  font-size: 26px;
-}
-
-.container_action{
-  display: flex;
-  flex-direction: row;
-  flex:1
-}
-.cancel{
-  display: flex;
-  flex: 1;
-  height:90px;
-  &_text{
-    font-size: 26px;
-    margin: auto;
-    color: #3298ff;
-  }
-}
-.confirm{
-  display: flex;
-  flex: 1;
-  background-color: #3399FF;
-  height:90px;
-  &_text{
-    font-size:30px;
-    margin: auto;
-    color: white;
-  }
-}
-
 
 
