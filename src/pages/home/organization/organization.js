@@ -80,6 +80,7 @@ class Organization extends Component {
   }
   goToCombo = (item) => {
     const {userType} =getCurrentInstance().router.params;
+
     Taro.navigateTo({
       url: `/pages/home/combo/combo?userType=${userType}&orgId=${item.orgId}&item=${JSON.stringify(item)}`})
     // Taro.navigateTo({

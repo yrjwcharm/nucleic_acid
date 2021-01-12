@@ -15,7 +15,7 @@ import {debounce, throttle} from "../../../utils/common";
 
 const AddPersonData = () => {
   const [userId, setUserId] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState(1);
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [orgId, setOrgId] = useState('');

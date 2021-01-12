@@ -171,7 +171,7 @@ class Combo extends Component {
    * @private
    */
   _nextStep = () => {
-    const {dateArr} = this.state;
+    const {dateArr,userType} = this.state;
     let item = {};
     for (let i = 0; i < dateArr.length; i++) {
       if (dateArr[i].checked) {
@@ -185,8 +185,11 @@ class Combo extends Component {
       title: '请选择有号源的预约时间',
       icon: 'none'
     }) : this.setState({visible: true, source: item}, () => {
-      Taro.navigateTo({
-        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(this.state.source)}&userType=1`
+      userType===1&&Taro.navigateTo({
+        url: `/pages/home/write-patient-info/addPersonData?item=${JSON.stringify(this.state.source)}`
+      })
+      userType===2&&Taro.navigateTo({
+        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(this.state.source)}`
       })
     })
   }

@@ -5,11 +5,8 @@
   border-top: 1px solid #eee;
   background: #F5F6F9;
 }
-.main{
-  padding-left: 40px;
-  padding-right: 40px;
-}
 .self-info-view{
+  margin-left: 40px;
   line-height: 80px;
   height:80px;
 }
@@ -18,23 +15,78 @@
   color: #333333;
 }
 .list-row-container{
-  height:78px;
-  padding:0;
   background: #fff;
+}
+
+.list-row-wrap{
+  height:78px;
+  margin-left: 40px;
+  margin-right: 40px;
   display: flex;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0.5px solid #eee;
   flex-direction: column;
   justify-content: center;
 }
+.address-info-wrap{
+  height:78px;
+  margin-right: 40px;
+  margin-left: 40px;
+  background: #fff;
+  display: flex;
+  border-bottom: 0.5px solid #eee;
+  flex-direction: column;
+  justify-content: center;
+}
+.address-info-container{
+  background: #fff;
+}
+.detail-address-container{
+  background: #fff;
+}
+.detail-address-textarea{
+  padding-top: 18px;
+  height:78px;
+  margin-right: 40px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.address-info-view{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.dist-name-text{
+  font-size: 28px;
+  color: #333333;
+}
+.select-city-text{
+  font-size: 28px;
+  color: #666666;
+}
+.list-row-arrow{
+  width: 14px;
+  height: 26px;
+}
+
 .list-row-input-placeholder{
   font-size: 28px;
   color: #666666;
 }
+.list-row-arrow{
+  width: 14px;
+  height:26px ;
+}
+.list-row-input{
+  padding-left: 142px;
+}
+._list-row-input{
+  padding-left: 86px;
+}
 
 .list-row-view{
   display: flex;
-  margin-left: 40px;
-  margin-right: 40px;
   flex-direction: row;
   align-items: center;
 }
