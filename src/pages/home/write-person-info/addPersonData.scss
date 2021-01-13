@@ -1,138 +1,215 @@
 @import "~taro-ui/dist/style/components/action-sheet.scss";
 .container{
   display: flex;
+  flex-direction: column;
   height: 100%;
-  flex-direction: column;
-  background-color: #f5f6f9;
   border-top: 1px solid #eee;
-  &_section{
-    display: flex;
-    flex-direction: column;
-  }
-  &__footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
-  &_footer{
-    height:90px;
-    display: flex;
-    background-color: rgba(50, 152, 255, 1);
-    align-items: center;
-    justify-content: center;
-    &_next{
-      text-align: center;
-      font-size: 28px;
-      color: #fff;
-      font-weight: bold;
-    }
-  }
+  background: #F5F6F9;
+  padding-top: 20px;
 }
-.insEscortStaff{
-  margin-left: 20px;
-  margin-right: 20px;
-  display: flex;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(50, 152, 255, 1);
-  background-color: rgba(255, 255, 255, 1);
-  flex-direction: row;
-  height: 68px;
-  justify-content: center;
-  align-items: center;
-  &_text{
-    color:#3298ff;
-    font-size: 28px;
-  }
+.self-info-view{
+  margin-left: 40px;
+  line-height: 80px;
+  height:80px;
 }
-.listRow{
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
- border-bottom-color:#F1F1F1;
-  color: #333;
-  height: 96.5px;
-  line-height: 96.5px;
-  background-color: #fff;
+.self-info-text{
+  font-family: PingFangSC-Regular;
   font-size: 28px;
-  padding-left: 40px;
-  padding-right: 40px;
-  &_left{
-    float:left;
-    height: 96.5px;
-    line-height:96.5px;
-  }
-  &_right_{
-    float: right;
-    text-align: right;
-    height: 96.5px;
-    line-height: 96.5px;
-  }
-  &_right{
-    float:right;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    &_address{
-      margin-right: 10px;
-    }
-    &_relative{
-      margin-right: 10px;
+  color: #333333;
+}
+.list-row-container{
+  background: #fff;
+}
 
-    }
-    &_arrow{
-      width: 12px;
-      height: 22px;
-    }
-    &_arrowDown{
-      width:16px ;
-      height:28px ;
-    }
-  }
+.list-row-wrap{
+  height:80px;
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  border-bottom: 1px solid #eee;
+  flex-direction: column;
+  justify-content: center;
 }
-.detail_address{
-  font-size:30px;
-  color:#999;
-  padding-left: 40px;
-  background-color: #fff;
-  height:68.25px;
-  width:100%;
-  margin-bottom: 20px;
+.address-info-wrap{
+  height:80px;
+  margin-right: 40px;
+  margin-left: 40px;
+  background: #fff;
+  display: flex;
+  border-bottom: 1px solid #eee;
+  flex-direction: column;
+  justify-content: center;
 }
-.insEscortStaff_wrap{
+.address-info-container{
+  background: #fff;
+}
+.detail-address-container{
+  background: #fff;
+}
+.detail-address-textarea{
+  padding-top: 18px;
+  height:78px;
+  margin-right: 40px;
+  margin-left: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
-.relationship{
+.address-info-view{
   display: flex;
-  height:96.5px;
-  padding-left: 40px;
-  padding-right: 40px;
-  background-color: white;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.dist-name-text{
+  font-size: 28px;
+  font-family: PingFangSC-Regular;
+
+  color: #333333;
+}
+.select-city-text{
+  font-size: 28px;
+  padding-left: 58px;
+  font-family: PingFangSC-Regular;
+
+  color: #666666;
+}
+.list-row-arrow{
+  width: 14px;
+  height: 26px;
+}
+.list-row-down{
+  width: 26px;
+  height: 14px;
+}
+
+.list-row-input-placeholder{
+  font-size: 28px;
+  font-family: PingFangSC-Regular;
+
+  color: #666666;
+}
+.list-row-arrow{
+  width: 14px;
+  height:26px ;
+}
+.list-row-input{
+  padding-left: 142px;
+}
+.list-row-input1{
+  padding-left: 86px;
+
+}
+._list-row-input{
+  padding-left: 86px;
+}
+.__list-row-input{
+  padding-left: 58px;
+  flex: 1;
+}
+
+.list-row-view{
+  display: flex;
   flex-direction: row;
   align-items: center;
+}
+.flex-between{
+  flex:1;
   justify-content: space-between;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
- border-bottom-color:#F1F1F1;
-
-  &_left{
-    color: #333;
-    font-size: 28px;
-
-  }
-  &_right{
-    color:#333;
-    font-size: 28px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    .arrow_down{
-      margin-left: 10px;
-      width:18px;
-      height:27px;
-    }
-  }
 }
-.cancelAcc{
+.list-row-text{
+  font-size: 28px;
+  font-family: PingFangSC-Regular;
+
+  color: #333333;
+}
+
+.tip{
+  font-size: 28px;
+  font-family: PingFangSC-Regular;
+  color: #3299FF;
+  margin-left: 40px;
+}
+.tip-container{
+  padding-top: 40px;
+  padding-bottom: 12px;
+
+}
+.tip-view{
+  display: flex;
+  flex:1;
+  padding-left: 40px;
+  padding-right: 40px;
+  //padding-right: 40px;
+}
+.tip-text{
+  flex: 1;
+  text-align: justify;
+  //text-align-last:justify;
+  text-justify: inter-ideograph;
+  font-size: 24px;
+  font-family: PingFangSC-Regular;
+  color: #999999;
+  line-height: 40px;
+}
+.footer{
+  display: flex;
+  flex:1;
+  background: #F5F6F9;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.btn-submit-view{
+  height: 80px;
+  display: flex;
+  background: #3299FF;
+}
+.btn-submit-text{
+  font-size: 32px;
+  font-family: PingFangSC-Regular;
+  color: #FFFFFF;
+  margin: auto;
+}
+.acc-info-view{
+    margin-top: 40px;
+    margin-left: 40px;
+    background: #FFFFFF;
+    margin-right: 40px;
+    display:flex;
+    border: 1px dashed rgba(50,153,255,17);
+    border-radius: 40px;
+    height:80px;
+}
+.acc-info-cancel{
+  margin-top: 40px;
+  margin-left: 40px;
+  background: #FFFFFF;
+  margin-right: 40px;
+  display: flex;
+  height: 80px;
+  border: 1px dashed rgba(229,0,18,17);
+  border-radius: 40px;
+}
+.acc-info-text{
+   margin: auto;
+  font-size: 32px;
+  color: #3299FF;
+  font-family: PingFangSC-Regular;
+}
+.acc-info-cancel-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 32px;
+  color: rgba(229,0,18,16);
+}
+.acc-info-container{
+  display: flex;
   margin-top: 20px;
+  flex-direction: column;
 }
+.code-view{
+  border: 1px dashed #3299FF;
+  height: 64px;
+  width: 184px;
+}
+

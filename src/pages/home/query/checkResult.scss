@@ -14,17 +14,19 @@
   background-color: #fff;
   border-bottom-width: 1px;
   border-bottom-style: solid;
- border-bottom-color:#F1F1F1;
+ border-bottom-color:#EEE;
   align-items: center;
     &_left{
       display: flex;
       flex-direction: column;
         &_appoint{
           font-size: 28px;
-          color: #000;
+          font-family: PingFangSC-Regular;
+          color: #333;
         }
         &_date{
           margin-top: 20px;
+          font-family: PingFangSC-Regular;
           font-size: 28px;
           color: #666;
         }
@@ -36,6 +38,7 @@
     align-items: center;
       &_status{
          color: #aaa;
+        font-family: PingFangSC-Regular;
         font-size: 28px;
       }
 

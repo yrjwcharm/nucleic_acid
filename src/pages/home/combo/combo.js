@@ -29,6 +29,7 @@ class Combo extends Component {
 
   componentDidMount() {
     let {orgId, item, userType} = getCurrentInstance().router.params;
+    console.log(333,userType);
     this.setState({orgId, userType, item: JSON.parse(item)}, () => {
 
       this._initData(this.state.orgId);
@@ -185,10 +186,10 @@ class Combo extends Component {
       title: '请选择有号源的预约时间',
       icon: 'none'
     }) : this.setState({visible: true, source: item}, () => {
-      userType===1&&Taro.navigateTo({
-        url: `/pages/home/write-patient-info/addPersonData?item=${JSON.stringify(this.state.source)}`
+      userType==1&&Taro.navigateTo({
+        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(this.state.source)}`
       })
-      userType===2&&Taro.navigateTo({
+      userType==2&&Taro.navigateTo({
         url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(this.state.source)}`
       })
     })
@@ -199,17 +200,6 @@ class Combo extends Component {
     console.log(333, item);
     return (
       <View className='container-box'>
-        {/*<View className='container_header'>*/}
-        {/*  <View className='container_header_list_item'>*/}
-        {/*    <Image src={Api.imgUrl + item.url} className='container_header_list_item_pic'/>*/}
-        {/*    <View className='container_header_list_item_desc'>*/}
-        {/*      <Text className='container_header_list_item_desc_hospital'>{item.orgName && item.orgName}</Text>*/}
-        {/*      <Text className='container_header_list_item_desc_item'>核酸检测</Text>*/}
-        {/*      <Text*/}
-        {/*        className='container_header_list_item_desc_address'>{item.wholeAddress && item.wholeAddress}</Text>*/}
-        {/*    </View>*/}
-        {/*  </View>*/}
-        {/*</View>*/}
         <View className='main'>
           <View className='list-row-bg'>
             <View className='list-row'>
@@ -249,7 +239,7 @@ class Combo extends Component {
                             style={item.checked ? 'color:#fff' : item.surplus > 0 ? 'color:#222222' : 'color:#666'}>{month_day}</Text>
                       <Text className='wrap_content_status'
                             style={item.checked ? 'color: #fff' : item.surplus > 0 ? 'color: #3299FF' : 'color:#999'}>
-                        {item.surplus > 0 ? '有号' : '约满'}
+                        {item.surplus > 0 ? '有号' :item.surplus==0?'无号':'约满'}
                       </Text>
                     </View>
                   </View>

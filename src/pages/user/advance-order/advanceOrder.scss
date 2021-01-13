@@ -6,11 +6,10 @@
   border-top: 1px solid #eee;
   }
 
-.wrap{;
+.wrap{
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  margin-bottom: 20px;
   &_footer{
     display: flex;
     flex-direction: row;
@@ -21,12 +20,13 @@
   }
 }
 .listItem{
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
- border-bottom-color:#F1F1F1;
+ border-bottom-color:#eeee;
   height:134px ;
   margin-left: 20px;
   margin-right:20px;
@@ -36,13 +36,17 @@
     display: flex;
     flex-direction: column;
     &_appoint{
-      font-size: 28px;
-      color: #000;
+      font-size: 32px;
+      font-family: PingFangSC-Regular;
+
+      color: #333333;
     }
     &_date{
       margin-top: 20px;
-      font-size: 28px;
-      color: #666;
+      font-size: 24px;
+      font-family: PingFangSC-Regular;
+
+      color: #666666;
     }
 
   }
@@ -51,34 +55,36 @@
     flex-direction: row;
     align-items: center;
     &_status{
-      color: #aaa;
-      font-size: 28px;
+      font-size: 24px;
+      font-family: PingFangSC-Regular;
+
+      color: #999999;
       position: relative;
       left: 15px;
     }
 
     &_arrow{
       position: relative;
-      left:15px;
-      width: 54px;
-      height:54px;
+      left:12px;
+      width: 14px;
+      height:26.4px;
     }
   }
 }
 @mixin btnStyle{
-  width: 142px;
-  height: 46px;
-  line-height: 46px;
+  width: 144px;
+  height: 52px;
+  line-height: 52px;
   background: inherit;
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(215, 215, 215, 1);
-  border-radius: 36px;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  font-size: 28px;
+  border-color: #dddddd;
+  border-radius: 30px;
+  font-size: 26px;
+  font-family: PingFangSC-Regular;
+
+  color: #333333;
   text-align: center;
 }
 .op_btn_1{

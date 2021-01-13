@@ -1,17 +1,16 @@
 import Taro from '@tarojs/taro'
-import {View, Text, ScrollView, Image, Input, Textarea, Picker} from '@tarojs/components'
-import React, {Component, useEffect, useState} from 'react';
+import {Image, Input, Text, Textarea, View} from '@tarojs/components'
+import React, {useEffect, useState} from 'react';
 import {AtActionSheet, AtActionSheetItem} from "taro-ui"
-
+import Down from '@assets/down.svg'
 import './addPersonData.scss'
-import ArrowRight from '@assets/home/write-person-data/arrow_right.svg'
-import ArrowDown from '@assets/home/write-person-data/arrow_down.svg'
 import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
-import {fetchAppointDetectApi, fetchAppointSuccessQrCodeApi, fetchSourceApi} from "../../../services/combo";
 import AddressPicker from "../../../components/addressPicker";
-import {debounce, throttle} from "../../../utils/common";
+import Forward from "../../../assets/home/forward.svg";
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 
 const AddPersonData = () => {
   const [userId, setUserId] = useState('');
@@ -31,12 +30,13 @@ const AddPersonData = () => {
   const [entourageName, setEntourageName] = useState('');
   const [entouragePhone, setEntouragePhone] = useState('');
   const [entourageRelation, setEntourageRelation] = useState('父亲');
-  // payType	支付方式 0 线上支付 1 线下支付
-  const [payType, setPayType] = useState(1);
+  // payType	支付方式 0 线上支付
+  const [payType, setPayType] = useState(0);
   const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'}, {
     label: 2,
     value: '亲戚'
   }, {label: 3, value: '朋友'}])
+  const [code,setCode] =useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择');
   const [visible, setVisible] = useState(false);
@@ -46,17 +46,13 @@ const AddPersonData = () => {
   }, [])
   const _initData = async () => {
     const {item, userType} = getCurrentInstance().router.params;
-    const {userId} = Taro.getStorageSync('loginInfo');
     const {sourceId, orgId, date,} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
     setUserType(userType);
-    setUserId(userId)
   }
   const nextStep = async () => {
-
-    console.log(333, name, phone);
     if (isEmpty(name)) {
       Taro.showToast({
         title: '姓名不能为空',
@@ -99,16 +95,14 @@ const AddPersonData = () => {
       })
       return;
     }
-    if(isEmpty(streetdesc)){
+    if (isEmpty(streetdesc)) {
       Taro.showToast({
-        title:'详细地址不能为空',
-        icon:'none',
+        title: '详细地址不能为空',
+        icon: 'none',
       })
       return;
     }
-
-    if (userType == 1) {
-      if (!isEmpty(entouragePhone)) {
+     if (!isEmpty(entouragePhone)) {
         if (!isMobile(entouragePhone)) {
           Taro.showToast({
             title: '陪同人手机号格式不正确',
@@ -118,7 +112,7 @@ const AddPersonData = () => {
         }
       }
 
-      if (isEmpty(entourageIdCard)) {
+      if (!isEmpty(entourageIdCard)) {
         if (!isIdCard(entourageIdCard)) {
           Taro.showToast({
             title: '陪同人身份证号格式不正确',
@@ -129,7 +123,7 @@ const AddPersonData = () => {
       }
 
       Taro.navigateTo({
-        url:`/pages/home/certification/certification?item=${JSON.stringify({
+        url: `/pages/home/certification/certification?item=${JSON.stringify({
           cityid,
           date,
           docUrl,
@@ -150,51 +144,10 @@ const AddPersonData = () => {
         })}`
       })
 
-    } else {
-      setEntourageRelation('');
-      const res  = await  fetchAppointDetectApi({
-        cityid,
-        date,
-        districtid,
-        docUrl,
-        entourageIdCard,
-        entourageName,
-        entouragePhone,
-        entourageRelation,
-        idCard,
-        name,
-        orgId,
-        payType,
-        phone,
-        provinceid,
-        sourceId,
-        streetdesc,
-        userId,
-        userType,
-      })
-      // if(res.code===200){
-      //
-      //   Taro.showToast({
-      //     title:'已预约',
-      //     icon:'none'
-      //   })
-      //    const _res = await  fetchAppointSuccessQrCodeApi({
-      //     appointId:res.data
-      //   })
-      //   _res.code ===200&&Taro.navigateTo({
-      //     url:`/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(_res.data)}`,
-      //
-      //   })
-      // }
-
-
-
-    }
-
   }
-  const toggleAddressPicker=(areaInfo,coding)=>{
+  const toggleAddressPicker = (areaInfo, coding) => {
     const _coding = coding.split(',');
-    console.log(333,areaInfo,coding);
+    console.log(333, areaInfo, coding);
     setArea(areaInfo);
     setProvinceId(_coding[0]);
     setCityId(_coding[1]);
@@ -207,90 +160,105 @@ const AddPersonData = () => {
   const showAreaPicker = () => {
     setShowPicker(true);
   }
-  const ListRow = (props) => {
-    const {label, type, onInput, value, placeholder, maxLength} = props;
-    return (
-      <View className='clearfix listRow'>
-        <Text className='listRow_left'>{label}</Text>
-        <Input controlled type={type} onInput={onInput} className='listRow_right_' placeholder={placeholder} value={value}
-               maxLength={maxLength}/>
-      </View>
-    )
-  }
-
   return (
     <View className='container'>
-      <View className='container_section'>
-        <ListRow type='text' label='姓名' onInput={debounce( (e)=>{
-          const {value} =e.detail;
-          setName(value);
-        },1000)} value={name} placeholder='请输入姓名' maxLength={6}/>
-        <ListRow type='number' label='电话' onInput={debounce((event)=> {
-          const {value} = event.detail;
-           setPhone(value);
-        },1000)} value={phone} placeholder='请输入电话' maxLength={11}/>
-        <ListRow type='idcard' label='身份证号' onInput={debounce((event) => {
-          const {value} = event.detail;
-          setIdCard(value);
-        },1000)} value={idCard} placeholder='请输入身份证号' maxLength={18}/>
-        <View className='clearfix listRow' style='border:none;' onClick={showAreaPicker}>
-          <Text className='listRow_left'>地址</Text>
-          <View className='listRow_right'>
-            <Text  className='listRow_right_address' style='color:#333'>{area}</Text>
-            <Image src={ArrowRight} className='listRow_right_arrow'/>
+      <View className='main'>
+        <ListRow className='list-row-input' type='text' onInput={(e) => {
+          setName(e.detail.value);
+
+        }} label='姓名' placeholder='请输入姓名'/>
+        <ListRow className='list-row-input' type='number' onInput={(e) => {
+          setPhone(e.detail.value);
+        }} label='电话' placeholder='请输入电话'/>
+        <View className='list-row-container'>
+          <View className='list-row-wrap'>
+            <View className='list-row-view  flex-between'>
+              <Text className='list-row-text'>图片验证码</Text>
+              <Input type='number' className='__list-row-input' onInput={(e)=>{
+                setCode(e.detail.value);
+              }} placeholder={'请输入图片验证码'}
+                     placeholderClass='list-row-input-placeholder'/>
+              <View className='code-view'>
+              </View>
+            </View>
+          </View>
+        </View>
+        <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
+          setIdCard(e.detail.value);
+        }} label='身份证号' placeholder='请输入身份证号'/>
+        <View className='address-info-container' onClick={showAreaPicker}>
+          <View className='address-info-wrap'>
+            <View className='address-info-view flex-between'>
+              <View style='display:flex;alignItems:center'>
+                <Text className='dist-name-text'>地区信息</Text>
+                <Text className='select-city-text _list-row-input'>{area}</Text>
+              </View>
+              <Image src={Forward} className='list-row-arrow'/>
+            </View>
+          </View>
+        </View>
+        <View className='detail-address-container'>
+          <View className='detail-address-textarea'>
+            <Textarea onInput={e => {
+              setStreetDesc(e.detail.value)
+            }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
           </View>
         </View>
 
-        <Textarea value={streetdesc} onInput={(event)=>{
-           const {value} = event.detail;
-           console.log('333',event)
-           setStreetDesc(value);
-        }} placeholder={'请输入详细地址'} className='detail_address'/>
-        {userType == 1 && !insEscortStaff ? <View className='insEscortStaff' onClick={()=>insEscortStaffClick(true)}>
-          <Text className='insEscortStaff_text'>+增加陪同人员</Text>
+        {!insEscortStaff ? <View className='acc-info-view' onClick={() => insEscortStaffClick(true)}>
+          <Text className='acc-info-text'>+增加陪同人员</Text>
         </View> : null}
-        {insEscortStaff ? <View className='insEscortStaff_wrap'>
-          <View className='clearfix listRow'>
-            <Text className='listRow_left'>姓名</Text>
-            <Input type='text' onInput={debounce(event => {
-              const {value} = event.detail;
-              setEntourageName(value)
-            },1000)} className='listRow_right_' placeholder='请输入陪同人姓名' value={entourageName} maxLength='6'/>
-          </View>
-          <View className='relationship' onClick={()=>setVisible(true)}>
-            <Text className='relationship_left'>与患者关系</Text>
-            <View className='relationship_right'>
-              <Text className='acc'>{entourageRelation}</Text>
-              <Image src={ArrowDown} style='transform: rotate(270deg);' className='arrow_down'/>
+        {insEscortStaff ?
+          <View className='acc-info-container'>
+            <ListRow className='list-row-input' type='text' onInput={(e) => {
+              setEntourageName(e.detail.value);
+
+            }} label='姓名' placeholder='请输入姓名'/>
+            <View className='address-info-container' onClick={()=>setVisible(true)}>
+              <View className='address-info-wrap'>
+                <View className='address-info-view'>
+                  <View style='display:flex;alignItems:center'>
+                    <Text className='dist-name-text'>与患者关系</Text>
+                    <Text className='select-city-text _list-row-input'>{entourageRelation}</Text>
+                  </View>
+                  <Image src={Down} className='list-row-down'/>
+                </View>
+              </View>
             </View>
-          </View>
-          <View className='clearfix listRow'>
-            <Text className='listRow_left'>电话</Text>
-            <Input type='number' onInput={debounce((event) => {
-              const {value} = event.detail;
-              setEntouragePhone(value);
-            },1000)} className='listRow_right_' placeholder='请输入陪同人电话号码' value={entouragePhone}
-                   maxLength='11'/>
-          </View>
-          <View className='clearfix listRow'>
-            <Text className='listRow_left'>身份证号</Text>
-            <Input onInput={debounce((event) => {
-              const {value} = event.detail;
-              setEntourageIdCard(value)
-            },1000)} type='idcard' className='listRow_right_' placeholder='请输入陪同人身份证号' value={entourageIdCard}
-                   maxLength='18'/>
-          </View>
-          {userType == 1 && insEscortStaff ? <View className='insEscortStaff cancelAcc' onClick={()=>insEscortStaffClick(false)}>
-            <Text className='insEscortStaff_text'>-取消陪同人员</Text>
+            <ListRow className='list-row-input' type='number' onInput={(e) => {
+              setEntouragePhone(e.detail.value);
+            }} label='电话' placeholder='请输入电话'/>
+            <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
+              setEntourageIdCard(e.detail.value);
+            }} label='身份证号' placeholder='请输入身份证号'/>
           </View> : null}
+        {insEscortStaff ? <View className='acc-info-cancel' onClick={() => insEscortStaffClick(false)}>
+          <Text className='acc-info-cancel-text'>-取消陪同人员</Text>
         </View> : null}
-      </View>
-      <View className='container__footer' onClick={nextStep}>
-        <View className='container_footer'>
-          <Text className='container_footer_next'>下一步</Text>
+        <View className='tip-container'>
+          <Text className='tip'>温馨提示</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
+          </Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
+          </Text>
         </View>
       </View>
-      <AtActionSheet  isOpened={visible} onCancel={()=>setVisible(false)}   onClose={()=>setVisible(false)} cancelText='取消'>
+      <View className='footer'>
+        <View className='btn-submit-view' onClick={nextStep}>
+          <Text className='btn-submit-text'>下一步</Text>
+        </View>
+      </View>
+      <AtActionSheet isOpened={visible} onCancel={() => setVisible(false)} onClose={() => setVisible(false)}
+                     cancelText='取消'>
         {relationList.map(item => {
           return (
             <AtActionSheetItem key={item.label + ""} onClick={() => {
@@ -303,7 +271,21 @@ const AddPersonData = () => {
           )
         })}
       </AtActionSheet>
-      <AddressPicker pickerShow={showPicker}   onHandleToggleShow={toggleAddressPicker}/>
+      <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
+    </View>
+  )
+}
+const ListRow = (props) => {
+  const {label, placeholder, className, type, onInput} = props;
+  return (
+    <View className='list-row-container'>
+      <View className='list-row-wrap'>
+        <View className='list-row-view'>
+          <Text className='list-row-text'>{label}</Text>
+          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
+                 placeholderClass='list-row-input-placeholder'/>
+        </View>
+      </View>
     </View>
   )
 }

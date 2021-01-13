@@ -2,7 +2,9 @@ import Taro,{Events} from '@tarojs/taro'
 import {View, Text, ScrollView, Image} from '@tarojs/components'
 import Arrow from '@assets/home/check-result-query/arrow__right.svg'
 import List from '@assets/ucenter/list.svg';
-import ArrowRight from '@assets/ucenter/arrow.png'
+import Order from '@assets/order.png';
+import Audit from '@assets/audit.png';
+import ArrowRight from '@assets/ucenter/arrow.svg'
 import './user.scss'
 import DefaultAvatar from '@assets/ucenter/avatar.png'
 import React, {useState, useEffect, Component} from 'react'
@@ -14,8 +16,8 @@ class User  extends Component {
     this.state = {
       userInfo:null,
       listItems: [
-        {label: '审核记录', id: 0, onPress: () => this._goToAuditRecord()},
-        {label: '我的预约', id: 1, onPress: () => this.goToAdvanceOrder()}
+        {label: '审核记录', id: 0, img:Order, onPress: () => this._goToAuditRecord()},
+        {label: '我的预约', id: 1, img:Audit, onPress: () => this.goToAdvanceOrder()}
       ]
     }
   }
@@ -67,7 +69,6 @@ class User  extends Component {
           <View className='header_wrap' onClick={this._goToAuth}>
             <Image src={userInfo ? userInfo&&userInfo.avatarUrl : DefaultAvatar} className='header_wrap_avatar'/>
             <Text className='header_wrap_username'>{userInfo ?userInfo&&userInfo.nickName : '请先登录'}</Text>
-            {!userInfo && <Image src={Arrow} className='header_wrap_arrow'/>}
           </View>
         </View>
         {listItems.map((item, index) => {
@@ -75,8 +76,8 @@ class User  extends Component {
             <View className='section' key={item.id + ""} onClick={() =>this.goToPage(item.id)}>
               <View className='section_wrap'>
                 <View className='section_wrap_left'>
-                  <Image src={List} className='section_wrap_left_list'/>
-                  <Text className='section_wrap_left_label'>{item.label}</Text>
+                  <Image src={item.img} className='section_wrap_left_list'/>
+                  <Text className='section_wrap_left_title'>{item.label}</Text>
                 </View>
                 <Image src={ArrowRight} className='section_wrap_right'/>
               </View>

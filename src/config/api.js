@@ -2,7 +2,7 @@
 // 局域网测试使用
 // var WxApiRoot = 'http://localhost:8082/wx/';
 // 云平台部署时使用
-let WxApiRoot = 'http://hstest.youjiankang.net:8081';
+let WxApiRoot = 'https://hstest.youjiankang.net';
 export default {
   imgUrl :'http://hstest.youjiankang.net/',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口

@@ -8,10 +8,12 @@ import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import {fetchAppointDetectApi} from "../../../services/combo";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from '../../../assets/home/forward.svg'
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 
 const WritePatientInfo = () => {
   const [userId, setUserId] = useState('');
-  const [userType, setUserType] = useState();
+  const [userType, setUserType] = useState(2);
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [orgId, setOrgId] = useState('');
@@ -23,6 +25,7 @@ const WritePatientInfo = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [idCard, setIdCard] = useState('');
+  const [code,setCode] =useState('');
   // payType	支付方式 0 线上支付 1 线下支付
   const [payType, setPayType] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
@@ -32,7 +35,6 @@ const WritePatientInfo = () => {
   }, [])
   const _initData = async () => {
     const {item, userType} = getCurrentInstance().router.params;
-    const {userId} = Taro.getStorageSync('loginInfo');
     const {sourceId, orgId, date,} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
@@ -90,29 +92,34 @@ const WritePatientInfo = () => {
       })
       return;
     }
+   const _res = await user.loginByWeixin({appid:Config.appid});
+    if (_res.code === 200) {
+      const {userId, wxid, unionid, sectionKey} =res.data;
+      const res = await fetchAppointDetectApi({
+        cityid,
+        date,
+        districtid,
+        docUrl,
+        idCard,
+        name,
+        orgId,
+        payType,
+        phone,
+        provinceid,
+        sourceId,
+        streetdesc,
+        userId,
+        userType,
+      })
+      if (res.code === 200) {
 
-    const res = await fetchAppointDetectApi({
-      cityid,
-      date,
-      districtid,
-      docUrl,
-      entourageIdCard,
-      entourageName,
-      entouragePhone,
-      entourageRelation,
-      idCard,
-      name,
-      orgId,
-      payType,
-      phone,
-      provinceid,
-      sourceId,
-      streetdesc,
-      userId,
-      userType,
-    })
-    if(res.code===200){
-
+        console.log(333,res.data);
+      }
+    }else{
+      Taro.showToast({
+        title:res.msg,
+        icon:'none'
+      })
     }
 
 
@@ -136,14 +143,27 @@ const WritePatientInfo = () => {
           <Text className='self-info-text'>本人信息</Text>
         </View>
         <ListRow className='list-row-input' type='text' onInput={(e) => {
-           setName(e.detail.value);
+          setName(e.detail.value);
 
         }} label='姓名' placeholder='请输入姓名'/>
         <ListRow className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
         }} label='电话' placeholder='请输入电话'/>
+        <View className='list-row-container'>
+          <View className='list-row-wrap'>
+            <View className='list-row-view  flex-between'>
+              <Text className='list-row-text'>图片验证码</Text>
+              <Input type='number' className='__list-row-input' onInput={(e)=>{
+                setCode(e.detail.value);
+              }} placeholder={'请输入图片验证码'}
+                     placeholderClass='list-row-input-placeholder'/>
+                     <View className='code-view'>
+                     </View>
+            </View>
+          </View>
+        </View>
         <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
-            setIdCard(e.detail.value);
+          setIdCard(e.detail.value);
         }} label='身份证号' placeholder='请输入身份证号'/>
         <View className='address-info-container' onClick={showAreaPicker}>
           <View className='address-info-wrap'>
@@ -158,10 +178,31 @@ const WritePatientInfo = () => {
         </View>
         <View className='detail-address-container'>
           <View className='detail-address-textarea'>
-            <Textarea  onInput={e=>{
+            <Textarea onInput={e => {
               setStreetDesc(e.detail.value)
             }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
           </View>
+        </View>
+        <View className='tip-container'>
+          <Text className='tip'>温馨提示</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
+          </Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
+          </Text>
+        </View>
+      </View>
+      <View className='footer'>
+        <View className='btn-submit-view' onClick={nextStep}>
+          <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
       <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
@@ -182,4 +223,5 @@ const ListRow = (props) => {
     </View>
   )
 }
+
 export default WritePatientInfo
