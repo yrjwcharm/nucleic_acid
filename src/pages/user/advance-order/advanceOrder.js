@@ -25,8 +25,8 @@ export class AdvanceOrder extends Component {
   componentDidMount() {
     this._initData();
   }
-  _initData=()=>{
-    user.loginByWeixin({appid:Config.appid}).then(res => {
+  _initData=async ()=>{
+    const res = await user.loginByWeixin({appid: Config.appid});
       if (res.code === 200) {
         console.log(333,res);
         const {userId, wxid, unionid, sectionKey} =res.data;
@@ -39,7 +39,6 @@ export class AdvanceOrder extends Component {
           icon:'none'
         })
       }
-    })
   }
 
   _getList = () => {

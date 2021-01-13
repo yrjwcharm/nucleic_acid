@@ -6,6 +6,8 @@ import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
 import {getResultQueryListApi} from "../../../services/result_query";
 import moment from 'moment'
 import React, { Component } from 'react'
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 class Check_Result extends Component {
   state={
     type: 0,
@@ -16,10 +18,22 @@ class Check_Result extends Component {
     userId:'',
   }
   componentDidMount() {
-    const {userId,wxid,unionid,sectionKey } = Taro.getStorageSync('loginInfo');
-    this.setState({userId},()=>{
-      this._getList();
-    })
+    this._initData();
+  }
+  _initData= async ()=>{
+    const res = await user.loginByWeixin({appid: Config.appid});
+    if (res.code === 200) {
+      console.log(333,res);
+      const {userId, wxid, unionid, sectionKey} =res.data;
+      this.setState({userId}, () => {
+        this._getList();
+      })
+    }else{
+      Taro.showToast({
+        title:res.msg,
+        icon:'none'
+      })
+    }
   }
   _getList =()=>{
     Taro.showLoading({
