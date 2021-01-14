@@ -11,9 +11,13 @@ import AddressPicker from "../../../components/addressPicker";
 import Forward from "../../../assets/home/forward.svg";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
+import Api from "../../../config/api";
 
 const AddPersonData = () => {
+  const [imgCode,setImgCode] =useState('');
   const [userId, setUserId] = useState('');
+  const [orgName,setOrgName] = useState('');
+  const [price,setPrice] =useState(0);
   const [userType, setUserType] = useState(1);
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
@@ -41,16 +45,54 @@ const AddPersonData = () => {
   const [area, setArea] = useState('请选择');
   const [visible, setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
+  const [verifyCode,setVerifyCode] =useState('');
+
   useEffect(() => {
     _initData();
+    getImageCode();
   }, [])
   const _initData = async () => {
     const {item, userType} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date,} = JSON.parse(item);
+    const {sourceId, orgId, date,orgName,price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
-    setUserType(userType);
+    setOrgName(orgName);
+    setPrice(price);
+  }
+  const getRandomCode=() =>{
+    let code = "";
+    const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+      'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+      'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+      'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+    for (let i = 0; i < 4; i++) {
+      let id = Math.round(Math.random() * 61);
+      code += array[id];
+    }
+    return code;
+  }
+  const getImageCode=async ()=>{
+    // const res = await  fetchImgCodeApi({})
+    // console.log(333,res);
+    const code = getRandomCode();
+    Taro.request({
+      url: Api.getImgCode,
+      data: {code},
+      method: "GET",
+      header: {
+        'Content-Type': 'application/json',
+        // 'X-Litemall-Token': Taro.getStorageSync('token')
+      },
+      responseType: 'arraybuffer',
+      success: function (res) {
+        console.log(333,res)
+        let url ='data:image/png;base64,'+Taro.arrayBufferToBase64(res.data);
+        setImgCode(url);
+        setCode(code);
+      }
+    })
   }
   const nextStep = async () => {
     if (isEmpty(name)) {
@@ -70,6 +112,13 @@ const AddPersonData = () => {
     if (!isMobile(phone)) {
       Taro.showToast({
         title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return;
+    }
+    if(code!==verifyCode){
+      Taro.showToast({
+        title: '验证码输入不正确',
         icon: 'none',
       })
       return;
@@ -121,9 +170,7 @@ const AddPersonData = () => {
           return;
         }
       }
-
-      Taro.navigateTo({
-        url: `/pages/home/certification/certification?item=${JSON.stringify({
+      let item ={
           cityid,
           date,
           docUrl,
@@ -131,17 +178,20 @@ const AddPersonData = () => {
           entourageName,
           entouragePhone,
           entourageRelation,
-          idCard,
-          name,
+          districtid,
           orgId,
           payType,
-          phone,
           provinceid,
           sourceId,
           streetdesc,
           userId,
           userType,
-        })}`
+        orgName,name,
+        phone,idCard,price
+      }
+
+    Taro.navigateTo({
+        url: `/pages/home/certification/certification?item=${JSON.stringify(item)}`
       })
 
   }
@@ -169,16 +219,17 @@ const AddPersonData = () => {
         }} label='姓名' placeholder='请输入姓名'/>
         <ListRow className='list-row-input' type='number' onInput={(e) => {
           setPhone(e.detail.value);
-        }} label='电话' placeholder='请输入电话'/>
+        }} label='电话' placeholder='请输入电话号码'/>
         <View className='list-row-container'>
           <View className='list-row-wrap'>
             <View className='list-row-view  flex-between'>
               <Text className='list-row-text'>图片验证码</Text>
               <Input type='number' className='__list-row-input' onInput={(e)=>{
-                setCode(e.detail.value);
+                setVerifyCode(e.detail.value);
               }} placeholder={'请输入图片验证码'}
                      placeholderClass='list-row-input-placeholder'/>
-              <View className='code-view'>
+              <View className='code-view' onClick={getImageCode}>
+                <Image src={imgCode} className='img-code'/>
               </View>
             </View>
           </View>
@@ -199,7 +250,7 @@ const AddPersonData = () => {
         </View>
         <View className='detail-address-container'>
           <View className='detail-address-textarea'>
-            <Textarea onInput={e => {
+            <Textarea  className='textarea-text' onInput={e => {
               setStreetDesc(e.detail.value)
             }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
           </View>
@@ -251,27 +302,27 @@ const AddPersonData = () => {
             3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
           </Text>
         </View>
+        <AtActionSheet isOpened={visible} onCancel={() => setVisible(false)} onClose={() => setVisible(false)}
+                       cancelText='取消'>
+          {relationList.map(item => {
+            return (
+              <AtActionSheetItem key={item.label + ""} onClick={() => {
+                setVisible(false);
+                setEntourageRelation(item.value)
+              }
+              }>
+                {item.value}
+              </AtActionSheetItem>
+            )
+          })}
+        </AtActionSheet>
+        <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
       </View>
       <View className='footer'>
         <View className='btn-submit-view' onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
-      <AtActionSheet isOpened={visible} onCancel={() => setVisible(false)} onClose={() => setVisible(false)}
-                     cancelText='取消'>
-        {relationList.map(item => {
-          return (
-            <AtActionSheetItem key={item.label + ""} onClick={() => {
-              setVisible(false);
-              setEntourageRelation(item.value)
-            }
-            }>
-              {item.value}
-            </AtActionSheetItem>
-          )
-        })}
-      </AtActionSheet>
-      <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
     </View>
   )
 }
@@ -282,7 +333,7 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
+          <Input  type={type} className={className} onInput={onInput} placeholder={placeholder}
                  placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>

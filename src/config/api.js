@@ -31,5 +31,6 @@ export default {
   generateQrcode :WxApiRoot + `/ncov/BaAppointmentController/my/qrcode`,
   uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
   deleteOrder:WxApiRoot + `/ncov/BaAppointmentController/delete`,
-  cancelOrder :WxApiRoot + `/ncov/BaAppointmentController/cancel`
+  cancelOrder :WxApiRoot + `/ncov/BaAppointmentController/cancel`,
+  getImgCode:WxApiRoot + `/ncov/BaAppointmentController/authImg`
 };

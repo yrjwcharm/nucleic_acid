@@ -64,7 +64,6 @@ export class AuditRecord extends Component {
       }
       Taro.hideLoading();
     })
-
   }
 
   onReachBottom() {
@@ -125,11 +124,11 @@ export class AuditRecord extends Component {
     }
   }
   goToPage = (item) => {
-    if (item.state == 1) {
-      Taro.navigateTo({
-        url: '/pages/home/immediate-order/immediateOrder'
+      console.log(333,item);
+      item.state==='2'&&Taro.navigateTo({
+        url:`/pages/home/audit-detail/audit-detail?item=${JSON.stringify(item)}`
       })
-    }
+
   }
 
   render() {
@@ -146,7 +145,7 @@ export class AuditRecord extends Component {
                     let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
                     return (
-                      <View className='wrap' key={_item.id + " "} onClick={(item) => this.goToPage(item)}>
+                      <View className='wrap' key={_item.id + " "} onClick={() => this.goToPage(_item)}>
                         <View className='main'>
                           <View className='listItem'>
                             <View className='listItem_left'>

@@ -80,9 +80,9 @@ class Check_Result extends Component {
     }
   }
 
-  _goToDetail = () => {
+  _goToDetail = (item) => {
     Taro.navigateTo({
-      url: '/pages/home/detail/detail',
+      url: `/pages/home/detail/detail?item=${JSON.stringify(item)}`,
       events: {
         // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
         acceptDataFromOpenedPage: function (data) {
@@ -127,8 +127,8 @@ class Check_Result extends Component {
             let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (
-              <View>
-                <View className='listItem' key={item.id + ""} onClick={this._goToDetail}>
+              <View className='query-view'>
+                <View className='listItem' key={item.id + ""} onClick={()=>this._goToDetail(item)}>
                   <View className='listItem_left'>
                     <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
                     <Text className='listItem_left_date'>{date} {week}</Text>

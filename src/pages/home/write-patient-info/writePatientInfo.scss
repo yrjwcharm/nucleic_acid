@@ -81,12 +81,18 @@
   height:26px ;
 }
 .list-row-input{
+  font-size: 14PX;
+  color: #666666;
   padding-left: 142px;
 }
 ._list-row-input{
+  font-size: 14PX;
+  color: #666666;
   padding-left: 86px;
 }
 .__list-row-input{
+  font-size: 14PX;
+  color: #666666;
   padding-left: 58px;
   flex: 1;
 }
@@ -113,10 +119,12 @@
   margin-left: 40px;
 }
 .tip-container{
-  padding-top: 40px;
-  padding-bottom: 12px;
+  padding-top: 20PX;
+  padding-bottom: 10PX;
 
 }
+
+
 .tip-view{
   display: flex;
   flex:1;
@@ -155,8 +163,19 @@
 .code-view{
   border: 1px dashed #3299FF;
   height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 184px;
+}
+.img-code{
+  height: 60px;
+  width: 180px;
 }
 
 
+.textarea-text{
+  font-size: 14PX;
+  color: #666666;
+}
 

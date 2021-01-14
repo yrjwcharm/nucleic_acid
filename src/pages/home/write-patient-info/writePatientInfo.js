@@ -5,15 +5,15 @@ import './writePatientInfo.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
-import {fetchAppointDetectApi} from "../../../services/combo";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from '../../../assets/home/forward.svg'
-import * as user from "../../../utils/user";
-import Config from "../../../../project.config.json";
+import Api from "../../../config/api";
 
 const WritePatientInfo = () => {
-  const [userId, setUserId] = useState('');
+  const [imgCode, setImgCode] = useState('');
+  const [orgName, setOrgName] = useState('');
   const [userType, setUserType] = useState(2);
+  const [price, setPrice] = useState(0);
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [orgId, setOrgId] = useState('');
@@ -25,21 +25,58 @@ const WritePatientInfo = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [idCard, setIdCard] = useState('');
-  const [code,setCode] =useState('');
+  const [code, setCode] = useState('');
   // payType	支付方式 0 线上支付 1 线下支付
   const [payType, setPayType] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择省市区');
+  const [verifyCode, setVerifyCode] = useState('');
   useEffect(() => {
     _initData();
+    getImageCode();
   }, [])
   const _initData = async () => {
     const {item} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date,} = JSON.parse(item);
+    const {sourceId, orgId, date, orgName, price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
-    setUserId(userId)
+    setOrgName(orgName);
+    setPrice(price);
+  }
+  const getRandomCode = () => {
+    let code = "";
+    const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+      'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+      'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+      'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+    for (let i = 0; i < 4; i++) {
+      let id = Math.round(Math.random() * 61);
+      code += array[id];
+    }
+    return code;
+  }
+  const getImageCode = async () => {
+    // const res = await  fetchImgCodeApi({})
+    // console.log(333,res);
+    const code = getRandomCode();
+    Taro.request({
+      url: Api.getImgCode,
+      data: {code},
+      method: "GET",
+      header: {
+        'Content-Type': 'application/json',
+        // 'X-Litemall-Token': Taro.getStorageSync('token')
+      },
+      responseType: 'arraybuffer',
+      success: function (res) {
+        console.log(333, res)
+        let url = 'data:image/png;base64,' + Taro.arrayBufferToBase64(res.data);
+        setImgCode(url);
+        setCode(code);
+      }
+    })
   }
   const nextStep = async () => {
     if (isEmpty(name)) {
@@ -59,6 +96,13 @@ const WritePatientInfo = () => {
     if (!isMobile(phone)) {
       Taro.showToast({
         title: '手机号格式不正确',
+        icon: 'none',
+      })
+      return;
+    }
+    if (code !== verifyCode) {
+      Taro.showToast({
+        title: '验证码输入不正确',
         icon: 'none',
       })
       return;
@@ -91,129 +135,112 @@ const WritePatientInfo = () => {
       })
       return;
     }
-   const _res = await user.loginByWeixin({appid:Config.appid});
-    if (_res.code === 200) {
-      const {userId, wxid, unionid, sectionKey} =_res.data;
-      const res = await fetchAppointDetectApi({
-        cityid,
-        date,
-        districtid,
-        docUrl,
-        idCard,
-        name,
-        orgId,
-        payType,
-        phone,
-        provinceid,
-        sourceId,
-        streetdesc,
-        userId,
-        userType,
-      })
-      console.log(333, res);
-      if (res.code === 200) {
-          Taro.showToast({
-            title:'已预约',
-            icon:'none',
-          })
-        Taro.reLaunch('/pages/home/home');
 
-      }else{
+    let item = {
+      cityid,
+      date,
+      districtid,
+      docUrl,
+      idCard,
+      name,
+      orgId,
+      payType,
+      phone,
+      provinceid,
+      sourceId,
+      streetdesc,
+      userType, orgName, price
+    };
+    Taro.navigateTo({
+      url: `/pages/home/confirm/confirm?item=${JSON.stringify(item)}&userType=2`
+    })
 
-      }
-    }else{
-      Taro.showToast({
-        title:res.msg,
-        icon:'none'
-      })
-    }
+}
+const toggleAddressPicker = (areaInfo, coding) => {
+  const _coding = coding.split(',');
+  console.log(333, areaInfo, coding);
+  setArea(areaInfo);
+  setProvinceId(_coding[0]);
+  setCityId(_coding[1]);
+  setDistrictId(_coding[2]);
+  setShowPicker(false);
+}
+const showAreaPicker = () => {
+  setShowPicker(true);
+}
+return (
+  <View className='container'>
+    <View className='main'>
+      <View className="self-info-view">
+        <Text className='self-info-text'>本人信息</Text>
+      </View>
+      <ListRow className='list-row-input' type='text' onInput={(e) => {
+        setName(e.detail.value);
 
-
-  }
-  const toggleAddressPicker = (areaInfo, coding) => {
-    const _coding = coding.split(',');
-    console.log(333, areaInfo, coding);
-    setArea(areaInfo);
-    setProvinceId(_coding[0]);
-    setCityId(_coding[1]);
-    setDistrictId(_coding[2]);
-    setShowPicker(false);
-  }
-  const showAreaPicker = () => {
-    setShowPicker(true);
-  }
-  return (
-    <View className='container'>
-      <View className='main'>
-        <View className="self-info-view">
-          <Text className='self-info-text'>本人信息</Text>
-        </View>
-        <ListRow className='list-row-input' type='text' onInput={(e) => {
-          setName(e.detail.value);
-
-        }} label='姓名' placeholder='请输入姓名'/>
-        <ListRow className='list-row-input' type='number' onInput={(e) => {
-          setPhone(e.detail.value);
-        }} label='电话' placeholder='请输入电话'/>
-        <View className='list-row-container'>
-          <View className='list-row-wrap'>
-            <View className='list-row-view  flex-between'>
-              <Text className='list-row-text'>图片验证码</Text>
-              <Input type='number' className='__list-row-input' onInput={(e)=>{
-                setCode(e.detail.value);
-              }} placeholder={'请输入图片验证码'}
-                     placeholderClass='list-row-input-placeholder'/>
-                     <View className='code-view'>
-                     </View>
+      }} label='姓名' placeholder='请输入姓名'/>
+      <ListRow className='list-row-input' type='number' onInput={(e) => {
+        setPhone(e.detail.value);
+      }} label='电话' placeholder='请输入电话号码'/>
+      <View className='list-row-container'>
+        <View className='list-row-wrap'>
+          <View className='list-row-view  flex-between'>
+            <Text className='list-row-text'>图片验证码</Text>
+            <Input type='number' className='__list-row-input' onInput={(e) => {
+              setVerifyCode(e.detail.value);
+            }} placeholder={'请输入图片验证码'}
+                   placeholderClass='list-row-input-placeholder'/>
+            <View className='code-view' onClick={getImageCode}>
+              <Image src={imgCode} className='img-code'/>
             </View>
           </View>
         </View>
-        <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
-          setIdCard(e.detail.value);
-        }} label='身份证号' placeholder='请输入身份证号'/>
-        <View className='address-info-container' onClick={showAreaPicker}>
-          <View className='address-info-wrap'>
-            <View className='address-info-view'>
-              <View style='display:flex;alignItems:center'>
-                <Text className='dist-name-text'>地区信息</Text>
-                <Text className='select-city-text _list-row-input'>{area}</Text>
-              </View>
-              <Image src={Forward} className='list-row-arrow'/>
+      </View>
+      <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
+        setIdCard(e.detail.value);
+      }} label='身份证号' placeholder='请输入身份证号'/>
+      <View className='address-info-container' onClick={showAreaPicker}>
+        <View className='address-info-wrap'>
+          <View className='address-info-view'>
+            <View style='display:flex;alignItems:center'>
+              <Text className='dist-name-text'>地区信息</Text>
+              <Text className='select-city-text _list-row-input'>{area}</Text>
             </View>
+            <Image src={Forward} className='list-row-arrow'/>
           </View>
         </View>
-        <View className='detail-address-container'>
-          <View className='detail-address-textarea'>
-            <Textarea onInput={e => {
-              setStreetDesc(e.detail.value)
-            }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
-          </View>
-        </View>
-        <View className='tip-container'>
-          <Text className='tip'>温馨提示</Text>
-        </View>
-        <View className='tip-view'>
-          <Text className='tip-text'>
-            1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
-          </Text>
-        </View>
-        <View className='tip-view'>
-          <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
-        </View>
-        <View className='tip-view'>
-          <Text className='tip-text'>
-            3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
-          </Text>
+      </View>
+      <View className='detail-address-container'>
+        <View className='detail-address-textarea'>
+          <Textarea onInput={e => {
+            setStreetDesc(e.detail.value)
+          }} className='textarea-text' placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>
-      <View className='footer'>
-        <View className='btn-submit-view' onClick={nextStep}>
-          <Text className='btn-submit-text'>下一步</Text>
-        </View>
+      <View className='tip-container'>
+        <Text className='tip'>温馨提示</Text>
       </View>
-      <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
+      <View className='tip-view'>
+        <Text className='tip-text'>
+          1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
+        </Text>
+      </View>
+      <View className='tip-view'>
+        <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
+      </View>
+      <View className='tip-view'>
+        <Text className='tip-text'>
+          3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
+        </Text>
+      </View>
     </View>
-  )
+    <View className='footer'>
+      <View className='btn-submit-view' onClick={nextStep}>
+        <Text className='btn-submit-text'>下一步</Text>
+      </View>
+    </View>
+    <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
+  </View>
+)
 }
 const ListRow = (props) => {
   const {label, placeholder, className, type, onInput} = props;

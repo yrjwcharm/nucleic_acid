@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {View, Text, ScrollView,  Image} from '@tarojs/components'
+import {View, Text, ScrollView, Image, Input} from '@tarojs/components'
 import {AtSearchBar, AtIcon} from 'taro-ui'
 import Marker from '@assets/home/location.png';
 import Pic from '@assets/home/pic.svg'
@@ -8,17 +8,12 @@ import './organization.scss'
 import React, { Component } from 'react'
 import {getQueryOrgListByNameApi} from "../../../services/home";
 import {getCurrentInstance} from "@tarojs/runtime";
+import Search from '@assets/search.png'
 let QQMapWX = require('../../../utils/qqmap-wx-jssdk.min');
 class Organization extends Component {
   state={
     queryName:'',
     city:'北京',
-  }
-
-  onChange = (value) => {
-      this.setState({queryName:value},()=>{
-        this._getList();
-      })
   }
   componentDidMount() {
       this._getAuthorize();
@@ -103,12 +98,15 @@ class Organization extends Component {
                       <Image src={Marker} className='marker-img'/>
                       <Text className='city-text'>{city}</Text>
                     </View>
-                    <AtSearchBar
-                      className='search-bar'
-                      value={this.state.queryName}
-                      onChange={this.onChange}
-                      placeholder={'搜索医院名称'}
-                    />
+                    <View className='search-bar'>
+                      <Image src={Search} className='search-img'/>
+                      <Text className='search-text'>搜索</Text>
+                      <Input  placeholderClass='search-input' onInput={(e)=>{
+                        this.setState({
+                          queryName:e.detail.value
+                        })
+                      }}/>
+                    </View>
                   </View>
               </View>
             {list&&list.map((item,index)=>{
@@ -117,7 +115,7 @@ class Organization extends Component {
                   <View className='list-row-view'>
                     <Image src={Api.imgUrl+item.url} className='hospital-img'/>
                     <View className='hospital-info-view'>
-                      <Text className='hospital-title'>{item.orgName}</Text>
+                      <Text className='hospital-title'>{item.orgName.length>10?item.orgName.substring(0,10)+"...":item.orgName}</Text>
                       <Text className='hospital-subtitle'>核酸检测预约中心</Text>
                       <Text className='hospital-address'>地址：{item.wholeAddress}</Text>
                     </View>

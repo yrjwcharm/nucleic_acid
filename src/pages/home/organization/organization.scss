@@ -38,9 +38,26 @@
 .search-bar{
   display: flex;
   flex:1;
-  opacity: 0.08;
-  background: #191F25;
+  flex-direction: row;
+  align-items: center;
+  height: 35PX;
+  //opacity: 0.08;
+  padding-left: 10PX;
+  background: rgba(25,31,37,0.08);
   border-radius: 18PX;
+}
+.search-img{
+  width: 16PX;
+  height: 16PX;
+}
+.search-input{
+  display: flex;
+  flex:1;
+}
+.search-text{
+  font-size: 15PX;
+  color: rgba(25,31,37,0.40);
+  margin-left: 8PX;
 }
 .list-row-container{
   display: flex;

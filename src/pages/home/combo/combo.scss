@@ -110,7 +110,7 @@
 }
 .choice-wrap{
   margin: auto;
-  background: #3299FF;
+  background: transparent;
   height:13PX;
   width: 13PX;
   border-radius: 6.5PX;
@@ -130,6 +130,7 @@
 .wrap{
   display: inline-block;
   &_content{
+    margin-right: 10PX;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -232,7 +233,7 @@
 }
 .surplus--text{
   font-size: 16PX;
-  color: #143F00;
+  color: #3299FF;
 }
 .right-away-order-view{
   display: flex;

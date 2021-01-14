@@ -12,7 +12,9 @@ export default {
     'pages/home/write-person-info/addPersonData',
     'pages/home/write-patient-info/writePatientInfo',
     'pages/home/combo/combo',
-    'pages/home/certification/certification'
+    'pages/home/certification/certification',
+    'pages/home/confirm/confirm',
+    'pages/home/audit-detail/audit-detail'
 
   ],
   window: {

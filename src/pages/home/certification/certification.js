@@ -8,30 +8,17 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import {fetchAppointDetectApi} from "../../../services/combo";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
-
+import Img from '@assets/certification.png';
 export default class UploadCertification extends Component {
   constructor() {
     super();
     this.state = {
       url: '',
       visible: true,
-      userId:'',
     }
 
   }
   componentDidMount() {
-    user.loginByWeixin({appid:Config.appid}).then(res => {
-      if (res.code === 200) {
-        console.log(333,res);
-        const {userId, wxid, unionid, sectionKey} =res.data;
-        this.setState({userId})
-      }else{
-        Taro.showToast({
-          title:res.msg,
-          icon:'none'
-        })
-      }
-    })
   }
 
   /**
@@ -39,26 +26,26 @@ export default class UploadCertification extends Component {
    */
   _submitAudit = async () => {
     const {url,userId} = this.state;
-    let item = getCurrentInstance().router.params;
+    let {item} = getCurrentInstance().router.params;
 
     console.log(333,item);
     const {
       cityid,
       date,
-      districtid,
       docUrl,
       entourageIdCard,
       entourageName,
       entouragePhone,
       entourageRelation,
-      idCard,
-      name,
+      districtid,
       orgId,
       payType,
-      phone,
       provinceid,
       sourceId,
       streetdesc,
+      userType,
+      orgName,name,
+      phone,idCard,price
 
     } = JSON.parse(item);
 
@@ -83,37 +70,48 @@ export default class UploadCertification extends Component {
 
     );
 
-    // if (isEmpty(url)) {
-    //   Taro.showToast({
-    //     title: '请先上传证明',
-    //     icon: 'none',
-    //   })
-    //   return;
-    // }
-    // const res = await fetchAppointDetectApi({
-    //   cityid,
-    //   date,
-    //   districtid,
-    //   docUrl: url,
-    //   entourageIdCard,
-    //   entourageName,
-    //   entouragePhone,
-    //   entourageRelation,
-    //   idCard,
-    //   name,
-    //   orgId,
-    //   payType,
-    //   phone,
-    //   provinceid,
-    //   sourceId,
-    //   streetdesc,
-    //   userId,
-    //   userType:1,
-    // })
-    // res.code === 200 && Taro.redirectTo({
-    //   url: '/pages/user/audit-record/auditRecord'
-    // })
+    if (isEmpty(url)) {
+      Taro.showToast({
+        title: '请先上传证明',
+        icon: 'none',
+      })
+      return;
+    }
+    const _res = await user.loginByWeixin({appid:Config.appid});
+    if (_res.code === 200) {
+      const {userId, wxid, unionid, sectionKey} = _res.data;
+      const res = await fetchAppointDetectApi({
+        cityid,
+        date,
+        districtid,
+        docUrl: url,
+        entourageIdCard,
+        entourageName,
+        entouragePhone,
+        entourageRelation,
+        idCard,
+        name,
+        orgId,
+        payType,
+        phone,
+        provinceid,
+        sourceId,
+        streetdesc,
+        userId,
+        userType: 1,
+      })
+      if (res.code === 200) {
+        Taro.showToast({
+          title:'已预约',
+          icon:'none',
+        })
 
+        // let item ={orgName,name,date,streetdesc,phone,idCard,price};
+        Taro.navigateTo({
+          url:`/pages/home/confirm/confirm?item=${item}&userType=1`
+        })
+      }
+    }
   }
   _chooseImage = () => {
     // 文档提供的示例
@@ -132,7 +130,8 @@ export default class UploadCertification extends Component {
           formData: {},
           success(res) {
             const data = JSON.parse(res.data);
-            data.code === 200 && that.setState({url: Api.imgUrl + data.data}, () => {
+            console.log(333,data);
+            data.code === 200 && that.setState({url:data.data}, () => {
               Taro.showToast({
                 title: '上传成功',
                 icon: 'none'
@@ -154,7 +153,7 @@ export default class UploadCertification extends Component {
           <View className='upload-img-container'>
             <View className='upload-img-view'>
               <View className='upload-img-wrap' onClick={this._chooseImage}>
-                <Image src={url} className='upload-img'/>
+                <Image src={url?Api.imgUrl +url:Img} className='upload-img'/>
                 <Text className='upload-text'>上传证明</Text>
               </View>
             </View>
