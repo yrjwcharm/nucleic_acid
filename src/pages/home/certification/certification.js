@@ -63,7 +63,14 @@ export default class UploadCertification extends Component {
     } = JSON.parse(item);
 
     console.log(
-      333, cityid, date, districtid, url, entourageIdCard, entourageName, entouragePhone,
+      111,
+      cityid,
+      date,
+      districtid,
+      url,
+      entourageIdCard,
+      entourageName,
+      entouragePhone,
       idCard,
       name,
       orgId,

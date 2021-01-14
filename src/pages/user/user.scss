@@ -40,9 +40,10 @@
   background-color: #fff;
   border-bottom-width: 1px;
   border-bottom-style: solid;
- border-bottom-color:#EEE;
+  border-bottom-color:#EEE;
    &_wrap{
      display: flex;
+     align-items: center;
      flex-direction: row;
      justify-content: space-between;
      &_left{

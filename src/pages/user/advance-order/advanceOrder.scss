@@ -5,31 +5,30 @@
   height: 100%;
   border-top: 1px solid #eee;
   }
-
 .wrap{
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  &_footer{
-    display: flex;
-    flex-direction: row;
-    height: 90px;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 40px;
-  }
+  padding-top: 10PX;
+}
+.footer{
+  display: flex;
+  flex-direction: row;
+  height: 90px;
+  background: #fff;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
 }
 .listItem{
-  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom-width: 1px;
+  border-bottom-width: 0.5px;
   border-bottom-style: solid;
- border-bottom-color:#eeee;
-  height:134px ;
-  margin-left: 20px;
-  margin-right:20px;
+  border-bottom-color:#eeee;
+  height:68PX ;
+  padding-left: 20PX;
+  padding-right:20PX;
   background-color: #fff;
   align-items: center;
   &_left{
@@ -55,19 +54,15 @@
     flex-direction: row;
     align-items: center;
     &_status{
-      font-size: 24px;
+      font-size: 12PX;
       font-family: PingFangSC-Regular;
-
       color: #999999;
-      position: relative;
-      left: 15px;
+      margin-right: 6PX;
     }
 
     &_arrow{
-      position: relative;
-      left:12px;
-      width: 14px;
-      height:26.4px;
+      width: 7PX;
+      height:13.2PX;
     }
   }
 }
@@ -93,4 +88,26 @@
 .op_btn_2{
   @include btnStyle();
   margin-left: 20px;
+}
+.empty-view{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  justify-content: center;
+  align-items: center;
+}
+.empty-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.empty-text{
+  margin-top: 20px;
+  color: #999;
+  font-size: 28px;
+}
+.empty-img{
+  width: 234px;
+  height: 188px;
+
 }

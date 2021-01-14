@@ -96,32 +96,50 @@ class Organization extends Component {
       const {list,city} = this.state;
       return (
         <View className='container'>
-          <View className='container_header'>
-            <View className='container_header_location'>
-              <Image src={Marker} className='container_header_location_marker'/>
-              <Text className='container_header_location_city'>{city}</Text>
-            </View>
-            <View className='container_header_wrap'>
-              <AtSearchBar
-                className='container_header_wrap_city'
-                value={this.state.queryName}
-                onChange={this.onChange}
-                placeholder={'搜索医院名称'}
-              />
-            </View>
-          </View>
-          {list&&list.map((item,index)=>{
-            return(
-              <View className='container_list_item' onClick={()=>this.goToCombo(item)} key={item.orgId+" "}>
-                <Image src={item.url?Api.imgUrl+item.url:Pic} className='container_list_item_pic'/>
-                <View className='container_list_item_desc'>
-                  <Text className='container_list_item_desc_hospital'>{item.orgName}</Text>
-                  <Text className='container_list_item_desc_item'>{'核酸检测'}</Text>
-                  <Text className='container_list_item_desc_address'>{item.wholeAddress}</Text>
-                </View>
+          <View className='main'>
+              <View className='search-view'>
+                  <View className='search-wrap'>
+                    <View style='display:flex;flex-direction:row;align-items:center'>
+                      <Image src={Marker} className='marker-img'/>
+                      <Text className='city-text'>{city}</Text>
+                    </View>
+                    <AtSearchBar
+                      className='search-bar'
+                      value={this.state.queryName}
+                      onChange={this.onChange}
+                      placeholder={'搜索医院名称'}
+                    />
+                  </View>
               </View>
-            )
-          })}
+            {list&&list.map((item,index)=>{
+              return(
+                <View className='list-row-container' onClick={()=>this.goToCombo(item)} key={item.orgId+" "}>
+                  <View className='list-row-view'>
+                    <Image src={Api.imgUrl+item.url} className='hospital-img'/>
+                    <View className='hospital-info-view'>
+                      <Text className='hospital-title'>{item.orgName}</Text>
+                      <Text className='hospital-subtitle'>核酸检测预约中心</Text>
+                      <Text className='hospital-address'>地址：{item.wholeAddress}</Text>
+                    </View>
+                  </View>
+                </View>
+              )
+            })}
+          </View>
+          {/*<View className='container_header'>*/}
+          {/*  <View className='container_header_location'>*/}
+          {/*    <Image src={Marker} className='container_header_location_marker'/>*/}
+          {/*    <Text className='container_header_location_city'>{city}</Text>*/}
+          {/*  </View>*/}
+          {/*  <View className='container_header_wrap'>*/}
+          {/*    <AtSearchBar*/}
+          {/*      className='container_header_wrap_city'*/}
+          {/*      value={this.state.queryName}*/}
+          {/*      onChange={this.onChange}*/}
+          {/*      placeholder={'搜索医院名称'}*/}
+          {/*    />*/}
+          {/*  </View>*/}
+          {/*</View>*/}
 
         </View>
 

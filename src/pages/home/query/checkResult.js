@@ -1,64 +1,67 @@
 import Taro from '@tarojs/taro'
-import {View, Text, Image, ScrollView, Swiper} from '@tarojs/components'
+import {Image, Text, View} from '@tarojs/components'
 import './checkResult.scss'
-import {AtList, AtListItem} from "taro-ui";
-import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
 import {getResultQueryListApi} from "../../../services/result_query";
 import moment from 'moment'
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as user from "../../../utils/user";
+import Forward from '@assets/home/forward.svg'
 import Config from "../../../../project.config.json";
+
 class Check_Result extends Component {
-  state={
+  state = {
     type: 0,
     list: [],
     page: 1,
     limit: 10,
     totalPage: 1,
-    userId:'',
+    userId: '',
   }
+
   componentDidMount() {
     this._initData();
   }
-  _initData= async ()=>{
+
+  _initData = async () => {
     const res = await user.loginByWeixin({appid: Config.appid});
     if (res.code === 200) {
-      console.log(333,res);
-      const {userId, wxid, unionid, sectionKey} =res.data;
+      console.log(333, res);
+      const {userId, wxid, unionid, sectionKey} = res.data;
       this.setState({userId}, () => {
         this._getList();
       })
-    }else{
+    } else {
       Taro.showToast({
-        title:res.msg,
-        icon:'none'
+        title: res.msg,
+        icon: 'none'
       })
     }
   }
-  _getList =()=>{
+  _getList = () => {
     Taro.showLoading({
       title: '加载中...',
     });
     getResultQueryListApi({
-      userId:this.state.userId,
+      userId: this.state.userId,
       page: this.state.page,
       size: this.state.limit
     }).then(res => {
-      console.log(444,res);
-      if(res.code===200){
-          if(res.data){
-            const {object,totalPage} = res.data;
-            if(Array.isArray(object)){
-              this.setState({list:this.state.list.concat(object),totalPage})
-            }else{
-              this.setState({list:this.state.list.concat([]),totalPage})
-            }
+      console.log(444, res);
+      if (res.code === 200) {
+        if (res.data) {
+          const {object, totalPage} = res.data;
+          if (Array.isArray(object)) {
+            this.setState({list: this.state.list.concat(object), totalPage})
+          } else {
+            this.setState({list: this.state.list.concat([]), totalPage})
           }
+        }
       }
       Taro.hideLoading();
     })
 
   }
+
   onReachBottom() {
     if (this.state.totalPage > this.state.page) {
       this.setState({
@@ -76,6 +79,7 @@ class Check_Result extends Component {
       return false;
     }
   }
+
   _goToDetail = () => {
     Taro.navigateTo({
       url: '/pages/home/detail/detail',
@@ -94,9 +98,9 @@ class Check_Result extends Component {
       }
     })
   }
-  _getWeek=(date)=>{
+  _getWeek = (date) => {
     let week = moment(date).day()
-    switch (week){
+    switch (week) {
       case 0:
         return '周日';
       case 1:
@@ -113,23 +117,26 @@ class Check_Result extends Component {
         return '周六'
     }
   }
+
   render() {
     const {list} = this.state;
     return (
       <View className='container'>
         <View className='section'>
-          {list&&list.map((item, index) => {
-            let date =  moment(item.date).format('YYYY-MM-DD');
+          {list && list.map((item, index) => {
+            let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (
-              <View className='listItem' key={item.id+""} onClick={this._goToDetail}>
-                <View className='listItem_left'>
-                  <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
-                  <Text className='listItem_left_date'>{date} {week}</Text>
-                </View>
-                <View className='listItem_right'>
-                  <Text className='listItem_right_status'>{item.state === '1'?'立即查看':'结果正在生成中'}</Text>
-                  <Image src={ArrowRight} className='listItem_right_arrow'/>
+              <View>
+                <View className='listItem' key={item.id + ""} onClick={this._goToDetail}>
+                  <View className='listItem_left'>
+                    <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
+                    <Text className='listItem_left_date'>{date} {week}</Text>
+                  </View>
+                  <View className='listItem_right'>
+                    <Text className='listItem_right_status'>{item.state === '1' ? '立即查看' : '结果正在生成中'}</Text>
+                    <Image src={Forward} className='listItem_right_arrow'/>
+                  </View>
                 </View>
               </View>
             )
@@ -140,4 +147,5 @@ class Check_Result extends Component {
 
   }
 }
+
 export default Check_Result

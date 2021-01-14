@@ -1,29 +1,31 @@
 import Taro from '@tarojs/taro'
-import {View, Text, ScrollView, Image} from '@tarojs/components'
-import {AtList, AtTabs, AtTabsPane, AtButton, AtListItem,} from "taro-ui"
+import {Image, Text, View} from '@tarojs/components'
+import {AtTabs, AtTabsPane,} from "taro-ui"
 import './auditRecord.scss'
-import ArrowRight from '@assets/home/check-result-query/arrow__right.svg'
 import {getAuditRecordApi} from "../../../services/user";
 import moment from "moment";
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import * as user from "../../../utils/user";
+import Forward from '@assets/home/forward.svg';
 import Config from "../../../../project.config.json";
+
 export class AuditRecord extends Component {
   state = {
     current: 0,
     list: [],
-    state:'',
+    state: '',
     page: 1,
     limit: 10,
     totalPage: 1,
     userId: '',
-    tabList: [{title: '全部',id:0}, {title: '审核中',id:1}, {title: '已通过',id:2}, {title: '已驳回',id:3}]
+    tabList: [{title: '全部', id: 0}, {title: '审核中', id: 1}, {title: '已通过', id: 2}, {title: '已驳回', id: 3}]
   }
 
   componentDidMount() {
-     this._initData();
+    this._initData();
   }
-  _initData=async ()=> {
+
+  _initData = async () => {
     const res = await user.loginByWeixin({appid: Config.appid});
     if (res.code === 200) {
       const {userId, wxid, unionid, sectionKey} = res.data;
@@ -47,7 +49,7 @@ export class AuditRecord extends Component {
       userId: this.state.userId,
       page: this.state.page,
       size: this.state.limit,
-      state:this.state.state
+      state: this.state.state
     }).then(res => {
       console.log(444, res);
       if (res.code === 200) {
@@ -85,7 +87,7 @@ export class AuditRecord extends Component {
 
   handleClick = (value) => {
     let state = '';
-    switch (value){
+    switch (value) {
       case 0:
         state = '';
         break;
@@ -99,13 +101,13 @@ export class AuditRecord extends Component {
         state = 2;
         break;
     }
-    this.setState({current: value,state,page:1,list:[]},()=>{
+    this.setState({current: value, state, page: 1, list: []}, () => {
       this._getList();
     })
   }
-  _getWeek=(date)=>{
+  _getWeek = (date) => {
     let week = moment(date).day()
-    switch (week){
+    switch (week) {
       case 0:
         return '周日';
       case 1:
@@ -122,43 +124,47 @@ export class AuditRecord extends Component {
         return '周六'
     }
   }
-  goToPage = (item)=>{
-    if(item.state ==1){
-        Taro.navigateTo({
-          url:'/pages/home/immediate-order/immediateOrder'
-        })
+  goToPage = (item) => {
+    if (item.state == 1) {
+      Taro.navigateTo({
+        url: '/pages/home/immediate-order/immediateOrder'
+      })
     }
   }
+
   render() {
-    const {current, tabList,list} = this.state;
-    console.log(333,list);
+    const {current, tabList, list} = this.state;
+    console.log(333, list);
     return (
       <View className='container'>
         <View className='container_body'>
           <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
             {tabList.map((item, index) => {
               return (
-                <AtTabsPane key={item.id+""} current={current} index={index}>
-                  {list&&list.map((_item,index)=>{
-                    let date =  moment(_item.date).format('YYYY-MM-DD');
+                <AtTabsPane key={item.id + ""} current={current} index={index}>
+                  {list && list.map((_item, index) => {
+                    let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
                     return (
-                      <View className='wrap' key={_item.id+" "} onClick={(item)=>this.goToPage(item)}>
-                        <View className='listItem'>
-                          <View className='listItem_left'>
-                            <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
-                            <Text className='listItem_left_date'>{date} {week}</Text>
+                      <View className='wrap' key={_item.id + " "} onClick={(item) => this.goToPage(item)}>
+                        <View className='main'>
+                          <View className='listItem'>
+                            <View className='listItem_left'>
+                              <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
+                              <Text className='listItem_left_date'>{date} {week}</Text>
+                            </View>
+                            <View className='listItem_right'>
+                              <Text
+                                className='listItem_right_status'>{_item.state == 0 ? '审核中' : _item.state == 1 ? '已通过' : '已驳回'}</Text>
+                              <Image src={Forward} className='listItem_right_arrow'/>
+                            </View>
                           </View>
-                          <View className='listItem_right'>
-                            <Text className='listItem_right_status'>{_item.state==0?'审核中':_item.state ==1?'已通过':'已驳回'}</Text>
-                            <Image src={ArrowRight} className='listItem_right_arrow'/>
-                          </View>
+                          {item.state == 2 && <View className='footer'>
+                            <View className='op_btn_1'>
+                              <Text>重新预约</Text>
+                            </View>
+                          </View>}
                         </View>
-                        {item.state ==2&&<View className='wrap_footer'>
-                          <View className='op_btn_1'>
-                            <Text>重新预约</Text>
-                          </View>
-                        </View>}
                       </View>
                     )
                   })}
@@ -172,4 +178,5 @@ export class AuditRecord extends Component {
     )
   }
 }
+
 export default AuditRecord

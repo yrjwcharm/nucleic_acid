@@ -11,10 +11,10 @@
   background-color: #f5f6f9;
 
 }
-.main{
-  background:#fff;
-
-}
+//.main{
+//  background:#fff;
+//
+//}
 .list-row-bg{
   padding-left: 20px;
   padding-right: 20px;
@@ -53,39 +53,79 @@
   font-size: 24px;
   color: #999999;
 }
-
+.order-time-view{
+  height: 41PX;
+  line-height: 41PX;
+}
 .order-time{
-  margin-top: 10px;
   font-size: 32px;
   color: #222222;
   margin-left: 40px;
 }
-
+.combo-choice-view{
+   height: 45PX;
+  line-height: 45PX;
+}
+.combo-choice-text{
+  font-size: 32px;
+  color: #222222;
+  margin-left: 40px;
+}
+.combo-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100PX;
+  background: #fff;
+}
+.combo-wrap{
+  padding-left: 20PX;
+  padding-right: 20PX;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.title{
+  font-size: 16PX;
+  color: #333333;
+}
+.content{
+  margin-top: 4PX;
+  font-size: 14PX;
+  color: #999999;
+}
+.price{
+  margin-top: 7PX;
+  font-size: 14PX;
+  color: #3299FF;
+}
+.choice-view{
+  display: flex;
+  width: 23PX;
+  border-radius: 11.5PX;
+  height: 23PX;
+  background: #F7F9FA;
+  border: 1px solid #D3D3D3;
+}
+.choice-wrap{
+  margin: auto;
+  background: #3299FF;
+  height:13PX;
+  width: 13PX;
+  border-radius: 6.5PX;
+}
 .section {
   position: relative;
-  padding:12px 40px 20px 40px;
+  padding:10PX 20PX 10PX 40px;
   display: flex;
+  background: #fff;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
-.prev{
-  width: 16px;
-  height:28.4px ;
-  position: absolute;
-  z-index: 9999;
-  left:40px;
-}
-.next{
-  width: 16px;
-  height:28.4px;
-  position: absolute;
-  right:40px;
-
-}
 .scrollView{
   white-space: nowrap;
-
 }
 .wrap{
   display: inline-block;
@@ -95,95 +135,114 @@
     justify-content: center;
     align-items: center;
     width: 108px;
-    height: 126px;
-    background: inherit;
-    background-color: transparent;
-    border: none;
+    height: 128px;
+    background: transparent;
     border-radius: 10px;
     &_week{
       font-size: 28px;
-      color: #666;
+      color: #999;
     }
     &_date{
       font-size: 28px;
-      color: #666;
+      color: #999;
     }
     &_status{
-      color: #666;
+      color: #999;
       font-size: 28px;
     }
   }
 }
-.am-wrap{
-  height: 84px;
-  padding-left: 40px;
-  line-height: 84px;
-  background: #F5F6F9;
-}
-.am{
-  font-size: 32px;
-  color: #222222;
-}
-.pm-wrap{
-  padding-left: 40px;
-  height: 84px;
-  background: #F5F6F9;
-  line-height: 42px;
-}
-.pm{
-  font-size: 32px;
-  color: #222222;
-}
-.combo{
+
+//新样式
+.list-row-container{
   display: flex;
+  margin-top: 20px;
   padding-left: 40px;
+  background: #fff;
   padding-right: 40px;
+  justify-content: center;
+  height: 194px;
+  flex-direction: column;
+}
+.list-row-view{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.hospital-img{
+  width: 244px;
+  height:154px;
+  border-radius: 5PX;
+}
+.hospital-title{
+  font-size: 32px;
+  color: #333333;
+}
+.hospital-info-view{
+  display: flex;
+  margin-left: 22px;
+  flex-direction: column;
+
+}
+.hospital-subtitle{
+  margin-top: 2px;
+  font-size:24px;
+  color: #666666;
+}
+.hospital-address{
+  margin-top: 8px;
+  font-size: 24px;
+  color: #999999;
+}
+
+.list-row{
+  margin-top: 17PX;
+  padding-left: 20PX;
+  padding-right: 20PX;
+  border-bottom: 0.5PX solid #EEE;
+  display: flex;
+  height: 50PX;
+  background: #FFFFFF;
   flex-direction: column;
   justify-content: center;
-  height: 108px;
 }
-.combo-item{
+.list-row-wrap{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
-.title{
-  font-size: 28px;
-  color: #333333;
-  text-align: center;
+.clock-img{
+  width: 18PX;
+  height:18PX;
 }
-.price{
-  font-size: 28px;
-  color: #333333;
-  text-align: center;
+.time-text{
+  font-size: 14PX;
+  color: #222222;
+  margin-left: 7PX;
 }
-.btn-wrap{
+.time-range-text{
+  font-size: 14PX;
+  color: #3F3F3F;
+  margin-left: 10PX;
+}
+.sy-text{
+  font-size: 14PX;
+  color: #999999;
+}
+.surplus--text{
+  font-size: 16PX;
+  color: #143F00;
+}
+.right-away-order-view{
   display: flex;
-  width: 144px;
-  height: 60px;
+  height: 30PX;
+  width: 80PX;
   background: #3299FF;
-  border-radius: 30px;
+  border-radius: 15PX;
 }
-.btn{
+.right-away-order-text{
+  font-size: 12PX;
   margin: auto;
-  font-size: 28px;
   color: #FFFFFF;
 }
-.bottom-wrap{
-  height:80px;
-  background: #3299FF;
-  display: flex;
-
-}
-.footer{
-  position: absolute;
-  bottom:0;
-  width: 100%;
-}
-.next-wrap{
-  font-size: 32px;
-  color: #FFFFFF;
-}
-
-

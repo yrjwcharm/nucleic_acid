@@ -3,9 +3,11 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #f5f6f9;
+  background-color: #F5F6F9;
   border-top: 1px solid #eee;
   &_section{
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -43,20 +45,18 @@
 .tip-container{
   background: #fff;
   padding-top: 32px;
-  margin-top: 20px;
   padding-bottom: 18px;
 
 }
 .tip-view{
   display: flex;
-  flex:1;
+  flex-direction: column;
   background: #fff;
   padding-left: 40px;
   padding-right: 40px;
   //padding-right: 40px;
 }
 .tip-text{
-  flex: 1;
   text-align: justify;
   //text-align-last:justify;
   text-justify: inter-ideograph;
@@ -78,10 +78,10 @@
       &_title{
         font-family: PingFangSC-Semibold;
         font-size: 32px;
+        font-weight: bolder;
         color: #333;
       }
       &_detail{
-        font-family: PingFangSC-Regular;
         margin-top: 20px;
         font-size: 24px;
         color: #999999;
@@ -102,7 +102,11 @@
   width:750rpx;
   height:300rpx;
 }
-.main{
+.container_footer{
+  margin-top: 20px;
   display: flex;
+  flex:1;
+  background: #fff;
   flex-direction: column;
 }
+

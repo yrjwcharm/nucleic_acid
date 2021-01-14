@@ -1,3 +1,3 @@
 export  default {
-  navigationBarTitleText: '填写信息'
+  navigationBarTitleText: '填写就诊人信息'
 }

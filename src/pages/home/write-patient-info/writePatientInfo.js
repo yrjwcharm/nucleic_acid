@@ -34,12 +34,11 @@ const WritePatientInfo = () => {
     _initData();
   }, [])
   const _initData = async () => {
-    const {item, userType} = getCurrentInstance().router.params;
+    const {item} = getCurrentInstance().router.params;
     const {sourceId, orgId, date,} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
-    setUserType(userType);
     setUserId(userId)
   }
   const nextStep = async () => {
@@ -94,7 +93,7 @@ const WritePatientInfo = () => {
     }
    const _res = await user.loginByWeixin({appid:Config.appid});
     if (_res.code === 200) {
-      const {userId, wxid, unionid, sectionKey} =res.data;
+      const {userId, wxid, unionid, sectionKey} =_res.data;
       const res = await fetchAppointDetectApi({
         cityid,
         date,
@@ -111,9 +110,16 @@ const WritePatientInfo = () => {
         userId,
         userType,
       })
+      console.log(333, res);
       if (res.code === 200) {
+          Taro.showToast({
+            title:'已预约',
+            icon:'none',
+          })
+        Taro.reLaunch('/pages/home/home');
 
-        console.log(333,res.data);
+      }else{
+
       }
     }else{
       Taro.showToast({

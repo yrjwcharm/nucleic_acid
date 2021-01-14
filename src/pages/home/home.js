@@ -53,7 +53,6 @@ export default class Home extends Component {
     return (
       <View className='container'>
         <Image src={Carousel} className='carousel'/>
-        <View>
           <View className='container_section'>
             <View className='home_wrap' onClick={() => this.goToOrganization(2)}>
               <Image className='home_wrap_img'
@@ -80,31 +79,31 @@ export default class Home extends Component {
               </View>
             </View>
           </View>
-          {/*<View className='container_footer'>*/}
-          <View className='tip-container'>
-            <Text className='tip'>预约服务声明</Text>
+          <View className='container_footer'>
+            <View className='tip-container'>
+              <Text className='tip'>预约服务声明</Text>
+            </View>
+            <View className='tip-view'>
+              <Text className='tip-text'>
+                1. 请您根据个人实际情况选择预约检测入口，个人自费核酸检
+                测预约入口所有人均可预约， 个人免费核酸检测预约必须是发
+                热门诊或住院患者，同时需要拍照上传证明资料， 同时陪同家
+                属有一个免费检测名额；
+              </Text>
+            </View>
+            <View className='tip-view'>
+              <Text className='tip-text'>
+                2. 个人预约仅限公民使用本人身份预约不可代办，核酸检测取
+                样前需要出示身份证核实身份，冒用身份需承担法律责任；
+              </Text>
+            </View>
+            <View className='tip-view'>
+              <Text className='tip-text'>
+                3. 核酸检测结果单最快是24小时返回, 超过72小时仍未收到检
+                测结果的，请与医院管理员联系；
+              </Text>
+            </View>
           </View>
-          <View className='tip-view'>
-            <Text className='tip-text'>
-              1. 请您根据个人实际情况选择预约检测入口，个人自费核酸检
-              测预约入口所有人均可预约， 个人免费核酸检测预约必须是发
-              热门诊或住院患者，同时需要拍照上传证明资料， 同时陪同家
-              属有一个免费检测名额；
-            </Text>
-          </View>
-          <View className='tip-view'>
-            <Text className='tip-text'>
-              2. 个人预约仅限公民使用本人身份预约不可代办，核酸检测取
-              样前需要出示身份证核实身份，冒用身份需承担法律责任；
-            </Text>
-          </View>
-          <View className='tip-view'>
-            <Text className='tip-text'>
-              3. 核酸检测结果单最快是24小时返回, 超过72小时仍未收到检
-              测结果的，请与医院管理员联系；
-            </Text>
-          </View>
-        </View>
       </View>
     )
   }
