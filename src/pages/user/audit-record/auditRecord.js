@@ -8,7 +8,7 @@ import React, {Component} from 'react'
 import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg';
 import Config from "../../../../project.config.json";
-
+import _Empty from "@assets/empty.png";
 export class AuditRecord extends Component {
   state = {
     current: 0,
@@ -141,7 +141,7 @@ export class AuditRecord extends Component {
             {tabList.map((item, index) => {
               return (
                 <AtTabsPane key={item.id + ""} current={current} index={index}>
-                  {list && list.map((_item, index) => {
+                  {list.length!==0?list && list.map((_item, index) => {
                     let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
                     return (
@@ -166,7 +166,7 @@ export class AuditRecord extends Component {
                         </View>
                       </View>
                     )
-                  })}
+                  }):<Empty/>}
 
                 </AtTabsPane>
               )
@@ -177,5 +177,14 @@ export class AuditRecord extends Component {
     )
   }
 }
-
+const Empty = () => {
+  return (
+    <View className='empty-view'>
+      <View className='empty-wrap'>
+        <Image src={_Empty} className='empty-img'/>
+        <Text className='empty-text'>暂无审核记录哦~</Text>
+      </View>
+    </View>
+  )
+}
 export default AuditRecord

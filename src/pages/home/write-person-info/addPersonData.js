@@ -116,7 +116,7 @@ const AddPersonData = () => {
       })
       return;
     }
-    if(code!==verifyCode){
+    if (code.toLowerCase() !== verifyCode.toLowerCase()) {
       Taro.showToast({
         title: '验证码输入不正确',
         icon: 'none',
@@ -151,48 +151,48 @@ const AddPersonData = () => {
       })
       return;
     }
-     if (!isEmpty(entouragePhone)) {
-        if (!isMobile(entouragePhone)) {
-          Taro.showToast({
-            title: '陪同人手机号格式不正确',
-            icon: 'none',
-          })
-          return;
-        }
+    if (!isEmpty(entouragePhone)) {
+      if (!isMobile(entouragePhone)) {
+        Taro.showToast({
+          title: '陪同人手机号格式不正确',
+          icon: 'none',
+        })
+        return;
       }
+    }
 
-      if (!isEmpty(entourageIdCard)) {
-        if (!isIdCard(entourageIdCard)) {
-          Taro.showToast({
-            title: '陪同人身份证号格式不正确',
-            icon: 'none',
-          })
-          return;
-        }
+    if (!isEmpty(entourageIdCard)) {
+      if (!isIdCard(entourageIdCard)) {
+        Taro.showToast({
+          title: '陪同人身份证号格式不正确',
+          icon: 'none',
+        })
+        return;
       }
-      let item ={
-          cityid,
-          date,
-          docUrl,
-          entourageIdCard,
-          entourageName,
-          entouragePhone,
-          entourageRelation,
-          districtid,
-          orgId,
-          payType,
-          provinceid,
-          sourceId,
-          streetdesc,
-          userId,
-          userType,
-        orgName,name,
-        phone,idCard,price
-      }
+    }
+    let item ={
+      cityid,
+      date,
+      docUrl,
+      entourageIdCard,
+      entourageName,
+      entouragePhone,
+      entourageRelation,
+      districtid,
+      orgId,
+      payType,
+      provinceid,
+      sourceId,
+      streetdesc,
+      userId,
+      userType,
+      orgName,name,
+      phone,idCard,price
+    }
 
     Taro.navigateTo({
-        url: `/pages/home/certification/certification?item=${JSON.stringify(item)}`
-      })
+      url: `/pages/home/certification/certification?item=${JSON.stringify(item)}`
+    })
 
   }
   const toggleAddressPicker = (areaInfo, coding) => {
@@ -224,7 +224,7 @@ const AddPersonData = () => {
           <View className='list-row-wrap'>
             <View className='list-row-view  flex-between'>
               <Text className='list-row-text'>图片验证码</Text>
-              <Input type='number' className='__list-row-input' onInput={(e)=>{
+              <Input type='text' className='__list-row-input' onInput={(e)=>{
                 setVerifyCode(e.detail.value);
               }} placeholder={'请输入图片验证码'}
                      placeholderClass='list-row-input-placeholder'/>
@@ -334,7 +334,7 @@ const ListRow = (props) => {
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
           <Input  type={type} className={className} onInput={onInput} placeholder={placeholder}
-                 placeholderClass='list-row-input-placeholder'/>
+                  placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>
     </View>

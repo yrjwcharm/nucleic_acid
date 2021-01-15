@@ -9,11 +9,13 @@ import React, { Component } from 'react'
 import {getQueryOrgListByNameApi} from "../../../services/home";
 import {getCurrentInstance} from "@tarojs/runtime";
 import Search from '@assets/search.png'
+import _Empty from "@assets/empty.png";
 let QQMapWX = require('../../../utils/qqmap-wx-jssdk.min');
 class Organization extends Component {
   state={
     queryName:'',
     city:'北京',
+    list:[],
   }
   componentDidMount() {
       this._getAuthorize();
@@ -109,7 +111,7 @@ class Organization extends Component {
                     </View>
                   </View>
               </View>
-            {list&&list.map((item,index)=>{
+            {list.length!==0?list&&list.map((item,index)=>{
               return(
                 <View className='list-row-container' onClick={()=>this.goToCombo(item)} key={item.orgId+" "}>
                   <View className='list-row-view'>
@@ -122,7 +124,7 @@ class Organization extends Component {
                   </View>
                 </View>
               )
-            })}
+            }):<Empty/>}
           </View>
           {/*<View className='container_header'>*/}
           {/*  <View className='container_header_location'>*/}
@@ -144,5 +146,14 @@ class Organization extends Component {
       )
     }
   }
-
+const Empty = () => {
+  return (
+    <View className='empty-view'>
+      <View className='empty-wrap'>
+        <Image src={_Empty} className='empty-img'/>
+        <Text className='empty-text'>暂无预约信息哦~</Text>
+      </View>
+    </View>
+  )
+}
 export default Organization

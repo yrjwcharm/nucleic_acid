@@ -5,7 +5,7 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
-import {fetchAppointDetectApi} from "../../../services/combo";
+import {fetchAppointDetectApi, fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import Taro from "@tarojs/taro";
 
 const Confirm = () => {
@@ -43,14 +43,17 @@ const Confirm = () => {
       date,
       districtid,
       docUrl,
-      idCard,
-      name,
       orgId,
       payType,
-      phone,
       provinceid,
       sourceId,
       streetdesc,
+      entourageIdCard,
+      entourageName,
+      entouragePhone,
+      entourageRelation,
+      orgName,name,
+      phone,idCard,price,
     } = JSON.parse(item);
     const _res = await user.loginByWeixin({appid: Config.appid});
     if (_res.code === 200) {
@@ -70,12 +73,19 @@ const Confirm = () => {
         streetdesc,
         userId,
         userType,
+        entourageIdCard,
+        entourageName,
+        entouragePhone,
+        entourageRelation,
       })
       console.log(333, res);
       if (res.code === 200) {
         Taro.showToast({
-          title: '已预约',
+          title: '提交成功',
           icon: 'none',
+        })
+        userType==1&&Taro.reLaunch({
+          url:'/pages/home/home'
         })
       }
     }

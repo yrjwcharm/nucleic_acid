@@ -30,9 +30,9 @@ export default class UploadCertification extends Component {
 
     console.log(333,item);
     const {
+      docUrl,
       cityid,
       date,
-      docUrl,
       entourageIdCard,
       entourageName,
       entouragePhone,
@@ -49,27 +49,6 @@ export default class UploadCertification extends Component {
 
     } = JSON.parse(item);
 
-    console.log(
-      111,
-      cityid,
-      date,
-      districtid,
-      url,
-      entourageIdCard,
-      entourageName,
-      entouragePhone,
-      idCard,
-      name,
-      orgId,
-      payType,
-      phone,
-      provinceid,
-      sourceId,
-      streetdesc,
-      userId,
-
-    );
-
     if (isEmpty(url)) {
       Taro.showToast({
         title: '请先上传证明',
@@ -79,38 +58,29 @@ export default class UploadCertification extends Component {
     }
     const _res = await user.loginByWeixin({appid:Config.appid});
     if (_res.code === 200) {
-      const {userId, wxid, unionid, sectionKey} = _res.data;
-      const res = await fetchAppointDetectApi({
+      let item={
         cityid,
         date,
-        districtid,
-        docUrl: url,
         entourageIdCard,
         entourageName,
         entouragePhone,
         entourageRelation,
-        idCard,
-        name,
+        districtid,
         orgId,
         payType,
-        phone,
         provinceid,
         sourceId,
         streetdesc,
-        userId,
-        userType: 1,
-      })
-      if (res.code === 200) {
-        Taro.showToast({
-          title:'已预约',
-          icon:'none',
-        })
-
+        userType,
+        orgName,name,
+        phone,idCard,price,
+        docUrl:url
+      }
         // let item ={orgName,name,date,streetdesc,phone,idCard,price};
         Taro.navigateTo({
-          url:`/pages/home/confirm/confirm?item=${item}&userType=1`
+          url:`/pages/home/confirm/confirm?item=${JSON.stringify(item)}&userType=1`
         })
-      }
+
     }
   }
   _chooseImage = () => {

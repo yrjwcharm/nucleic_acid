@@ -111,9 +111,10 @@ export class AdvanceOrder extends Component {
     })
   }
   goToPage = (item) => {
-    if (item.state == 2) {
+    console.log(333,item);
+    if (item.state == 1) {
       Taro.navigateTo({
-        url: '/pages/user/order-success/orderAppointSuccess',
+        url: `/pages/user/order-success/orderAppointSuccess?item=${JSON.stringify(item)}`,
         events: {
           // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
           acceptDataFromOpenedPage: function (data) {
@@ -193,27 +194,26 @@ export class AdvanceOrder extends Component {
           <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
             {tabList.map((item, index) => {
               return (
-                <AtTabsPane key={item.id + ""} current={current} index={index}>
-                  {
-                    list.length === 0 ? <Empty/> : list.map((_item, index) => {
+                <AtTabsPane  className='at-tab' key={item.id + ""} current={current} index={index}>
+                  {list.length!==0?list.map((_item, index) => {
                       let date = moment(_item.date).format('YYYY-MM-DD');
                       let week = this._getWeek(_item.date);
                       return (
-                        <View className='wrap' key={_item.id + " "} onClick={(item) => this.goToPage(item)}>
+                        <View className='wrap' key={_item.id + " "} >
                           <View className='main'>
                             <View className='listItem'>
                               <View className='listItem_left'>
                                 <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
                                 <Text className='listItem_left_date'>{date} {week}</Text>
                               </View>
-                              <View className='listItem_right'>
+                              <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
                                 <Text
                                   className='listItem_right_status'>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
                                 <Image src={Forward} className='listItem_right_arrow'/>
                               </View>
                             </View>
-                            <View className='footer' onClick={() => this._orderOp(_item)}>
-                              <View className='op_btn_1'>
+                            <View className='footer' >
+                              <View className='op_btn_1' onClick={() => this._orderOp(_item)}>
                                 <Text>{_item.state == 1 ? '取消预约' : '再次预约'}</Text>
                               </View>
                               {_item.state == 3 && <View className='op_btn_2' onClick={() => this._deleteOrder(_item)}>
@@ -223,8 +223,7 @@ export class AdvanceOrder extends Component {
                           </View>
                         </View>
                       )
-                    })}
-
+                    }):<Empty/>}
                 </AtTabsPane>
               )
             })}

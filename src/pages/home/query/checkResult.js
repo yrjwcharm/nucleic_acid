@@ -7,7 +7,8 @@ import React, {Component} from 'react'
 import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg'
 import Config from "../../../../project.config.json";
-
+import _Empty from "@assets/empty.png";
+import {AtTabsPane} from "taro-ui";
 class Check_Result extends Component {
   state = {
     type: 0,
@@ -123,7 +124,7 @@ class Check_Result extends Component {
     return (
       <View className='container'>
         <View className='section'>
-          {list && list.map((item, index) => {
+          {list.length!==0?list && list.map((item, index) => {
             let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (
@@ -140,12 +141,21 @@ class Check_Result extends Component {
                 </View>
               </View>
             )
-          })}
+          }):<Empty/>}
         </View>
       </View>
     )
 
   }
 }
-
+const Empty = () => {
+  return (
+    <View className='empty-view'>
+      <View className='empty-wrap'>
+        <Image src={_Empty} className='empty-img'/>
+        <Text className='empty-text'>暂无检验结果哦~</Text>
+      </View>
+    </View>
+  )
+}
 export default Check_Result

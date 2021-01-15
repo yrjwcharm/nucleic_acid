@@ -100,7 +100,7 @@ const WritePatientInfo = () => {
       })
       return;
     }
-    if (code !== verifyCode) {
+    if (code.toLowerCase() !== verifyCode.toLowerCase()) {
       Taro.showToast({
         title: '验证码输入不正确',
         icon: 'none',
@@ -155,92 +155,92 @@ const WritePatientInfo = () => {
       url: `/pages/home/confirm/confirm?item=${JSON.stringify(item)}&userType=2`
     })
 
-}
-const toggleAddressPicker = (areaInfo, coding) => {
-  const _coding = coding.split(',');
-  console.log(333, areaInfo, coding);
-  setArea(areaInfo);
-  setProvinceId(_coding[0]);
-  setCityId(_coding[1]);
-  setDistrictId(_coding[2]);
-  setShowPicker(false);
-}
-const showAreaPicker = () => {
-  setShowPicker(true);
-}
-return (
-  <View className='container'>
-    <View className='main'>
-      <View className="self-info-view">
-        <Text className='self-info-text'>本人信息</Text>
-      </View>
-      <ListRow className='list-row-input' type='text' onInput={(e) => {
-        setName(e.detail.value);
+  }
+  const toggleAddressPicker = (areaInfo, coding) => {
+    const _coding = coding.split(',');
+    console.log(333, areaInfo, coding);
+    setArea(areaInfo);
+    setProvinceId(_coding[0]);
+    setCityId(_coding[1]);
+    setDistrictId(_coding[2]);
+    setShowPicker(false);
+  }
+  const showAreaPicker = () => {
+    setShowPicker(true);
+  }
+  return (
+    <View className='container'>
+      <View className='main'>
+        <View className="self-info-view">
+          <Text className='self-info-text'>本人信息</Text>
+        </View>
+        <ListRow className='list-row-input' type='text' onInput={(e) => {
+          setName(e.detail.value);
 
-      }} label='姓名' placeholder='请输入姓名'/>
-      <ListRow className='list-row-input' type='number' onInput={(e) => {
-        setPhone(e.detail.value);
-      }} label='电话' placeholder='请输入电话号码'/>
-      <View className='list-row-container'>
-        <View className='list-row-wrap'>
-          <View className='list-row-view  flex-between'>
-            <Text className='list-row-text'>图片验证码</Text>
-            <Input type='number' className='__list-row-input' onInput={(e) => {
-              setVerifyCode(e.detail.value);
-            }} placeholder={'请输入图片验证码'}
-                   placeholderClass='list-row-input-placeholder'/>
-            <View className='code-view' onClick={getImageCode}>
-              <Image src={imgCode} className='img-code'/>
+        }} label='姓名' placeholder='请输入姓名'/>
+        <ListRow className='list-row-input' type='number' onInput={(e) => {
+          setPhone(e.detail.value);
+        }} label='电话' placeholder='请输入电话号码'/>
+        <View className='list-row-container'>
+          <View className='list-row-wrap'>
+            <View className='list-row-view  flex-between'>
+              <Text className='list-row-text'>图片验证码</Text>
+              <Input type='text' className='__list-row-input' onInput={(e) => {
+                setVerifyCode(e.detail.value);
+              }} placeholder={'请输入图片验证码'}
+                     placeholderClass='list-row-input-placeholder'/>
+              <View className='code-view' onClick={getImageCode}>
+                <Image src={imgCode} className='img-code'/>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
-        setIdCard(e.detail.value);
-      }} label='身份证号' placeholder='请输入身份证号'/>
-      <View className='address-info-container' onClick={showAreaPicker}>
-        <View className='address-info-wrap'>
-          <View className='address-info-view'>
-            <View style='display:flex;alignItems:center'>
-              <Text className='dist-name-text'>地区信息</Text>
-              <Text className='select-city-text _list-row-input'>{area}</Text>
+        <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
+          setIdCard(e.detail.value);
+        }} label='身份证号' placeholder='请输入身份证号'/>
+        <View className='address-info-container' onClick={showAreaPicker}>
+          <View className='address-info-wrap'>
+            <View className='address-info-view'>
+              <View style='display:flex;alignItems:center'>
+                <Text className='dist-name-text'>地区信息</Text>
+                <Text className='select-city-text _list-row-input'>{area}</Text>
+              </View>
+              <Image src={Forward} className='list-row-arrow'/>
             </View>
-            <Image src={Forward} className='list-row-arrow'/>
           </View>
         </View>
-      </View>
-      <View className='detail-address-container'>
-        <View className='detail-address-textarea'>
-          <Textarea onInput={e => {
-            setStreetDesc(e.detail.value)
-          }} className='textarea-text' placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
+        <View className='detail-address-container'>
+          <View className='detail-address-textarea'>
+            <Textarea onInput={e => {
+              setStreetDesc(e.detail.value)
+            }} className='textarea-text' placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
+          </View>
+        </View>
+        <View className='tip-container'>
+          <Text className='tip'>温馨提示</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
+          </Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
+        </View>
+        <View className='tip-view'>
+          <Text className='tip-text'>
+            3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
+          </Text>
         </View>
       </View>
-      <View className='tip-container'>
-        <Text className='tip'>温馨提示</Text>
+      <View className='footer'>
+        <View className='btn-submit-view' onClick={nextStep}>
+          <Text className='btn-submit-text'>下一步</Text>
+        </View>
       </View>
-      <View className='tip-view'>
-        <Text className='tip-text'>
-          1. 就诊人信息必须是核酸检测者本人，姓名、身份证号必须和身份证内容保持完全一致，核酸检测取样前需要出示身份证核实身份，冒用身份需承担法律责任；
-        </Text>
-      </View>
-      <View className='tip-view'>
-        <Text className='tip-text'>2. 所有填写的信息务必做到真实，不要使用他人手机号进行验证，否则将会导致他人身份无法核验；</Text>
-      </View>
-      <View className='tip-view'>
-        <Text className='tip-text'>
-          3. 详细地址必须为本人现住宅或办公真实地址，精确到门牌号；
-        </Text>
-      </View>
+      <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
     </View>
-    <View className='footer'>
-      <View className='btn-submit-view' onClick={nextStep}>
-        <Text className='btn-submit-text'>下一步</Text>
-      </View>
-    </View>
-    <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
-  </View>
-)
+  )
 }
 const ListRow = (props) => {
   const {label, placeholder, className, type, onInput} = props;

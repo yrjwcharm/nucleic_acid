@@ -1,8 +1,10 @@
 .container{
   display: flex;
+  flex:1;
   flex-direction: column;
   background-color: #f5f6f9;
   height: 100%;
+  position: relative;
   border-top: 1px solid #eee;
   }
 .wrap{
@@ -43,8 +45,6 @@
     &_date{
       margin-top: 20px;
       font-size: 24px;
-      font-family: PingFangSC-Regular;
-
       color: #666666;
     }
 
@@ -91,8 +91,9 @@
 }
 .empty-view{
   display: flex;
-  flex-direction: column;
   flex:1;
+  margin-top: 50%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -110,4 +111,9 @@
   width: 234px;
   height: 188px;
 
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  flex:1;
 }
