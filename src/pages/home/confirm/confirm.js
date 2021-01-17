@@ -163,7 +163,10 @@ const Confirm = () => {
           title: res.msg,
           icon: 'none',
         })
-        Taro.reLaunch({url:'/pages/index/index'})
+        let timer =setTimeout(()=>{
+          Taro.reLaunch({url:'/pages/index/index'})
+          clearTimeout(timer);
+        },1500)
       }
     }
   }

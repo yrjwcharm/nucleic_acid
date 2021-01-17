@@ -39,8 +39,9 @@ const WritePatientInfo = () => {
     getImageCode();
   }, [])
   const _initData = async () => {
-    const {item} = getCurrentInstance().router.params;
+    const {item,obj} = getCurrentInstance().router.params;
     const {sourceId, orgId, date,appointId, orgName,timeType, price} = JSON.parse(item);
+    console.log(222,obj);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);

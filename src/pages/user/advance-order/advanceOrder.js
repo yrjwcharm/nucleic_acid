@@ -141,23 +141,20 @@ export class AdvanceOrder extends Component {
         return '周六'
     }
   }
-  _orderOp = async (item) => {
-    if(item.state ==1){
-      this.setState({visible:true,item});
-    }else {
-        const res = await queryAppointRecord({
-          id: item.id,
-        })
-        if(res.code == 200){
-          const {userType}=res.data;
-          Taro.eventCenter.trigger('event', res.data)
-            Taro.redirectTo({url:`/pages/home/organization/organization?userType=${userType}`});
-        }
-
-    }
-
+  _cancelAppoint = async (item) => {
+      this.setState({visible: true, item});
   }
-  _deleteOrder = (item) => {
+  _againAppoint=async (item)=>{
+    const res = await queryAppointRecord({
+      id: item.id,
+    })
+    console.log(333, res);
+    if (res.code == 200) {
+      const {userType} = res.data;
+      Taro.redirectTo({url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}`});
+    }
+  }
+  _deleteAppoint = (item) => {
     this.setState({visible:true,item})
   }
   _enter=()=>{
@@ -178,7 +175,7 @@ export class AdvanceOrder extends Component {
           })
         }
       })
-    }else if(item.state==1){
+    }else if(item.state==1||item.state == 0){
       Taro.request({
         url: Api.cancelOrder + `?id=${item.id}`, //仅为示例，并非真实的接口地址
         data: {},
@@ -226,10 +223,13 @@ export class AdvanceOrder extends Component {
                             </View>
                           </View>
                           <View className='footer'>
-                            <View className='op_btn_1' onClick={() => this._orderOp(_item)}>
-                              <Text>{_item.state == 1 ? '取消预约' : '再次预约'}</Text>
-                            </View>
-                            {_item.state == 3 && <View className='op_btn_2' onClick={() => this._deleteOrder(_item)}>
+                            {(_item.state==0||_item.state==1)&&<View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
+                              <Text>取消预约</Text>
+                            </View>}
+                            {_item.state==1&&<View className='op_btn_2' onClick={() => this._againAppoint(_item)}>
+                             <Text>再次预约</Text>
+                            </View>}
+                            {_item.state == 3 && <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
                               <Text>删除</Text>
                             </View>}
                           </View>

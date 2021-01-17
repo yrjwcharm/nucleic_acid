@@ -30,9 +30,9 @@ class Combo extends Component {
   }
 
   componentDidMount() {
-    let {orgId, item, userType} = getCurrentInstance().router.params;
-    const {orgName}= JSON.parse(item);
-    this.setState({orgId,userType,orgName, item: JSON.parse(item)}, () => {
+    let {orgId, item, userType,obj} = getCurrentInstance().router.params;
+    const {orgName,}= JSON.parse(item);
+    this.setState({orgId,userType,orgName,obj:obj&&JSON.parse(obj), item: JSON.parse(item)}, () => {
 
       this._initData(this.state.orgId);
 
@@ -198,10 +198,10 @@ class Combo extends Component {
     console.log(333,userType);
     if(item.amount>0) {
       userType == 1 && Taro.navigateTo({
-        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}&obj=${obj}`
+        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
       })
       userType == 2 && Taro.navigateTo({
-        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}&obj=${obj}`
+        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
       })
     }
   }

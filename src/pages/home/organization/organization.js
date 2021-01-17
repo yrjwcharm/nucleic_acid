@@ -81,10 +81,18 @@ class Organization extends Component {
 
   }
   goToCombo = (item) => {
-    const {userType} =getCurrentInstance().router.params;
+    const {userType,obj} =getCurrentInstance().router.params;
+    console.log(333,obj);
+    if(obj){
+      let obj =JSON.parse(obj);
+      Taro.navigateTo({
+        url: `/pages/home/combo/combo?userType=${userType}&orgId=${item.orgId}&item=${JSON.stringify(item)}&obj=${JSON.stringify(obj)}`
+      })
+    }else{
       Taro.navigateTo({
         url: `/pages/home/combo/combo?userType=${userType}&orgId=${item.orgId}&item=${JSON.stringify(item)}`
       })
+    }
 
   }
     render(){

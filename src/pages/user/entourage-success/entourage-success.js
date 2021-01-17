@@ -28,7 +28,7 @@ const EntourageSuccess = (props) => {
               />
             </View>
             <Text className='order-status'>预约成功</Text>
-            <Text className='desc'>若【取消预约】请前往【我的预约】内进行取消</Text>
+            {/*<Text className='desc'>若【取消预约】请前往【我的预约】内进行取消</Text>*/}
           </View>
         </View>
         <View className='info-confirm-wrap'>
@@ -36,8 +36,20 @@ const EntourageSuccess = (props) => {
           <Text className='value'>{item.entourageName}</Text>
         </View>
         <View className='info-confirm-wrap'>
+          <Text className='label'>手机号</Text>
+          <Text className='value'>{item.entouragePhone}</Text>
+        </View>
+        <View className='info-confirm-wrap'>
           <Text className='label'>与陪同人关系</Text>
           <Text className='value'>{item.entourageRelation}</Text>
+        </View>
+        <View className='info-confirm-wrap'>
+          <Text className='label'>预约医院</Text>
+          <Text className='value'>{item.orgName}</Text>
+        </View>
+        <View className='info-confirm-wrap'>
+          <Text className='label'>预约套餐</Text>
+          <Text className='value'>{item.comboName}</Text>
         </View>
       </View>
     </View>

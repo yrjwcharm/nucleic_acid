@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import {Image, Text, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react'
 import './orderAppointSuccess.scss'
@@ -16,7 +17,9 @@ const OrderAppointSuccess = (props) => {
   const [entourageHisId, setEntourageHisId] = useState('');
   const [name, setName] = useState('');
   const [entourageName, setEntourageName] = useState('');
-  const [entourageRelation, , setEntourageRelation] = useState('');
+  const [entourageIdCard,setEntourageIdCard] =useState('');
+  const [entouragePhone,setEntouragePhone]= useState('');
+  const [entourageRelation, setEntourageRelation] = useState('');
   useEffect(() => {
     let {item} = getCurrentInstance().router.params;
     const {comboName, date, orgName, phone, id, name} = JSON.parse(item);
@@ -40,27 +43,43 @@ const OrderAppointSuccess = (props) => {
     console.log(333, res);
     if (res.code === 200) {
       const {
-        comboName, date,
+        comboName,
+        date,
         entourageHisId,
         entourageName,
+        entourageIdCard,
+        entouragePhone,
         entourageRelation,
-        orgName, patientId,
+        orgName,
+         patientId,
+        phone
       } = res.data;
 
       setComboName(comboName);
       setDate(date);
       setOrgName(orgName);
+      setPhone(phone),
       setPatientId(patientId);
-      setEntourageHisId(entourageHisId);
-      setEntourageName(entourageName);
-      setEntourageRelation(entourageRelation);
+      entouragePhone&&setEntouragePhone(entouragePhone);
+      entourageHisId&&setEntourageHisId(entourageHisId);
+      entourageIdCard&&setEntourageIdCard(entourageIdCard)
+      entourageName&&setEntourageName(entourageName);
+      entourageRelation&&setEntourageRelation(entourageRelation);
       // comboName: "核酸检测"
       // date: 1610640000000
       // orgName: "北京市红十字会急诊抢救中心"
     }
   }
   const entouragePage = () => {
-    let item = {entourageHisId, entourageRelation, entourageName}
+    let item = {
+      entourageHisId,
+      entourageName,
+      entourageIdCard,
+      entouragePhone,
+      entourageRelation,
+      orgName,
+      comboName,
+    }
     Taro.navigateTo({
       url: `/pages/user/entourage-success/entourage-success?item=${JSON.stringify(item)}`
     })
@@ -84,9 +103,9 @@ const OrderAppointSuccess = (props) => {
             {/*<Text className='desc'>若【取消预约】请前往【我的预约】内进行取消</Text>*/}
           </View>
         </View>
-        {entourageHisId && <View className='info-confirm-wrap'>
+        {entourageHisId && <View className='info-confirm-wrap' onClick={entouragePage}>
           <Text className='label'>陪同人</Text>
-          <View className='list-row-wrap' onClick={() => entouragePage()}>
+          <View className='list-row-wrap' >
             <Text className='value'>{entourageName}</Text>
             <Image src={Forward} className='forward'/>
           </View>
@@ -100,12 +119,16 @@ const OrderAppointSuccess = (props) => {
           <Text className='value'>{name}</Text>
         </View>
         <View className='info-confirm-wrap'>
+          <Text className='label'>手机号</Text>
+          <Text className='value'>{phone}</Text>
+        </View>
+        <View className='info-confirm-wrap'>
           <Text className='label'>预约医院</Text>
           <Text className='value'>{orgName}</Text>
         </View>
         <View className='info-confirm-wrap'>
           <Text className='label'>预约套餐</Text>
-          <Text className='value'>新冠核酸检测套餐</Text>
+          <Text className='value'>{comboName}</Text>
         </View>
       </View>
     </View>
