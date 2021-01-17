@@ -1,9 +1,15 @@
+@import "~taro-ui/dist/style/components/modal.scss";
 .container{
   display: flex;
   flex-direction: column;
   height: 100%;
   border-top: 1px solid #eee;
   background: #F5F6F9;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
 }
 .self-info-view{
   margin-left: 40px;
@@ -17,13 +23,16 @@
 .list-row-container{
   background: #fff;
 }
-
+.line{
+  height: 0;
+  border-botton: 1px solid #eee;
+  transform: scaleY(0.5);
+}
 .list-row-wrap{
   height:80px;
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
-  border-bottom: 0.5px solid #eee;
   flex-direction: column;
   justify-content: center;
 }
@@ -33,7 +42,6 @@
   margin-left: 40px;
   background: #fff;
   display: flex;
-  border-bottom: 0.5px solid #eee;
   flex-direction: column;
   justify-content: center;
 }
@@ -74,7 +82,7 @@
 .list-row-input-placeholder{
   font-size: 28px;
   font-family: PingFangSC-Regular;
-  color: #666666;
+  color: #999;
 }
 .list-row-arrow{
   width: 14px;
@@ -108,8 +116,7 @@
 }
 .list-row-text{
   font-size: 28px;
-  font-family: PingFangSC-Regular;
-  color: #333333;
+  color: #333;
 }
 
 .tip{

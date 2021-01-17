@@ -37,7 +37,6 @@
   //}
 }
 .tip{
-  font-family: PingFangSC-Regular;
   font-size: 32px;
   color: #333333;
   margin-left: 40px;
@@ -61,7 +60,6 @@
   //text-align-last:justify;
   text-justify: inter-ideograph;
   font-size: 24px;
-  font-family: PingFangSC-Regular;
   color: #999999;
   line-height: 40px;
 }
@@ -76,9 +74,10 @@
       display: flex;
       flex-direction: column;
       &_title{
-        font-family: PingFangSC-Semibold;
+        font-weight: bold;
+        font-family: 'PingFangSC-Semibold';
+        //font-family: 'Semibold';
         font-size: 32px;
-        font-weight: bolder;
         color: #333;
       }
       &_detail{

@@ -43,10 +43,11 @@ export default class UploadCertification extends Component {
       provinceid,
       sourceId,
       streetdesc,
+      area,
       userType,
       orgName,name,
-      phone,idCard,price
-
+      phone,idCard,price,
+      timeType,
     } = JSON.parse(item);
 
     if (isEmpty(url)) {
@@ -72,6 +73,8 @@ export default class UploadCertification extends Component {
         sourceId,
         streetdesc,
         userType,
+        timeType,
+        area,
         orgName,name,
         phone,idCard,price,
         docUrl:url
@@ -134,7 +137,7 @@ export default class UploadCertification extends Component {
         </View>
         <View className='footer'>
           <View className='btn-submit-view' onClick={this._submitAudit}>
-            <Text className='btn-submit-text'>提交审核</Text>
+            <Text className='btn-submit-text'>下一步</Text>
           </View>
         </View>
 

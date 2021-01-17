@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
-import {Image, Input, Text, Textarea, View} from '@tarojs/components'
+import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
-import {AtActionSheet, AtActionSheetItem} from "taro-ui"
+import {AtActionSheet, AtActionSheetItem, AtInput, AtModal, AtModalAction} from "taro-ui"
 import Down from '@assets/down.svg'
 import './addPersonData.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -46,19 +46,21 @@ const AddPersonData = () => {
   const [visible, setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
   const [verifyCode,setVerifyCode] =useState('');
-
+  const [timeType,setTimeType] =useState('');
+  const [modal,setModal]=useState(false);
   useEffect(() => {
     _initData();
     getImageCode();
   }, [])
   const _initData = async () => {
     const {item, userType} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date,orgName,price} = JSON.parse(item);
+    const {sourceId, orgId,timeType, date,orgName,price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
     setOrgName(orgName);
     setPrice(price);
+    setTimeType(timeType);
   }
   const getRandomCode=() =>{
     let code = "";
@@ -116,7 +118,7 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (code.toLowerCase() !== verifyCode.toLowerCase()) {
+    if (code.toLowerCase() != verifyCode.toLowerCase()) {
       Taro.showToast({
         title: '验证码输入不正确',
         icon: 'none',
@@ -151,7 +153,14 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (!isEmpty(entouragePhone)) {
+    if(insEscortStaff){
+      if (isEmpty(entourageName)){
+        Taro.showToast({
+          title: '陪同人姓名不能为空',
+          icon: 'none',
+        })
+        return;
+      }
       if (!isMobile(entouragePhone)) {
         Taro.showToast({
           title: '陪同人手机号格式不正确',
@@ -159,16 +168,23 @@ const AddPersonData = () => {
         })
         return;
       }
-    }
 
-    if (!isEmpty(entourageIdCard)) {
-      if (!isIdCard(entourageIdCard)) {
+
+      if(entourageIdCard===idCard) {
         Taro.showToast({
-          title: '陪同人身份证号格式不正确',
+          title: '身份证号不允许重复',
           icon: 'none',
         })
         return;
       }
+
+        if (!isIdCard(entourageIdCard)) {
+          Taro.showToast({
+            title: '陪同人身份证号格式不正确',
+            icon: 'none',
+          })
+          return;
+        }
     }
     let item ={
       cityid,
@@ -186,10 +202,17 @@ const AddPersonData = () => {
       streetdesc,
       userId,
       userType,
+      timeType,
+      area,
       orgName,name,
       phone,idCard,price
     }
-
+    console.log(
+      333,
+      userType,
+      provinceid,docUrl,cityid,districtid,name,phone,idCard, streetdesc,
+      entourageIdCard,entourageRelation,entourageName,entouragePhone,
+    );
     Taro.navigateTo({
       url: `/pages/home/certification/certification?item=${JSON.stringify(item)}`
     })
@@ -205,10 +228,21 @@ const AddPersonData = () => {
     setShowPicker(false);
   }
   const insEscortStaffClick = (flag) => {
-    setInsEscortStaff(flag);
+     setInsEscortStaff(flag);
   }
   const showAreaPicker = () => {
     setShowPicker(true);
+  }
+  const deleteEntourage=()=>{
+    setModal(true);
+  }
+  const _enter=()=>{
+    setModal(false);
+    setEntourageRelation('');
+    setEntourageName('');
+    setEntourageIdCard('');
+    setEntouragePhone('');
+    setInsEscortStaff(false)
   }
   return (
     <View className='container'>
@@ -247,6 +281,7 @@ const AddPersonData = () => {
               <Image src={Forward} className='list-row-arrow'/>
             </View>
           </View>
+          <View className='line'/>
         </View>
         <View className='detail-address-container'>
           <View className='detail-address-textarea'>
@@ -257,7 +292,7 @@ const AddPersonData = () => {
         </View>
 
         {!insEscortStaff ? <View className='acc-info-view' onClick={() => insEscortStaffClick(true)}>
-          <Text className='acc-info-text'>+增加陪同人员</Text>
+          <Text className='acc-info-text'>增加陪同人员</Text>
         </View> : null}
         {insEscortStaff ?
           <View className='acc-info-container'>
@@ -275,6 +310,7 @@ const AddPersonData = () => {
                   <Image src={Down} className='list-row-down'/>
                 </View>
               </View>
+              <View className='line'/>
             </View>
             <ListRow className='list-row-input' type='number' onInput={(e) => {
               setEntouragePhone(e.detail.value);
@@ -283,8 +319,8 @@ const AddPersonData = () => {
               setEntourageIdCard(e.detail.value);
             }} label='身份证号' placeholder='请输入身份证号'/>
           </View> : null}
-        {insEscortStaff ? <View className='acc-info-cancel' onClick={() => insEscortStaffClick(false)}>
-          <Text className='acc-info-cancel-text'>-取消陪同人员</Text>
+        {insEscortStaff ? <View className='acc-info-cancel' onClick={deleteEntourage} >
+          <Text className='acc-info-cancel-text'>删除陪同人员</Text>
         </View> : null}
         <View className='tip-container'>
           <Text className='tip'>温馨提示</Text>
@@ -323,6 +359,17 @@ const AddPersonData = () => {
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
+      <AtModal
+        isOpened={modal}
+      >
+        <View className='modal-view'>
+          <Text className='modal-text'>确定删除该陪同人信息吗？</Text>
+        </View>
+        <AtModalAction>
+          <Button onClick={()=>setModal(false)}>取消</Button>
+          <Button onClick={_enter}>确定</Button>
+        </AtModalAction>
+      </AtModal>
     </View>
   )
 }
@@ -337,6 +384,7 @@ const ListRow = (props) => {
                   placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>
+      <View className='line'/>
     </View>
   )
 }

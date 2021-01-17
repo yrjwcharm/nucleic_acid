@@ -3,9 +3,12 @@
   display: flex;
   height: 100%;
   flex-direction: column;
-  background-color: #f3f7f7;
+  background-color: #F5F6F9;
   border-top: 1px solid #eee;
 
+}
+.search-img{
+  margin-right:9.2PX ;
 }
 .city-text{
   font-size: 15PX;
@@ -43,7 +46,7 @@
   height: 35PX;
   //opacity: 0.08;
   padding-left: 10PX;
-  background: rgba(25,31,37,0.08);
+  background-color: #f5f6f9;
   border-radius: 18PX;
 }
 .search-img{

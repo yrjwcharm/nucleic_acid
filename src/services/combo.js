@@ -22,3 +22,7 @@ export  async  function  fetchAppointSuccessQrCodeApi(payload){
 export  async  function  fetchImgCodeApi(payload){
   return request.get(Api.getImgCode,payload)
 }
+
+export async  function  fetchApplyTradeApi(payload){
+  return request.post(Api.getApplyTrade,payload)
+}

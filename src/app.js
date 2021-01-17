@@ -8,6 +8,7 @@ class App extends Component {
 
   componentWillMount() {
     this.update();
+
   }
 
   update = () => {
@@ -43,11 +44,28 @@ class App extends Component {
 
     // Taro.requestSubscribeMessage({
     //   tmplIds: [''],
-    //   success: function (res) { }
+    //   success: function (res) {
+    //
+    //   },fail:function (res){
+    //
+    //   }
     // })
   }
   componentDidShow(){
+    Taro.loadFontFace ({
+      family: 'Regular',
 
+      source: 'url("http://hstest.youjiankang.net/hmp/images/font/PingFang-Regular.ttf")',
+
+      success: function(){
+        console.log('load font success')
+      },
+      fail:function (){
+        console.log(333,'chucuowl');
+      }
+
+
+    })
   }
   componentDidHide () {}
 

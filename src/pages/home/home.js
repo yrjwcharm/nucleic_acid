@@ -6,6 +6,8 @@ import Carousel from '@assets/home/banner.png'
 import Order from '@assets/home/yuyue.png'
 import Query from '@assets/home/query.png'
 import Free from '@assets/home/free.png'
+import {AtTabBar} from "taro-ui";
+import {getQueryOrgListByNameApi} from "../../services/home";
 
 const RECOMMEND_SIZE = 20
 
@@ -37,15 +39,34 @@ export default class Home extends Component {
   }
   goToOrganization = (userType) => {
     if (this.state.userInfo) {
-      Taro.navigateTo({
-        url: `/pages/home/organization/organization?userType=${userType}`,
-      })
+      this._getList(userType);
     } else {
       Taro.redirectTo({
         url: '/pages/auth/login/login',
       })
     }
 
+
+  }
+  _getList =(userType)=>{
+    getQueryOrgListByNameApi({
+      queryName:'',
+    }).then(res => {
+      if(res.length>1){
+
+        Taro.navigateTo({
+          url: `/pages/home/organization/organization?userType=${userType}`,
+        })
+      }else{
+        let item =res[0];
+        Taro.navigateTo({
+          url: `/pages/home/combo/combo?userType=${userType}&orgId=${item.orgId}&item=${JSON.stringify(item)}`})
+        // Taro.navigateTo({
+        //   url:'/pages/home/certification/certification'
+        // })
+      }
+
+    })
 
   }
 

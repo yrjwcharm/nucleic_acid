@@ -12,7 +12,7 @@ class Login extends Component {
       console.log(333,e);
       Taro.setStorageSync('userInfo',e.detail.userInfo)
       Taro.reLaunch({
-        url: '/pages/home/home'
+        url: '/pages/index/index'
       })
 
     }

@@ -32,5 +32,8 @@ export default {
   uploadFile:WxApiRoot+`/ncov/uploadController/perfect/uploadPhoto`,
   deleteOrder:WxApiRoot + `/ncov/BaAppointmentController/delete`,
   cancelOrder :WxApiRoot + `/ncov/BaAppointmentController/cancel`,
-  getImgCode:WxApiRoot + `/ncov/BaAppointmentController/authImg`
+  getImgCode:WxApiRoot + `/ncov/BaAppointmentController/authImg`,
+  QueryAppointRecord:WxApiRoot+`/ncov/BaAppointmentController/baseInfo/get`,
+  createOrder :WxApiRoot +`/ncov/order/create`,
+  getApplyTrade:WxApiRoot + `/ncov/trade/apply`
 };

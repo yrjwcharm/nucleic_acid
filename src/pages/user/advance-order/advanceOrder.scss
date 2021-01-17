@@ -1,3 +1,4 @@
+@import "~taro-ui/dist/style/components/modal.scss";
 .container{
   display: flex;
   flex:1;
@@ -6,7 +7,8 @@
   height: 100%;
   position: relative;
   border-top: 1px solid #eee;
-  }
+
+}
 .wrap{
   display: flex;
   flex-direction: column;
@@ -116,4 +118,23 @@
   display: flex;
   flex-direction: column;
   flex:1;
+}
+.modal-view{
+  height: 80PX;
+  width: 280PX;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+.modal-text{
+  margin-top: 36PX;
+  font-family: PingFangSC-Medium;
+  font-size: 17PX;
+  color: #191F25;
+}
+
+.btn{
+  border-right: 1px solid #EEE;
 }

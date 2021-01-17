@@ -1,4 +1,6 @@
 @import "~taro-ui/dist/style/components/action-sheet.scss";
+@import "~taro-ui/dist/style/components/modal.scss";
+
 .container{
   display: flex;
   flex: 1;
@@ -16,7 +18,7 @@
 .self-info-text{
   font-family: PingFangSC-Regular;
   font-size: 28px;
-  color: #333333;
+  color: #333;
 }
 .list-row-container{
   background: #fff;
@@ -27,9 +29,13 @@
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
-  border-bottom: 0.5px solid #eee;
   flex-direction: column;
   justify-content: center;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
 }
 .address-info-wrap{
   height:80px;
@@ -37,7 +43,6 @@
   margin-left: 40px;
   background: #fff;
   display: flex;
-  border-bottom: 0.5px solid #eee;
   flex-direction: column;
   justify-content: center;
 }
@@ -70,10 +75,9 @@
 }
 .select-city-text{
   font-size: 28px;
+  color: #666;
   padding-left: 58px;
   font-family: PingFangSC-Regular;
-
-  color: #666666;
 }
 .list-row-arrow{
   width: 14px;
@@ -86,9 +90,8 @@
 
 .list-row-input-placeholder{
   font-size: 28px;
+  color: #999;
   font-family: PingFangSC-Regular;
-
-  color: #666666;
 }
 .list-row-arrow{
   width: 14px;
@@ -231,4 +234,19 @@
 .textarea-text{
   font-size: 14PX;
   color: #666666;
+}
+.modal-view{
+  height: 80PX;
+  width: 280PX;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+.modal-text{
+  margin-top: 36PX;
+  font-family: PingFangSC-Medium;
+  font-size: 17PX;
+  color: #191F25;
 }

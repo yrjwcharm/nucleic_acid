@@ -26,13 +26,13 @@ class Combo extends Component {
     orgName: '',
     sourceList: [],
     price:0,
+    obj:{},
   }
 
   componentDidMount() {
     let {orgId, item, userType} = getCurrentInstance().router.params;
-    console.log(333, userType);
     const {orgName}= JSON.parse(item);
-    this.setState({orgId, userType,orgName, item: JSON.parse(item)}, () => {
+    this.setState({orgId,userType,orgName, item: JSON.parse(item)}, () => {
 
       this._initData(this.state.orgId);
 
@@ -193,16 +193,15 @@ class Combo extends Component {
    * @private
    */
   _nextStep = (item) => {
-    console.log(333,item);
-    const {dateArr,userType,orgName} = this.state;
+    const {dateArr,userType,orgName,obj} = this.state;
     let source ={comboId:this.state.comboId,...item,orgName,price:this.state.price}
-    console.log(222,item,userType);
+    console.log(333,userType);
     if(item.amount>0) {
       userType == 1 && Taro.navigateTo({
-        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}`
+        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}&obj=${obj}`
       })
       userType == 2 && Taro.navigateTo({
-        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}`
+        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}&obj=${obj}`
       })
     }
   }
@@ -288,7 +287,7 @@ class Combo extends Component {
                   <View style='display:flex;flex-direction:row;align-items:center'>
                     <Image src={Clock} className='clock-img'/>
                     <Text className='time-text'>{item.timeType===0?'上午':item.timeType===1?'下午':'全天'}</Text>
-                    <Text className='time-range-text'>{moment(item.date).format('YYYY-MM-DD')}</Text>
+                    <Text className='time-range-text'>{item.timeType===0?'8:00～11:00':'1:00～4:00'}</Text>
                   </View>
                   <View style='display:flex;flex-direction:row;align-items:center'>
                     <Text className='sy-text'>剩余：</Text>

@@ -17,7 +17,9 @@ export async function getMyAppointListApi(payload){
   return request.get(Api.MyAppointApi,payload);
 
 }
-
+export  async function  queryAppointRecord(payload){
+  return request.get(Api.QueryAppointRecord,payload)
+}
 /**
  * 获取审核记录
  * @param payload

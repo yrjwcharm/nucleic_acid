@@ -1,0 +1,8 @@
+@import "~taro-ui/dist/style/components/tab-bar.scss";
+@import "~taro-ui/dist/style/components/badge.scss";
+.index-box{
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  height: 100%;
+}

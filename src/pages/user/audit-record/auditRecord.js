@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
 import {Image, Text, View} from '@tarojs/components'
+import VirtualList from '@tarojs/components/virtual-list'
 import {AtTabs, AtTabsPane,} from "taro-ui"
 import './auditRecord.scss'
 import {getAuditRecordApi} from "../../../services/user";
@@ -100,9 +101,13 @@ export class AuditRecord extends Component {
         state = 2;
         break;
     }
-    this.setState({current: value, state, page: 1, list: []}, () => {
-      this._getList();
-    })
+    const {list}=this.state;
+    if(state==''){
+      this.setState({current:value,list:[...list]})
+    }else{
+      let arr= list.filter(item=>item.state==state);
+      this.setState({current:value,list:[...arr]})
+    }
   }
   _getWeek = (date) => {
     let week = moment(date).day()
@@ -125,7 +130,7 @@ export class AuditRecord extends Component {
   }
   goToPage = (item) => {
       console.log(333,item);
-      item.state==='2'&&Taro.navigateTo({
+     Taro.navigateTo({
         url:`/pages/home/audit-detail/audit-detail?item=${JSON.stringify(item)}`
       })
 
@@ -154,7 +159,7 @@ export class AuditRecord extends Component {
                             </View>
                             <View className='listItem_right'>
                               <Text
-                                className='listItem_right_status'>{_item.state == 0 ? '审核中' : _item.state == 1 ? '已通过' : '已驳回'}</Text>
+                                className='listItem_right_status' style={_item.state==0?'color:red':_item.state==1?'color:#333':'color:#999'}>{_item.state == 0 ? '审核中' : _item.state == 1 ? '已通过' : '已驳回'}</Text>
                               <Image src={Forward} className='listItem_right_arrow'/>
                             </View>
                           </View>

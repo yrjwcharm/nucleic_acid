@@ -5,8 +5,9 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
-import {fetchAppointDetectApi, fetchAppointSuccessQrCodeApi} from "../../../services/combo";
+import {fetchApplyTradeApi, fetchAppointDetectApi, fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import Taro from "@tarojs/taro";
+import Api from "../../../config/api";
 
 const Confirm = () => {
   const [item, setItem] = useState({})
@@ -38,6 +39,7 @@ const Confirm = () => {
   }
   const _enterOrder = async () => {
     let {item, userType} = getCurrentInstance().router.params;
+    console.log(444, item);
     const {
       cityid,
       date,
@@ -52,9 +54,12 @@ const Confirm = () => {
       entourageName,
       entouragePhone,
       entourageRelation,
-      orgName,name,
-      phone,idCard,price,
+      orgName, name,
+      phone, idCard, price,
     } = JSON.parse(item);
+    Taro.showLoading({
+      title: '加载中...',
+    });
     const _res = await user.loginByWeixin({appid: Config.appid});
     if (_res.code === 200) {
       const {userId, wxid, unionid, sectionKey} = _res.data;
@@ -78,15 +83,87 @@ const Confirm = () => {
         entouragePhone,
         entourageRelation,
       })
-      console.log(333, res);
+      Taro.hideLoading();
       if (res.code === 200) {
+        if (userType == 1) {
+          Taro.navigateTo({
+            url: '/pages/home/audit-result/audit-result'
+          })
+        } else if (userType == 2) {
+          if (res.code == 200) {
+            Taro.request({
+              url: Api.createOrder + `?appointId=${res.data}`, //仅为示例，并非真实的接口地址
+              data: {},
+              method: 'POST',
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              success: (res) => {
+                console.log(1111, res);
+                const {code, data} = res.data;
+                if (code == 200) {
+                  fetchApplyTradeApi({
+                    payType: '02',
+                    orderId: data
+                  }).then(response => {
+                    // appId: "wx99bc91f0ade99f16"
+                    // nonceStr: "mygY7r2Ac0pyI6XL"
+                    // packageValue: "prepay_id=wx17140433899831f06b0a174a946b0a0000"
+                    // paySign: "9B50AD71302BEB2F6DC9190C3F743F5C"
+                    // signType: "MD5"
+                    // timeStamp: "1610863474"
+                    if (response.code == 200) {
+                      const {
+                        payResult: {timeStamp, paySign, nonceStr, appId, signType, packageValue},
+                        tradeId
+                      } = response.data;
+                      Taro.requestPayment({
+                        appId,
+                        timeStamp,
+                        nonceStr,
+                        package: packageValue,
+                        signType,
+                        paySign,
+                        success: function (result) {
+                            Taro.navigateTo({
+                              url:`/pages/user/payment-success/payment-success?id=${res.data}`
+                            })
+                        },
+                        fail: function (res) {
+                          Taro.showToast({
+                            title: '支付失败',
+                            icon: 'none',
+                          })
+                        }
+                      })
+                    }
+                  }).catch(error => {
+                    console.log(333, error);
+                  })
+                } else {
+                  Taro.showToast({
+                    title: '交易失败',
+                    icon: 'none',
+                  })
+                }
+                // const _res = res.data;
+                // _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
+                //   this._getList();
+                // })
+              }
+            })
+          }
+
+        }
+        // userType==2&&Taro.reLaunch({
+        //   url:'/pages/index/index'
+        // })
+      } else {
         Taro.showToast({
-          title: '提交成功',
+          title: res.msg,
           icon: 'none',
         })
-        userType==1&&Taro.reLaunch({
-          url:'/pages/home/home'
-        })
+        Taro.reLaunch({url:'/pages/index/index'})
       }
     }
   }
@@ -116,7 +193,7 @@ const Confirm = () => {
           </View>
           <View className='info-confirm-wrap'>
             <Text className='label'>家庭住址</Text>
-            <Text className='value'>{item && item.streetdesc}</Text>
+            <Text className='value'>{item && item.area + '' + item.streetdesc}</Text>
           </View>
           <View className='info-confirm-wrap'>
             <Text className='label'>联系电话</Text>

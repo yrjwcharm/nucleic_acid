@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, Input, Text, Textarea, View} from '@tarojs/components'
+import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
 import './writePatientInfo.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -8,6 +8,8 @@ import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from '../../../assets/home/forward.svg'
 import Api from "../../../config/api";
+import {AtModal, AtModalAction} from "taro-ui";
+import {queryAppointRecord} from "../../../services/user";
 
 const WritePatientInfo = () => {
   const [imgCode, setImgCode] = useState('');
@@ -31,19 +33,22 @@ const WritePatientInfo = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择省市区');
   const [verifyCode, setVerifyCode] = useState('');
+  const [timeType,setTimeType]=useState('');
   useEffect(() => {
     _initData();
     getImageCode();
   }, [])
   const _initData = async () => {
     const {item} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date, orgName, price} = JSON.parse(item);
+    const {sourceId, orgId, date,appointId, orgName,timeType, price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
     setOrgName(orgName);
     setPrice(price);
+    setTimeType(timeType);
   }
+
   const getRandomCode = () => {
     let code = "";
     const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
@@ -100,7 +105,7 @@ const WritePatientInfo = () => {
       })
       return;
     }
-    if (code.toLowerCase() !== verifyCode.toLowerCase()) {
+    if (code.toLowerCase() != verifyCode.toLowerCase()) {
       Taro.showToast({
         title: '验证码输入不正确',
         icon: 'none',
@@ -146,15 +151,18 @@ const WritePatientInfo = () => {
       orgId,
       payType,
       phone,
+      area,
+      timeType,
       provinceid,
       sourceId,
       streetdesc,
-      userType, orgName, price
+      userType,
+      orgName,
+      price
     };
     Taro.navigateTo({
       url: `/pages/home/confirm/confirm?item=${JSON.stringify(item)}&userType=2`
     })
-
   }
   const toggleAddressPicker = (areaInfo, coding) => {
     const _coding = coding.split(',');
@@ -208,6 +216,7 @@ const WritePatientInfo = () => {
               <Image src={Forward} className='list-row-arrow'/>
             </View>
           </View>
+          <View className='line'/>
         </View>
         <View className='detail-address-container'>
           <View className='detail-address-textarea'>
@@ -249,10 +258,12 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
-                 placeholderClass='list-row-input-placeholder'/>
+          <Input type={type}  className={className} onInput={onInput} placeholder={placeholder}
+                  placeholderClass='list-row-input-placeholder'
+          />
         </View>
       </View>
+      <View className='line'/>
     </View>
   )
 }

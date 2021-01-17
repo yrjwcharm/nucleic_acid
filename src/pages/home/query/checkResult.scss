@@ -4,8 +4,11 @@
   background-color: #f5f6f9;
   border-top: 1px solid #eee;
 }
-.main{
+.section{
   padding-top: 10PX;
+  display: flex;
+  flex:1;
+  flex-direction: column;
 }
 
 .listItem{
