@@ -1,10 +1,10 @@
-import Taro, { eventCenter } from '@tarojs/taro'
-import { Button, Image, Text, View } from '@tarojs/components'
-import { AtModal, AtModalAction, AtTabs, AtTabsPane, } from "taro-ui"
+import Taro from '@tarojs/taro'
+import {Button, Image, ScrollView, Text, View} from '@tarojs/components'
+import {AtModal, AtModalAction, AtTabs, AtTabsPane,} from "taro-ui"
 import './advanceOrder.scss'
-import { getMyAppointListApi, queryAppointRecord } from "../../../services/user";
+import {getMyAppointListApi, queryAppointRecord} from "../../../services/user";
 import moment from "moment";
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Api from '../../../config/api';
 import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg'
@@ -24,7 +24,7 @@ export class AdvanceOrder extends Component {
     totalPage: 1,
     visible: false,
     userId: '',
-    tabList: [{ title: '全部', id: 0 }, { title: '预约中', id: 1 }, { title: '已预约', id: 2 }, { title: '已完成', id: 3 }]
+    tabList: [{title: '全部', id: 0}, {title: '预约中', id: 1}, {title: '已预约', id: 2}, {title: '已完成', id: 3}]
   }
 
   componentDidMount() {
@@ -33,11 +33,11 @@ export class AdvanceOrder extends Component {
   }
 
   _initData = async () => {
-    const res = await user.loginByWeixin({ appid: Config.appid });
+    const res = await user.loginByWeixin({appid: Config.appid});
     if (res.code === 200) {
       console.log(333, res);
-      const { userId, wxid, unionid, sectionKey } = res.data;
-      this.setState({ userId }, () => {
+      const {userId, wxid, unionid, sectionKey} = res.data;
+      this.setState({userId}, () => {
         this._getList();
       })
     } else {
@@ -61,11 +61,11 @@ export class AdvanceOrder extends Component {
       console.log(444, res);
       if (res.code === 200) {
         if (res.data) {
-          const { object, totalPage } = res.data;
+          const {object, totalPage} = res.data;
           if (Array.isArray(object)) {
-            this.setState({ list: this.state.list.concat(object), totalPage })
+            this.setState({list: this.state.list.concat(object), totalPage})
           } else {
-            this.setState({ list: this.state.list.concat([]), totalPage })
+            this.setState({list: this.state.list.concat([]), totalPage})
           }
         }
       }
@@ -73,6 +73,7 @@ export class AdvanceOrder extends Component {
     })
 
   }
+
   onReachBottom() {
     if (this.state.totalPage > this.state.page) {
       this.setState({
@@ -90,6 +91,7 @@ export class AdvanceOrder extends Component {
       return false;
     }
   }
+
   handleClick = (value) => {
     let state = '';
     switch (value) {
@@ -110,7 +112,7 @@ export class AdvanceOrder extends Component {
         break;
     }
     console.log(333, value);
-    this.setState({ current: value, state, page: 1, list: [] }, () => {
+    this.setState({current: value, state, page: 1, list: []}, () => {
       this._getList();
     })
   }
@@ -141,7 +143,7 @@ export class AdvanceOrder extends Component {
     }
   }
   _cancelAppoint = async (item) => {
-    this.setState({ visible: true, item });
+    this.setState({visible: true, item});
   }
   _againAppoint = async (item) => {
     const res = await queryAppointRecord({
@@ -149,15 +151,15 @@ export class AdvanceOrder extends Component {
     })
     console.log(333, res);
     if (res.code == 200) {
-      const { userType } = res.data;
-      Taro.redirectTo({ url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}` });
+      const {userType} = res.data;
+      Taro.redirectTo({url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}`});
     }
   }
   _deleteAppoint = (item) => {
-    this.setState({ visible: true, item })
+    this.setState({visible: true, item})
   }
   _enter = () => {
-    const { item } = this.state;
+    const {item} = this.state;
     if (item.state == 3) {
       Taro.request({
         url: Api.deleteOrder + `?id=${item.id}`, //仅为示例，并非真实的接口地址
@@ -169,7 +171,7 @@ export class AdvanceOrder extends Component {
         success: (res) => {
           const _res = res.data;
           console.log(222, _res);
-          _res.code == 200 && this.setState({ visible: false, page: 1, list: [] }, () => {
+          _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
             this._getList();
           })
         }
@@ -185,7 +187,7 @@ export class AdvanceOrder extends Component {
         success: (res) => {
           console.log(333, res);
           const _res = res.data;
-          _res.code == 200 && this.setState({ visible: false, page: 1, list: [] }, () => {
+          _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
             this._getList();
           })
         }
@@ -194,50 +196,53 @@ export class AdvanceOrder extends Component {
   }
 
   render() {
-    const { current, tabList, list, visible, item: tipItem } = this.state;
+    const {current, tabList, list, visible, item: tipItem} = this.state;
     console.log(333, list);
     return (
-      <View className='container'>
+      <ScrollView scrollY className='container'>
         <View className='main'>
           <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
             {tabList.map((item, index) => {
               return (
-                <AtTabsPane className='at-tab' key={item.id + ""} current={current} index={index}>
-                  {list.length !== 0 ? list.map((_item, index) => {
-                    let date = moment(_item.date).format('YYYY-MM-DD');
-                    let week = this._getWeek(_item.date);
-                    console.log(333, _item);
-                    return (
-                      <View className='wrap' key={_item.id + " "}>
-                        <View className='main'>
-                          <View className='listItem'>
-                            <View className='listItem_left'>
-                              <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
-                              <Text className='listItem_left_date'>{date} {week} {_item.timeType == 0 ? '上午' : _item.timeType == 1 ? '下午' : '全天'}</Text>
+                  <AtTabsPane  key={item.id + ""} current={current} index={index}>
+                    {list.length !== 0 ? list.map((_item, index) => {
+                      let date = moment(_item.date).format('YYYY-MM-DD');
+                      let week = this._getWeek(_item.date);
+                      console.log(333, _item);
+                      return (
+                        <View className='wrap' key={_item.id + " "}>
+                          <View className='main'>
+                            <View className='listItem'>
+                              <View className='listItem_left'>
+                                <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
+                                <Text
+                                  className='listItem_left_date'>{date} {week} {_item.timeType == 0 ? '上午' : _item.timeType == 1 ? '下午' : '全天'}</Text>
+                              </View>
+                              <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
+                                <Text
+                                  className='listItem_right_status'
+                                  style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:#3299ff' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
+                                {_item.state != 3 && <Image src={Forward} className='listItem_right_arrow'/>}
+                              </View>
                             </View>
-                            <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
-                              <Text
-                                className='listItem_right_status' style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:#3299ff' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
-                              {_item.state!=3&&<Image src={Forward} className='listItem_right_arrow' />}
-                            </View>
-                          </View>
-                          <View className='footer'>
-                            {(_item.state == 0 || _item.state == 1) && <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
-                              <Text>取消预约</Text>
-                            </View>}
-                            {/* {_item.state==1&&<View className='op_btn_2' onClick={() => this._againAppoint(_item)}>
+                            <View className='footer'>
+                              {(_item.state == 0 || _item.state == 1) &&
+                              <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
+                                <Text>取消预约</Text>
+                              </View>}
+                              {/* {_item.state==1&&<View className='op_btn_2' onClick={() => this._againAppoint(_item)}>
                              <Text>再次预约</Text>
                             </View>} */}
-                            {_item.state == 3 && <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
-                              <Text>删除</Text>
-                            </View>}
+                              {_item.state == 3 &&
+                              <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
+                                <Text>删除</Text>
+                              </View>}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    )
-                  }) : <Empty />}
-                </AtTabsPane>
-              )
+                      )
+                    }) : <Empty/>}
+                  </AtTabsPane>)
             })}
           </AtTabs>
         </View>
@@ -248,11 +253,11 @@ export class AdvanceOrder extends Component {
             <Text className='modal-text'>确定{tipItem.state == 3 ? '删除' : '取消'}该条预约信息吗？</Text>
           </View>
           <AtModalAction>
-            <Button className={'btn'} onClick={() => this.setState({ visible: false })}>取消</Button>
+            <Button className={'btn'} onClick={() => this.setState({visible: false})}>取消</Button>
             <Button onClick={this._enter}>确定</Button>
           </AtModalAction>
         </AtModal>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -261,7 +266,7 @@ const Empty = () => {
   return (
     <View className='empty-view'>
       <View className='empty-wrap'>
-        <Image src={_Empty} className='empty-img' />
+        <Image src={_Empty} className='empty-img'/>
         <Text className='empty-text'>暂无预约信息哦~</Text>
       </View>
     </View>
