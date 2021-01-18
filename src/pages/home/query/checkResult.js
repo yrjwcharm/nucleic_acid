@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, Text, View} from '@tarojs/components'
+import {Image, ScrollView, Text, View} from '@tarojs/components'
 import './checkResult.scss'
 import {getResultQueryListApi} from "../../../services/result_query";
 import moment from 'moment'
@@ -122,7 +122,7 @@ class Check_Result extends Component {
   render() {
     const {list} = this.state;
     return (
-      <View className='container'>
+      <ScrollView scrollY className='container'>
         <View className='section'>
           {list.length!==0?list && list.map((item, index) => {
             let date = moment(item.date).format('YYYY-MM-DD');
@@ -143,7 +143,7 @@ class Check_Result extends Component {
             )
           }):<Empty/>}
         </View>
-      </View>
+      </ScrollView>
     )
 
   }

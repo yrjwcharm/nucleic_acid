@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, Text, View} from '@tarojs/components'
+import {Image, ScrollView, Text, View} from '@tarojs/components'
 import VirtualList from '@tarojs/components/virtual-list'
 import {AtTabs, AtTabsPane,} from "taro-ui"
 import './auditRecord.scss'
@@ -136,7 +136,7 @@ export class AuditRecord extends Component {
     const {current, tabList, list} = this.state;
     console.log(333, list);
     return (
-      <View className='container'>
+      <ScrollView scrollY className='container'>
         <View className='container_body'>
           <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
             {tabList.map((item, index) => {
@@ -174,7 +174,7 @@ export class AuditRecord extends Component {
             })}
           </AtTabs>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
