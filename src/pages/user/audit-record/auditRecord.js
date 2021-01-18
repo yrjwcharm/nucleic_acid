@@ -101,13 +101,9 @@ export class AuditRecord extends Component {
         state = 2;
         break;
     }
-    const {list}=this.state;
-    if(state==''){
-      this.setState({current:value,list:[...list]})
-    }else{
-      let arr= list.filter(item=>item.state==state);
-      this.setState({current:value,list:[...arr]})
-    }
+    this.setState({ current: value, state, page: 1, list: [] }, () => {
+      this._getList();
+    })
   }
   _getWeek = (date) => {
     let week = moment(date).day()
@@ -155,7 +151,7 @@ export class AuditRecord extends Component {
                           <View className='listItem'>
                             <View className='listItem_left'>
                               <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
-                              <Text className='listItem_left_date'>{date} {week}</Text>
+                              <Text className='listItem_left_date'>{date} {week} {_item.timeType == 0 ? '上午' : _item.timeType == 1 ? '下午' : '全天'}</Text>
                             </View>
                             <View className='listItem_right'>
                               <Text

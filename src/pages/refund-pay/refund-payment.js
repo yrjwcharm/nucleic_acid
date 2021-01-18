@@ -1,14 +1,12 @@
 import React, {Component, useEffect, useState} from 'react'
 import Taro from '@tarojs/taro'
 import {Image, Text, View} from "@tarojs/components";
-import './audit-result.scss'
-import Api from "../../../config/api";
-import {isEmpty} from "../../../utils/EmptyUtil";
+import './refund-payment.scss'
 import submitSuccess from '@assets/submit.png'
 import {getCurrentInstance} from "@tarojs/runtime";
-const AuditResult =()=>{
+const RefundPayment =()=>{
   const [item,setItem]=useState({});
-  const lookup=()=>{
+  const skip=()=>{
     Taro.reLaunch({
       url:'/pages/user/advance-order/advanceOrder',
     })
@@ -18,16 +16,18 @@ const AuditResult =()=>{
       <View className='main'>
         <View  className='img-view'>
           <Image src={submitSuccess} className='img'/>
-          <Text className='title'>提交成功</Text>
-          <Text className='reason'>审核结果将发送至微信服务通知，请及时关注</Text>
+          <Text className='title'>取消预约已受理</Text>
+          <Text className='reason'>最长72小时退款，退款成功后会发送微信服务通知,</Text>
+          <Text className='reason'>请及时关注</Text>
+
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' onClick={lookup}>
-          <Text className='btn-submit-text'>查看预约</Text>
+        <View className='btn-submit-view' onClick={skip}>
+          <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>
     </View>
   )
 }
-export  default AuditResult;
+export  default RefundPayment;

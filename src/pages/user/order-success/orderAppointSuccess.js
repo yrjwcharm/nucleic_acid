@@ -20,6 +20,7 @@ const OrderAppointSuccess = (props) => {
   const [entourageIdCard,setEntourageIdCard] =useState('');
   const [entouragePhone,setEntouragePhone]= useState('');
   const [entourageRelation, setEntourageRelation] = useState('');
+  const [timeType,setTimeType] =useState('');
   useEffect(() => {
     let {item} = getCurrentInstance().router.params;
     const {comboName, date, orgName, phone, id, name} = JSON.parse(item);
@@ -51,6 +52,7 @@ const OrderAppointSuccess = (props) => {
         entouragePhone,
         entourageRelation,
         orgName,
+        timeType,
          patientId,
         phone
       } = res.data;
@@ -58,7 +60,8 @@ const OrderAppointSuccess = (props) => {
       setComboName(comboName);
       setDate(date);
       setOrgName(orgName);
-      setPhone(phone),
+      setPhone(phone);
+      setTimeType(timeType);
       setPatientId(patientId);
       entouragePhone&&setEntouragePhone(entouragePhone);
       entourageHisId&&setEntourageHisId(entourageHisId);
@@ -84,6 +87,25 @@ const OrderAppointSuccess = (props) => {
       url: `/pages/user/entourage-success/entourage-success?item=${JSON.stringify(item)}`
     })
   }
+  const _getWeek = (date) => {
+    let week = moment(date).day()
+    switch (week) {
+      case 0:
+        return '周日';
+      case 1:
+        return '周一';
+      case 2:
+        return '周二';
+      case 3:
+        return '周三';
+      case 4:
+        return '周四';
+      case 5:
+        return '周五';
+      case 6:
+        return '周六'
+    }
+  }
   return (
     <View className='container'>
       <View className='main'>
@@ -104,15 +126,15 @@ const OrderAppointSuccess = (props) => {
           </View>
         </View>
         {entourageHisId && <View className='info-confirm-wrap' onClick={entouragePage}>
-          <Text className='label'>陪同人</Text>
+          <Text className='label' >陪同人</Text>
           <View className='list-row-wrap' >
-            <Text className='value'>{entourageName}</Text>
+            <Text className='value' style={'color:#3299ff'}>{entourageName}</Text>
             <Image src={Forward} className='forward'/>
           </View>
         </View>}
         <View className='info-confirm-wrap'>
           <Text className='label'>预约时间</Text>
-          <Text className='value'>{moment(date).format('YYYY-MM-DD')}</Text>
+          <Text className='value'>{moment(date).format('YYYY-MM-DD')} {_getWeek(date)} {timeType == 0 ? '上午' : timeType == 1 ? '下午' : '全天'}</Text>
         </View>
         <View className='info-confirm-wrap'>
           <Text className='label'>姓名</Text>

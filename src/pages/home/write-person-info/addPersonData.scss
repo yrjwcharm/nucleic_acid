@@ -171,7 +171,7 @@
   justify-content: flex-end;
 }
 .btn-submit-view{
-  height: 80px;
+  height: 100rpx;
   display: flex;
   background: #3299FF;
 }
@@ -182,14 +182,14 @@
   margin: auto;
 }
 .acc-info-view{
-    margin-top: 40px;
-    margin-left: 40px;
-    background: #FFFFFF;
-    margin-right: 40px;
-    display:flex;
-    border: 1px dashed rgba(50,153,255,17);
-    border-radius: 40px;
-    height:80px;
+  margin-top: 40px;
+  margin-left: 40px;
+  background: #FFFFFF;
+  margin-right: 40px;
+  display:flex;
+  border: 1px dashed rgba(50,153,255,17);
+  border-radius: 40px;
+  height:80px;
 }
 .acc-info-cancel{
   margin-top: 40px;
@@ -202,7 +202,7 @@
   border-radius: 40px;
 }
 .acc-info-text{
-   margin: auto;
+  margin: auto;
   font-size: 32px;
   color: #3299FF;
   font-family: PingFangSC-Regular;

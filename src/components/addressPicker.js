@@ -72,7 +72,7 @@ class AddressPicker extends Component {
         <View className="picker-content">
           <View className="dialog-header">
             <View className="dialog-button cancel" onClick={this.handlePickerShow.bind(this,false)}>取消</View>
-            <View className="dialog-title">请选择省市区</View>
+            <View className="dialog-title">请选择所属区域</View>
             <View className="dialog-button" onClick={this.handlePickerShow.bind(this, true)}>确定</View>
           </View>
           <PickerView onChange={this.cityChange} value={value} className='picker-view-wrap'>

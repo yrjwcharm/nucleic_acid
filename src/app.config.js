@@ -18,7 +18,7 @@ export default {
     'pages/home/audit-detail/audit-detail',
     'pages/user/entourage-success/entourage-success',
     'pages/home/audit-result/audit-result',
-    'pages/user/payment-success/payment-success'
+    'pages/user/payment-success/payment-success',
 
   ],
   window: {

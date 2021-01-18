@@ -42,14 +42,16 @@ class App extends Component {
           }
         })
 
-    // Taro.requestSubscribeMessage({
-    //   tmplIds: [''],
-    //   success: function (res) {
-    //
-    //   },fail:function (res){
-    //
-    //   }
-    // })
+    Taro.requestSubscribeMessage({
+      tmplIds: ['GdftJ7S3_vf6pi46DWY7iVhCxAc3A0CJmDB3TCIRLzs','81qGlv4rgIoMOFwTncimczMXS-EHZMfzGPWtOnS7zQs','JV3aQWtvMyHmkxlGSN-RbON-VTioOe6Xj11KH7s_v3Y','JV3aQWtvMyHmkxlGSN-RbCn8CWbSOiCGsNW1M4XxF7s'],
+      success: function (res) {
+
+      },fail:function (res){
+        Taro.redirectTo({
+          url:'/pages/auth/login/login',
+        })
+      }
+    })
   }
   componentDidShow(){
     Taro.loadFontFace ({

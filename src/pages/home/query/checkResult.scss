@@ -2,40 +2,40 @@
   position: relative;
   height: 100%;
   background-color: #f5f6f9;
-  border-top: 1px solid #eee;
+  border-top: 1rpx solid #eee;
 }
 .section{
-  padding-top: 10PX;
+  padding-top: 10rpx;
   display: flex;
   flex:1;
   flex-direction: column;
 }
 
 .listItem{
-  margin-top: 10PX;
+  margin-top: 10rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom-width: 0.5px;
+  border-bottom-width: 0.5rpx;
   border-bottom-style: solid;
   border-bottom-color:#eeee;
-  height:68PX ;
-  padding-left: 20PX;
-  padding-right:20PX;
+  height:68rpx ;
+  padding-left: 20rpx;
+  padding-right:20rpx;
   background-color: #fff;
   align-items: center;
   &_left{
     display: flex;
     flex-direction: column;
     &_appoint{
-      font-size: 32px;
+      font-size: 32rpx;
       font-family: PingFangSC-Regular;
 
       color: #333333;
     }
     &_date{
-      margin-top: 20px;
-      font-size: 24px;
+      margin-top: 20rpx;
+      font-size: 24rpx;
       font-family: PingFangSC-Regular;
 
       color: #666666;
@@ -47,14 +47,14 @@
     flex-direction: row;
     align-items: center;
     &_status{
-      font-size: 12PX;
+      font-size: 12rpx;
       color: #999999;
-      margin-right: 6PX;
+      margin-right: 6rpx;
     }
 
     &_arrow{
-      width: 7PX;
-      height:13.2PX;
+      width: 7rpx;
+      height:13.2rpx;
     }
   }
 }
@@ -72,12 +72,12 @@
   align-items: center;
 }
 .empty-text{
-  margin-top: 20px;
+  margin-top: 20rpx;
   color: #999;
-  font-size: 28px;
+  font-size: 28rpx;
 }
 .empty-img{
-  width: 234px;
-  height: 188px;
+  width: 234rpx;
+  height: 188rpx;
 
 }

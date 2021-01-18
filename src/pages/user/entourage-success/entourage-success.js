@@ -5,6 +5,7 @@ import {Barcode, QRCode} from 'taro-code'
 import {getCurrentInstance} from "@tarojs/runtime";
 import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import moment from 'moment';
+import Taro from "@tarojs/taro";
 const EntourageSuccess = (props) => {
   const [item,setItem] =useState({});
   useEffect(() => {
@@ -12,6 +13,9 @@ const EntourageSuccess = (props) => {
     setItem(JSON.parse(item));
     // qrcode: "/home/hmp/images/qrcode/265965661749116928.jpg"
   }, [])
+  const skip = () => {
+    Taro.reLaunch({ url: '/pages/index/index' })
+  }
   return (
     <View className='container'>
       <View className='main'>
@@ -33,7 +37,7 @@ const EntourageSuccess = (props) => {
         </View>
         <View className='info-confirm-wrap'>
           <Text className='label'>陪同人姓名</Text>
-          <Text className='value'>{item.entourageName}</Text>
+          <Text className='value' >{item.entourageName}</Text>
         </View>
         <View className='info-confirm-wrap'>
           <Text className='label'>手机号</Text>
@@ -50,6 +54,11 @@ const EntourageSuccess = (props) => {
         <View className='info-confirm-wrap'>
           <Text className='label'>预约套餐</Text>
           <Text className='value'>{item.comboName}</Text>
+        </View>
+      </View>
+      <View className='footer' >
+        <View className='btn-submit-view' onClick={skip}>
+          <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>
     </View>

@@ -1,11 +1,11 @@
-import {Text, View} from '@tarojs/components'
-import React, {useEffect, useState} from 'react';
+import { Text, View } from '@tarojs/components'
+import React, { useEffect, useState } from 'react';
 import './confirm.scss'
-import {getCurrentInstance} from "@tarojs/runtime";
+import { getCurrentInstance } from "@tarojs/runtime";
 import moment from "moment";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
-import {fetchApplyTradeApi, fetchAppointDetectApi, fetchAppointSuccessQrCodeApi} from "../../../services/combo";
+import { fetchApplyTradeApi, fetchAppointDetectApi, fetchAppointSuccessQrCodeApi } from "../../../services/combo";
 import Taro from "@tarojs/taro";
 import Api from "../../../config/api";
 
@@ -13,7 +13,7 @@ const Confirm = () => {
   const [item, setItem] = useState({})
   const [userType, setUserType] = useState(0);
   useEffect(() => {
-    let {item, userType} = getCurrentInstance().router.params;
+    let { item, userType } = getCurrentInstance().router.params;
     const _item = JSON.parse(item);
     setUserType(userType);
     setItem(_item);
@@ -38,8 +38,7 @@ const Confirm = () => {
     }
   }
   const _enterOrder = async () => {
-    let {item, userType} = getCurrentInstance().router.params;
-    console.log(444, item);
+    let { item, userType } = getCurrentInstance().router.params;
     const {
       cityid,
       date,
@@ -60,9 +59,9 @@ const Confirm = () => {
     Taro.showLoading({
       title: '加载中...',
     });
-    const _res = await user.loginByWeixin({appid: Config.appid});
+    const _res = await user.loginByWeixin({ appid: Config.appid });
     if (_res.code === 200) {
-      const {userId, wxid, unionid, sectionKey} = _res.data;
+      const { userId, wxid, unionid, sectionKey } = _res.data;
       const res = await fetchAppointDetectApi({
         cityid,
         date,
@@ -84,6 +83,7 @@ const Confirm = () => {
         entourageRelation,
       })
       Taro.hideLoading();
+      console.log(1111, res);
       if (res.code === 200) {
         if (userType == 1) {
           Taro.navigateTo({
@@ -98,9 +98,8 @@ const Confirm = () => {
               header: {
                 'content-type': 'application/json' // 默认值
               },
-              success: (res) => {
-                console.log(1111, res);
-                const {code, data} = res.data;
+              success: (result) => {
+                const { code, data } = result.data;
                 if (code == 200) {
                   fetchApplyTradeApi({
                     payType: '02',
@@ -114,7 +113,7 @@ const Confirm = () => {
                     // timeStamp: "1610863474"
                     if (response.code == 200) {
                       const {
-                        payResult: {timeStamp, paySign, nonceStr, appId, signType, packageValue},
+                        payResult: { timeStamp, paySign, nonceStr, appId, signType, packageValue },
                         tradeId
                       } = response.data;
                       Taro.requestPayment({
@@ -125,9 +124,10 @@ const Confirm = () => {
                         signType,
                         paySign,
                         success: function (result) {
-                            Taro.navigateTo({
-                              url:`/pages/user/payment-success/payment-success?id=${res.data}`
-                            })
+
+                          Taro.navigateTo({
+                            url: `/pages/user/payment-success/payment-success?id=${res.data}`
+                          })
                         },
                         fail: function (res) {
                           Taro.showToast({
@@ -163,10 +163,10 @@ const Confirm = () => {
           title: res.msg,
           icon: 'none',
         })
-        let timer =setTimeout(()=>{
-          Taro.reLaunch({url:'/pages/index/index'})
+        let timer = setTimeout(() => {
+          Taro.reLaunch({ url: '/pages/index/index' })
           clearTimeout(timer);
-        },1500)
+        }, 1500)
       }
     }
   }
@@ -177,7 +177,7 @@ const Confirm = () => {
           <Text className='order-info-text'>预约信息</Text>
         </View>
         <View className='info-confirm-view'>
-          <View className='info-confirm-wrap'>
+          <View className='info-confirm-wrap' style={'margin-top:0'}>
             <Text className='label'>就诊医院</Text>
             <Text className='value'>{item && item.orgName}</Text>
           </View>
@@ -206,6 +206,26 @@ const Confirm = () => {
             <Text className='label'>身份证号</Text>
             <Text className='value'>{item && item.idCard}</Text>
           </View>
+          {item.entourageIdCard&&
+          <View>
+            <View className='info-confirm-wrap'>
+              <Text className='label'>陪同人姓名</Text>
+              <Text className='value'>{item && item.entourageName}</Text>
+            </View>
+            <View className='info-confirm-wrap'>
+              <Text className='label'>与患者关系</Text>
+              <Text className='value'>{item && item.entourageRelation}</Text>
+            </View>
+            <View className='info-confirm-wrap'>
+              <Text className='label'>联系电话</Text>
+              <Text className='value'>{item && item.entouragePhone}</Text>
+            </View>
+            <View className='info-confirm-wrap'>
+              <Text className='label'>身份证号</Text>
+              <Text className='value'>{item && item.entourageIdCard}</Text>
+            </View>
+          </View>
+          }
         </View>
         <View className='tip-container'>
           <Text className='tip'>温馨提示</Text>

@@ -8,6 +8,7 @@ import Query from '@assets/home/query.png'
 import Free from '@assets/home/free.png'
 import {AtTabBar} from "taro-ui";
 import {getQueryOrgListByNameApi} from "../../services/home";
+import {fetchAppointSuccessQrCodeApi} from "../../services/combo";
 
 const RECOMMEND_SIZE = 20
 
@@ -21,6 +22,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
+
     const userInfo = Taro.getStorageSync('userInfo');
 
     this.setState({userInfo});
@@ -53,7 +55,6 @@ export default class Home extends Component {
       queryName:'',
     }).then(res => {
       if(res.length>1){
-
         Taro.navigateTo({
           url: `/pages/home/organization/organization?userType=${userType}`,
         })

@@ -1,0 +1,72 @@
+@import "~taro-ui/dist/style/components/modal.scss";
+.container{
+  display: flex;
+  flex-direction: column;
+  height:100%;
+  background: #fff;
+  border-top: 1px solid #EEE;
+}
+.hospital{
+  margin-top: 20rpx;
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 76rpx;
+}
+.login-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hospital-img{
+  width: 164rpx;
+  height: 164rpx;
+}
+.main{
+  padding-top: 92rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth{
+  margin-top: 58rpx;
+  font-size: 32px;
+  color: #333333;
+  margin-left: 72rpx;
+}
+.info{
+  font-size: 28px;
+  margin-top: 26rpx;
+  color: #999999;
+  margin-left: 72rpx;
+
+}
+.wx-login-btn{
+  margin-top: 50rpx;
+  background: #00B100;
+  width: 302PX;
+  height:44PX;
+  text-align: center;
+  color:#fff;
+  border-radius: 10PX;
+}
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
+.modal-view{
+  height: 80PX;
+  width: 280PX;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+.modal-text{
+  //margin-top: 30PX;
+  font-family: PingFangSC-Medium;
+  font-size: 17PX;
+  color: #191F25;
+}

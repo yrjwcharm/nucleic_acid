@@ -42,7 +42,7 @@ const AddPersonData = () => {
   }, {label: 3, value: '朋友'}])
   const [code,setCode] =useState('');
   const [showPicker, setShowPicker] = useState(false);
-  const [area, setArea] = useState('请选择');
+  const [area, setArea] = useState('请选择所属区域');
   const [visible, setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
   const [verifyCode,setVerifyCode] =useState('');
@@ -267,6 +267,7 @@ const AddPersonData = () => {
               </View>
             </View>
           </View>
+          <View className='line'/>
         </View>
         <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
@@ -275,7 +276,7 @@ const AddPersonData = () => {
           <View className='address-info-wrap'>
             <View className='address-info-view flex-between'>
               <View style='display:flex;alignItems:center'>
-                <Text className='dist-name-text'>地区信息</Text>
+                <Text className='dist-name-text' style={'color:#666'}>地区信息</Text>
                 <Text className='select-city-text _list-row-input'>{area}</Text>
               </View>
               <Image src={Forward} className='list-row-arrow'/>

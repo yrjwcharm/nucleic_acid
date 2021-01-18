@@ -31,7 +31,7 @@ const WritePatientInfo = () => {
   // payType	支付方式 0 线上支付 1 线下支付
   const [payType, setPayType] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
-  const [area, setArea] = useState('请选择省市区');
+  const [area, setArea] = useState('请选择所属区域');
   const [verifyCode, setVerifyCode] = useState('');
   const [timeType,setTimeType]=useState('');
   useEffect(() => {
@@ -203,6 +203,7 @@ const WritePatientInfo = () => {
               </View>
             </View>
           </View>
+          <View className='line'/>
         </View>
         <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);

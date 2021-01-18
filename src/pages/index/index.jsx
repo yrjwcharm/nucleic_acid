@@ -43,7 +43,7 @@ export default class Index extends Component {
         {current==1&&<UserPage/>}
       <AtTabBar
         fixed
-        customStyle={{fontWeight:'bold'}}
+        // customStyle={{fontWeight:'bold'}}
         color={'#999'}
         selectedColor={'#3299ff'}
         iconSize={20}

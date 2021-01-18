@@ -108,3 +108,20 @@
   display: flex;
   align-items: center;
 }
+.footer{
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.btn-submit-view{
+  height: 100rpx;
+  display: flex;
+  background: #3299FF;
+}
+.btn-submit-text{
+  font-size: 32px;
+  font-family: PingFangSC-Regular;
+  color: #FFFFFF;
+  margin: auto;
+}

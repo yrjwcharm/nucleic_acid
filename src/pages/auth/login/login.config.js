@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '用户授权'
+  navigationBarTitleText: '登录'
 }
