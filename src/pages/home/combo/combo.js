@@ -211,14 +211,17 @@ class Combo extends Component {
     let _item = {};
     let _sourceList = sourceList && sourceList.filter(item => moment(item.date).format('YYYY-MM-DD') === startDate);
     // console.log(333,_sourceList);
-    // for (let i = 0; i < _sourceList.length; i++) {
-    //   if (_sourceList[i].timeType === 0) {
-    //     _item = _sourceList[i];
-    //     _sourceList.splice(i, 1);
-    //     break;
-    //   }
-    // }
-    // _sourceList.unshift(_item);
+    if(_sourceList.length==2){
+      for (let i = 0; i < _sourceList.length; i++) {
+        if (_sourceList[i].timeType === 0) {
+          _item = _sourceList[i];
+          _sourceList.splice(i, 1);
+          break;
+        }
+      }
+      _sourceList.unshift(_item);
+    }
+
     return (
       <View className='container-box'>
         <View className='main'>
