@@ -18,8 +18,6 @@ const RefundPayment =()=>{
           <Image src={submitSuccess} className='img'/>
           <Text className='title'>预约取消已成功</Text>
           <Text className='reason'>退款将在72小时内到账，请随时关注~</Text>
-          <Text className='reason'>请及时关注</Text>
-
         </View>
       </View>
       <View className='footer'>
