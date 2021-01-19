@@ -57,9 +57,9 @@ class App extends Component {
         Taro.setStorageSync('userInfo', userInfo);
       },
       fail: function (res) {
-        Taro.redirectTo({
-          url: '/pages/auth/login/login',
-        })
+        // Taro.navigateTo({
+        //   url: '/pages/auth/login/login',
+        // })
       }
     })
 
@@ -68,9 +68,9 @@ class App extends Component {
       success: function (res) {
 
       }, fail: function (res) {
-        Taro.redirectTo({
-          url: '/pages/auth/login/login',
-        })
+        // Taro.redirectTo({
+        //   url: '/pages/auth/login/login',
+        // })
       }
     })
   }
