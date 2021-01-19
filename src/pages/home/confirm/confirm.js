@@ -102,6 +102,7 @@ const Confirm = () => {
                 'content-type': 'application/json' // 默认值
               },
               success: (result) => {
+                console.log(333,result);
                 const { code, data } = result.data;
                 if (code == 200) {
                   fetchApplyTradeApi({
