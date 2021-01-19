@@ -283,7 +283,7 @@ const AddPersonData = () => {
           <View className='address-info-wrap'>
             <View className='address-info-view flex-between'>
               <View style='display:flex;alignItems:center'>
-                <Text className='dist-name-text' style={'color:#666'}>地区信息</Text>
+                <Text className='dist-name-text' style={'color:#333'}>地区信息</Text>
                 <Text className='select-city-text _list-row-input'>{area}</Text>
               </View>
               <Image src={Forward} className='list-row-arrow'/>
