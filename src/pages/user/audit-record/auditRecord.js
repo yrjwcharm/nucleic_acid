@@ -161,7 +161,7 @@ export class AuditRecord extends Component {
                           </View>
                           {item.state == 2 && <View className='footer'>
                             <View className='op_btn_1'>
-                              <Text>重新预约</Text>
+                              <Text style={'margin:auto;'}>重新预约</Text>
                             </View>
                           </View>}
                         </View>

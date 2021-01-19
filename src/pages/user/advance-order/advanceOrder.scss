@@ -71,18 +71,14 @@
 @mixin btnStyle{
   width: 144px;
   height: 52px;
-  line-height: 52px;
-  background: inherit;
-  box-sizing: border-box;
+  display: flex;
   border-width: 1px;
   border-style: solid;
   border-color: #dddddd;
   border-radius: 30px;
   font-size: 26px;
   font-family: PingFangSC-Regular;
-
   color: #333333;
-  text-align: center;
 }
 .op_btn_1{
   @include btnStyle();

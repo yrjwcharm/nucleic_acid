@@ -235,10 +235,10 @@ export class AdvanceOrder extends Component {
                 signType,
                 paySign,
                 success: function (result) {
-                    // _this._getList();
-                    Taro.navigateTo({
-                      url: `/pages/user/payment-success/payment-success?id=${item.id}`
-                    })
+                  // _this._getList();
+                      Taro.navigateTo({
+                        url: `/pages/user/payment-success/payment-success?id=${item.id}`
+                      })
                 },
                 fail: function (res) {
                   Taro.showToast({
@@ -273,45 +273,45 @@ export class AdvanceOrder extends Component {
           <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
             {tabList.map((item, index) => {
               return (
-                  <AtTabsPane  key={item.id + ""} current={current} index={index}>
-                    {list.length !== 0 ? list.map((_item, index) => {
-                      let date = moment(_item.date).format('YYYY-MM-DD');
-                      let week = this._getWeek(_item.date);
-                      console.log(333, _item);
-                      return (
-                        <View className='wrap' key={_item.id + " "}>
-                          <View className='main'>
-                            <View className='listItem'>
-                              <View className='listItem_left'>
-                                <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
-                                <Text
-                                  className='listItem_left_date'>{date} {week} {_item.timeType == 0 ? '上午' : _item.timeType == 1 ? '下午' : '全天'}</Text>
-                              </View>
-                              <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
-                                <Text
-                                  className='listItem_right_status'
-                                  style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:green' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
-                                {_item.state != 3 && <Image src={Forward} className='listItem_right_arrow'/>}
-                              </View>
+                <AtTabsPane  key={item.id + ""} current={current} index={index}>
+                  {list.length !== 0 ? list.map((_item, index) => {
+                    let date = moment(_item.date).format('YYYY-MM-DD');
+                    let week = this._getWeek(_item.date);
+                    console.log(333, _item);
+                    return (
+                      <View className='wrap' key={_item.id + " "}>
+                        <View className='main'>
+                          <View className='listItem'>
+                            <View className='listItem_left'>
+                              <Text className='listItem_left_appoint'>预约人:{_item.name}</Text>
+                              <Text
+                                className='listItem_left_date'>{date} {week} {_item.timeType == 0 ? '上午' : _item.timeType == 1 ? '下午' : '全天'}</Text>
                             </View>
-                            <View className='footer'>
-                              {(_item.state == 0 || _item.state == 1) &&
-                              <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
-                                <Text>取消预约</Text>
-                              </View>}
-                              {(_item.state ==0&&_item.userType==2)&&<View className='op_btn_2' onClick={() => this._waitPay(_item)}>
-                                <Text>待支付</Text>
-                                </View>}
-                              {_item.state == 3 &&
-                              <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
-                                <Text>删除</Text>
-                              </View>}
+                            <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
+                              <Text
+                                className='listItem_right_status'
+                                style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:green' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
+                              {_item.state != 3 && <Image src={Forward} className='listItem_right_arrow'/>}
                             </View>
                           </View>
+                          <View className='footer'>
+                            {(_item.state == 0 || _item.state == 1) &&
+                            <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
+                              <Text style={'margin:auto;'}>取消预约</Text>
+                            </View>}
+                            {(_item.state ==0&&_item.userType==2)&&<View className='op_btn_2' style={'border-color:red;border-width:1px;border-style:solid'} onClick={() => this._waitPay(_item)}>
+                              <Text style={'color:red;margin:auto;'}>待支付</Text>
+                            </View>}
+                            {_item.state == 3 &&
+                            <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
+                              <Text style={'margin:auto;'}>删除</Text>
+                            </View>}
+                          </View>
                         </View>
-                      )
-                    }) : <Empty/>}
-                  </AtTabsPane>)
+                      </View>
+                    )
+                  }) : <Empty/>}
+                </AtTabsPane>)
             })}
           </AtTabs>
         </View>
