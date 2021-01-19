@@ -12,8 +12,8 @@
 }
 .self-info-view{
   margin-left: 40px;
-  line-height: 80px;
-  height:80px;
+  line-height: 80rpx;
+  height:80rpx;
 }
 .self-info-text{
   font-family: PingFangSC-Regular;
@@ -25,7 +25,7 @@
 }
 
 .list-row-wrap{
-  height:80px;
+  height:80rpx;
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
@@ -38,7 +38,7 @@
   transform: scaleY(0.5);
 }
 .address-info-wrap{
-  height:80px;
+  height:80rpx;
   margin-right: 40px;
   margin-left: 40px;
   background: #fff;
@@ -189,7 +189,7 @@
   display:flex;
   border: 1px dashed rgba(50,153,255,17);
   border-radius: 40px;
-  height:80px;
+  height:80rpx;
 }
 .acc-info-cancel{
   margin-top: 40px;
@@ -197,7 +197,7 @@
   background: #FFFFFF;
   margin-right: 40px;
   display: flex;
-  height: 80px;
+  height: 80rpx;
   border: 1px dashed rgba(229,0,18,17);
   border-radius: 40px;
 }
@@ -228,7 +228,7 @@
 }
 .img-code{
   height: 60px;
-  width: 180px;
+  width: 180rpx;
 }
 
 .textarea-text{
@@ -236,8 +236,8 @@
   color: #666666;
 }
 .modal-view{
-  height: 80PX;
-  width: 280PX;
+  height: 80rpx;
+  width: 280rpx;
   display: flex;
   align-items: center;
   flex-direction: column;

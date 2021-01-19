@@ -5,12 +5,17 @@ import './refund-payment.scss'
 import submitSuccess from '@assets/submit.png'
 import {getCurrentInstance} from "@tarojs/runtime";
 const RefundPayment =()=>{
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [item,setItem]=useState({});
   const skip=()=>{
     Taro.reLaunch({
       url:'/pages/user/advance-order/advanceOrder',
     })
   }
+  useEffect(()=>{
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
+    setIsIphoneX(isIphoneX);
+  },[])
   return (
     <View className='audit-detail-box'>
       <View className='main'>
@@ -21,7 +26,7 @@ const RefundPayment =()=>{
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' onClick={skip}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={skip}>
           <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>

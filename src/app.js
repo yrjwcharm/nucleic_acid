@@ -16,8 +16,11 @@ class App extends Component {
 //model中包含着设备信息
         console.log(res.model)
         var model = res.model
-        if (model.search('iPhone X') != -1) {
+        if (model.search('iPhone X') != -1||model.search('iPhone 11')!=-1||model.search('iPhone 12')!=-1) {
+            console.log(333,'zoule');
+          Taro.setStorageSync('isIphoneX',true);
         } else {
+          Taro.setStorageSync('isIphoneX',false);
         }
       }
     })
@@ -69,23 +72,6 @@ class App extends Component {
           url: '/pages/auth/login/login',
         })
       }
-    })
-  }
-
-  componentDidShow() {
-    Taro.loadFontFace({
-      family: 'Regular',
-
-      source: 'url("http://hstest.youjiankang.net/hmp/images/font/PingFang-Regular.ttf")',
-
-      success: function () {
-        console.log('load font success')
-      },
-      fail: function () {
-        console.log(333, 'chucuowl');
-      }
-
-
     })
   }
 

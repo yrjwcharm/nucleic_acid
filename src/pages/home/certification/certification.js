@@ -15,10 +15,12 @@ export default class UploadCertification extends Component {
     this.state = {
       url: '',
       visible: true,
+      isIphoneX:false
     }
-
   }
   componentDidMount() {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
+    this.setState({isIphoneX})
   }
 
   /**
@@ -118,7 +120,7 @@ export default class UploadCertification extends Component {
   }
 
   render() {
-    const {url} = this.state;
+    const {url,isIphoneX} = this.state;
     return (
       <View className='container'>
 
@@ -136,7 +138,7 @@ export default class UploadCertification extends Component {
           </View>
         </View>
         <View className='footer'>
-          <View className='btn-submit-view' onClick={this._submitAudit}>
+          <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={this._submitAudit}>
             <Text className='btn-submit-text'>下一步</Text>
           </View>
         </View>

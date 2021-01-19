@@ -10,13 +10,16 @@ import Taro from "@tarojs/taro";
 import Api from "../../../config/api";
 
 const Confirm = () => {
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [item, setItem] = useState({})
   const [userType, setUserType] = useState(0);
   useEffect(() => {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     let { item, userType } = getCurrentInstance().router.params;
     const _item = JSON.parse(item);
     setUserType(userType);
     setItem(_item);
+    setIsIphoneX(isIphoneX);
   }, [])
   const _getWeek = (date) => {
     let week = moment(date).day()
@@ -249,7 +252,7 @@ const Confirm = () => {
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-wrap-view'>
+        <View className='btn-wrap-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'}>
           <View className='price-view'>
             <Text className='RMB'>￥</Text>
             <Text className={userType == 1 ? 'price' : '_price'}>{item && item.price}</Text>

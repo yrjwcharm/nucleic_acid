@@ -7,10 +7,13 @@ import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import moment from 'moment';
 import Taro from "@tarojs/taro";
 const EntourageSuccess = (props) => {
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [item,setItem] =useState({});
   useEffect(() => {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     let {item} = getCurrentInstance().router.params;
     setItem(JSON.parse(item));
+    setIsIphoneX(isIphoneX);
     // qrcode: "/home/hmp/images/qrcode/265965661749116928.jpg"
   }, [])
   const skip = () => {
@@ -57,7 +60,7 @@ const EntourageSuccess = (props) => {
         </View>
       </View>
       <View className='footer' >
-        <View className='btn-submit-view' onClick={skip}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={skip}>
           <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>

@@ -8,6 +8,7 @@ import moment from 'moment';
 import Forward from '@assets/home/forward.svg'
 import  Taro from '@tarojs/taro'
 const PaymentSuccess = (props) => {
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [comboName, setComboName] = useState('');
   const [date, setDate] = useState('');
   const [orgName, setOrgName] = useState('');
@@ -16,8 +17,9 @@ const PaymentSuccess = (props) => {
   const [name, setName] = useState('');
   const [timeType,setTimeType] =useState('');
   useEffect(() => {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     let { id } = getCurrentInstance().router.params;
-    // setName(name);
+     setIsIphoneX(isIphoneX);
     _generateQrCode(id);
   }, [])
   const _generateQrCode = async (id) => {
@@ -101,7 +103,7 @@ const PaymentSuccess = (props) => {
         </View>
       </View>
       <View className='footer' >
-        <View className='btn-submit-view' onClick={skip}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={skip}>
           <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>

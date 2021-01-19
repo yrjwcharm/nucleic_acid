@@ -7,12 +7,17 @@ import {isEmpty} from "../../../utils/EmptyUtil";
 import submitSuccess from '@assets/submit.png'
 import {getCurrentInstance} from "@tarojs/runtime";
 const AuditResult =()=>{
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [item,setItem]=useState({});
   const lookup=()=>{
     Taro.reLaunch({
       url:'/pages/user/advance-order/advanceOrder',
     })
   }
+  useEffect(()=>{
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
+    setIsIphoneX(isIphoneX);
+  },[])
   return (
     <View className='audit-detail-box'>
       <View className='main'>
@@ -23,7 +28,7 @@ const AuditResult =()=>{
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' onClick={lookup}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={lookup}>
           <Text className='btn-submit-text'>查看预约</Text>
         </View>
       </View>

@@ -12,6 +12,7 @@ import {AtModal, AtModalAction} from "taro-ui";
 import {queryAppointRecord} from "../../../services/user";
 
 const WritePatientInfo = () => {
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode, setImgCode] = useState('');
   const [orgName, setOrgName] = useState('');
   const [userType, setUserType] = useState(2);
@@ -39,15 +40,17 @@ const WritePatientInfo = () => {
     getImageCode();
   }, [])
   const _initData = async () => {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     const {item,obj} = getCurrentInstance().router.params;
     const {sourceId, orgId, date,appointId, orgName,timeType, price} = JSON.parse(item);
-    console.log(222,obj);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
     setOrgName(orgName);
     setPrice(price);
     setTimeType(timeType);
+
+    setIsIphoneX(isIphoneX);
   }
 
   const getRandomCode = () => {
@@ -244,8 +247,8 @@ const WritePatientInfo = () => {
           </Text>
         </View>
       </View>
-      <View className='footer'>
-        <View className='btn-submit-view' onClick={nextStep}>
+      <View className='footer' >
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>

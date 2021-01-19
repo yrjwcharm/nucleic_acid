@@ -14,6 +14,7 @@ import Config from "../../../../project.config.json";
 import Api from "../../../config/api";
 
 const AddPersonData = () => {
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode,setImgCode] =useState('');
   const [userId, setUserId] = useState('');
   const [orgName,setOrgName] = useState('');
@@ -37,14 +38,12 @@ const AddPersonData = () => {
   // payType	支付方式 0 线上支付
   const [payType, setPayType] = useState(0);
   const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'},
-    {label: 2, value: '丈夫'},
+    {label:2, value: '丈夫'},
     {label:3,value:'妻子'},
-    {label:4,value:'兄弟'},
-    {label:5,value:'姐妹'},
-    {label:6,value:'儿子'},
-    {label:7,value:'女儿'},
-    {label:8,value:'孙子'},
-    {label:9,value:'孙女'},
+    {label:4,value:'儿子'},
+    {label:5,value:'女儿'},
+    {label:6,value:'其他亲属'},
+    {label:6,value:'非亲属'},
     ])
   const [code,setCode] =useState('');
   const [showPicker, setShowPicker] = useState(false);
@@ -59,6 +58,7 @@ const AddPersonData = () => {
     getImageCode();
   }, [])
   const _initData = async () => {
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
     const {item, userType} = getCurrentInstance().router.params;
     const {sourceId, orgId,timeType, date,orgName,price} = JSON.parse(item);
     setSourceId(sourceId);
@@ -67,6 +67,7 @@ const AddPersonData = () => {
     setOrgName(orgName);
     setPrice(price);
     setTimeType(timeType);
+    setIsIphoneX(isIphoneX);
   }
   const getRandomCode=() =>{
     let code = "";
@@ -362,7 +363,7 @@ const AddPersonData = () => {
         <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' onClick={nextStep}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>

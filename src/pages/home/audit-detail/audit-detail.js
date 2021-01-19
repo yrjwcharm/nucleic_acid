@@ -23,6 +23,7 @@ const AuditDetail =()=>{
               <Text className='title'>{item.state ==0?'审核中':item.state==1?'已通过':'已驳回'}</Text>
               {item.state ==2&&<Text className='reason'>驳回原因：{item.refuseReason}</Text>}
               {item.state==0&&<Text className='reason'>审核结果将发送至微信服务通知，请及时关注</Text>}
+              {item.state ==2&&<Text className={'reason'}>请在我的预约中查看已预约订单</Text> }
             </View>
         </View>
      </View>
