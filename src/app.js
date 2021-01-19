@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import * as user from "./utils/user";
 import {set as setGlobalData, get as getGlobalData} from './global_data';
 import {loginByWXApi} from "./services/auth";
+import Api from './config/api'
 class App extends Component {
 
   componentWillMount() {
@@ -43,7 +44,7 @@ class App extends Component {
         })
 
     Taro.requestSubscribeMessage({
-      tmplIds: ['GdftJ7S3_vf6pi46DWY7iVhCxAc3A0CJmDB3TCIRLzs','81qGlv4rgIoMOFwTncimczMXS-EHZMfzGPWtOnS7zQs','JV3aQWtvMyHmkxlGSN-RbON-VTioOe6Xj11KH7s_v3Y','JV3aQWtvMyHmkxlGSN-RbCn8CWbSOiCGsNW1M4XxF7s'],
+      tmplIds:Api.tmplIds,
       success: function (res) {
 
       },fail:function (res){

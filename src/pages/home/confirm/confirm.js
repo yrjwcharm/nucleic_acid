@@ -131,7 +131,7 @@ const Confirm = () => {
                         },
                         fail: function (res) {
                           Taro.showToast({
-                            title: '支付失败',
+                            title: '支付已取消,请在我的预约-进行支付',
                             icon: 'none',
                           })
                         }

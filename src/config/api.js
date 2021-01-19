@@ -4,6 +4,7 @@
 // 云平台部署时使用
 let WxApiRoot = 'https://hstest.youjiankang.net';
 export default {
+  tmplIds:['JV3aQWtvMyHmkxlGSN-RbIsYvvKhRCet4M7wS2HqCeY','PfnmBhL-_e7Dyr3cN8XPieC-pJMxZxZLFZ64nP3c5GM','91F5vWCWIp9dYyUdS4QLFh-V7UQI5C0cp6ttAIQy-48'],
   imgUrl :'http://hstest.youjiankang.net/',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口
   AboutUrl: WxApiRoot + 'home/about', //介绍信息

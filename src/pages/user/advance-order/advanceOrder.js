@@ -10,6 +10,7 @@ import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg'
 import Config from "../../../../project.config.json";
 import _Empty from "@assets/empty.png";
+import {fetchApplyTradeApi} from "../../../services/combo";
 
 let i = 1;
 
@@ -24,7 +25,7 @@ export class AdvanceOrder extends Component {
     totalPage: 1,
     visible: false,
     userId: '',
-    tabList: [{title: '全部', id: 0}, {title: '预约中', id: 1}, {title: '已预约', id: 2}, {title: '已完成', id: 3}]
+    tabList: [{title: '全部', id: 0}, {title: '预约中', id: 1}, {title: '已预约', id: 2}]
   }
 
   componentDidMount() {
@@ -145,16 +146,16 @@ export class AdvanceOrder extends Component {
   _cancelAppoint = async (item) => {
     this.setState({visible: true, item});
   }
-  _againAppoint = async (item) => {
-    const res = await queryAppointRecord({
-      id: item.id,
-    })
-    console.log(333, res);
-    if (res.code == 200) {
-      const {userType} = res.data;
-      Taro.redirectTo({url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}`});
-    }
-  }
+  // _againAppoint = async (item) => {
+  //   const res = await queryAppointRecord({
+  //     id: item.id,
+  //   })
+  //   console.log(333, res);
+  //   if (res.code == 200) {
+  //     const {userType} = res.data;
+  //     Taro.redirectTo({url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}`});
+  //   }
+  // }
   _deleteAppoint = (item) => {
     this.setState({visible: true, item})
   }
@@ -187,14 +188,82 @@ export class AdvanceOrder extends Component {
         success: (res) => {
           console.log(333, res);
           const _res = res.data;
-          _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
-            this._getList();
-          })
+          if(_res.code==200){
+            if(item.userType==2){
+              if(item.payState==1){
+                Taro.navigateTo({url:'/pages/user/refund-pay/refund-payment'})
+              }
+            }
+            this.setState({visible: false, page: 1, list: []}, () => {
+              this._getList();
+            })
+          }
         }
       })
     }
   }
-
+  _waitPay=(item)=>{
+    Taro.request({
+      url: Api.createOrder + `?appointId=${item.id}`, //仅为示例，并非真实的接口地址
+      data: {},
+      method: 'POST',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: (result) => {
+        const { code, data } = result.data;
+        if (code == 200) {
+          fetchApplyTradeApi({
+            payType: '02',
+            orderId: data
+          }).then(response => {
+            // appId: "wx99bc91f0ade99f16"
+            // nonceStr: "mygY7r2Ac0pyI6XL"
+            // packageValue: "prepay_id=wx17140433899831f06b0a174a946b0a0000"
+            // paySign: "9B50AD71302BEB2F6DC9190C3F743F5C"
+            // signType: "MD5"
+            // timeStamp: "1610863474"
+            if (response.code == 200) {
+              const {
+                payResult: { timeStamp, paySign, nonceStr, appId, signType, packageValue },
+              } = response.data;
+              Taro.requestPayment({
+                appId,
+                timeStamp,
+                nonceStr,
+                package: packageValue,
+                signType,
+                paySign,
+                success: function (result) {
+                    // _this._getList();
+                    Taro.navigateTo({
+                      url: `/pages/user/payment-success/payment-success?id=${item.id}`
+                    })
+                },
+                fail: function (res) {
+                  Taro.showToast({
+                    title: '支付失败',
+                    icon: 'none',
+                  })
+                }
+              })
+            }
+          }).catch(error => {
+            console.log(333, error);
+          })
+        } else {
+          Taro.showToast({
+            title: '交易失败',
+            icon: 'none',
+          })
+        }
+        // const _res = res.data;
+        // _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
+        //   this._getList();
+        // })
+      }
+    })
+  }
   render() {
     const {current, tabList, list, visible, item: tipItem} = this.state;
     console.log(333, list);
@@ -221,7 +290,7 @@ export class AdvanceOrder extends Component {
                               <View className='listItem_right' onClick={(item) => this.goToPage(_item)}>
                                 <Text
                                   className='listItem_right_status'
-                                  style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:#3299ff' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
+                                  style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:green' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
                                 {_item.state != 3 && <Image src={Forward} className='listItem_right_arrow'/>}
                               </View>
                             </View>
@@ -230,9 +299,9 @@ export class AdvanceOrder extends Component {
                               <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
                                 <Text>取消预约</Text>
                               </View>}
-                              {/* {_item.state==1&&<View className='op_btn_2' onClick={() => this._againAppoint(_item)}>
-                             <Text>再次预约</Text>
-                            </View>} */}
+                              {(_item.state ==0&&_item.userType==2)&&<View className='op_btn_2' onClick={() => this._waitPay(_item)}>
+                                <Text>待支付</Text>
+                                </View>}
                               {_item.state == 3 &&
                               <View className='op_btn_2' onClick={() => this._deleteAppoint(_item)}>
                                 <Text>删除</Text>

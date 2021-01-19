@@ -5,6 +5,7 @@ import {set as setGlobalData} from '../../../global_data';
 import Icon from '@assets/icon.png'
 import * as user from '../../../utils/user';
 import './login.scss';
+import Api from '../../../config/api'
 import React, {Component} from "react";
 import {AtModal, AtModalAction} from "taro-ui";
 class Login extends Component {
@@ -24,7 +25,7 @@ class Login extends Component {
   _enterOp=()=>{
     let _this = this;
     Taro.requestSubscribeMessage({
-      tmplIds: ['GdftJ7S3_vf6pi46DWY7iVhCxAc3A0CJmDB3TCIRLzs','81qGlv4rgIoMOFwTncimczMXS-EHZMfzGPWtOnS7zQs','JV3aQWtvMyHmkxlGSN-RbON-VTioOe6Xj11KH7s_v3Y'],
+      tmplIds:Api.tmplIds,
       success: function (res) {
         _this.setState({visible:false})
         Taro.reLaunch({

@@ -16,8 +16,8 @@ const RefundPayment =()=>{
       <View className='main'>
         <View  className='img-view'>
           <Image src={submitSuccess} className='img'/>
-          <Text className='title'>取消预约已受理</Text>
-          <Text className='reason'>最长72小时退款，退款成功后会发送微信服务通知,</Text>
+          <Text className='title'>预约取消已成功</Text>
+          <Text className='reason'>退款将在72小时内到账，请随时关注~</Text>
           <Text className='reason'>请及时关注</Text>
 
         </View>
