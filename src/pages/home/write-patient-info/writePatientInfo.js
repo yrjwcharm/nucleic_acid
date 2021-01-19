@@ -263,8 +263,8 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input  type={type} className={className} onInput={onInput} placeholder={placeholder}
-                  placeholderClass='list-row-input-placeholder'/>
+          <Input  type={type}  onInput={onInput} placeholder={placeholder}
+                  />
         </View>
       </View>
       <View className='line'/>
