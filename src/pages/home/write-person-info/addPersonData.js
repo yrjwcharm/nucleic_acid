@@ -36,10 +36,16 @@ const AddPersonData = () => {
   const [entourageRelation, setEntourageRelation] = useState('父亲');
   // payType	支付方式 0 线上支付
   const [payType, setPayType] = useState(0);
-  const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'}, {
-    label: 2,
-    value: '亲戚'
-  }, {label: 3, value: '朋友'}])
+  const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'},
+    {label: 2, value: '丈夫'},
+    {label:3,value:'妻子'},
+    {label:4,value:'兄弟'},
+    {label:5,value:'姐妹'},
+    {label:6,value:'儿子'},
+    {label:7,value:'女儿'},
+    {label:8,value:'孙子'},
+    {label:9,value:'孙女'},
+    ])
   const [code,setCode] =useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择所属区域');
