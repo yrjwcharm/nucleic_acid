@@ -280,7 +280,6 @@ export class AdvanceOrder extends Component {
                   {list.length !== 0 ? list.map((_item, index) => {
                     let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
-                    console.log(333, _item);
                     return (
                       <View className='wrap' key={_item.id + " "}>
                         <View className='main'>
