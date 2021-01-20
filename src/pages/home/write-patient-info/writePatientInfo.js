@@ -247,7 +247,7 @@ const WritePatientInfo = () => {
           </Text>
         </View>
       </View>
-      <View className='footer' >
+      <View className='footer'>
         <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>

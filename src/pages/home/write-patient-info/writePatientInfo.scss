@@ -1,15 +1,19 @@
+@import "~taro-ui/dist/style/components/action-sheet.scss";
 @import "~taro-ui/dist/style/components/modal.scss";
+
 .container{
   display: flex;
+  flex: 1;
   flex-direction: column;
   height: 100%;
   border-top: 1px solid #eee;
   background: #F5F6F9;
+  padding-top: 20px;
 }
-.line{
-  height:0;
-  border-bottom: 1px solid #eee;
-  transform: scaleY(0.5);
+.main{
+  display: flex;
+  flex-direction: column;
+  flex:1;
 }
 .self-info-view{
   margin-left: 40px;
@@ -17,27 +21,29 @@
   height:80rpx;
 }
 .self-info-text{
+  font-family: PingFangSC-Regular;
   font-size: 28px;
-  color: #333333;
+  color: #333;
 }
 .list-row-container{
   background: #fff;
 }
-.line{
-  height: 0;
-  border-botton: 1px solid #eee;
-  transform: scaleY(0.5);
-}
+
 .list-row-wrap{
-  height:96rpx;
+  height:80rpx;
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+.line{
+  height:0;
+  border-bottom: 1px solid #eee;
+  transform: scaleY(0.5);
+}
 .address-info-wrap{
-  height:96rpx;
+  height:80rpx;
   margin-right: 40px;
   margin-left: 40px;
   background: #fff;
@@ -53,7 +59,7 @@
 }
 .detail-address-textarea{
   padding-top: 18px;
-  height:96rpx;
+  height:78px;
   margin-right: 40px;
   margin-left: 40px;
   display: flex;
@@ -62,27 +68,35 @@
 }
 .address-info-view{
   display: flex;
-  flex-direction: row;
   align-items: center;
+  flex-direction: row;
   justify-content: space-between;
 }
 .dist-name-text{
   font-size: 28px;
+  font-family: PingFangSC-Regular;
+
   color: #333333;
 }
 .select-city-text{
   font-size: 28px;
   color: #999;
+  padding-left: 58px;
+  font-family: PingFangSC-Regular;
 }
 .list-row-arrow{
   width: 14px;
   height: 26px;
 }
+.list-row-down{
+  width: 26px;
+  height: 14px;
+}
 
 .list-row-input-placeholder{
   font-size: 28px;
-  font-family: PingFangSC-Regular;
   color: #999;
+  font-family: PingFangSC-Regular;
 }
 .list-row-arrow{
   width: 14px;
@@ -92,6 +106,12 @@
   font-size: 14PX;
   color: #666666;
   padding-left: 142px;
+}
+.list-row-input1{
+  font-size: 14PX;
+  color: #666666;
+  padding-left: 86px;
+
 }
 ._list-row-input{
   font-size: 14PX;
@@ -116,7 +136,9 @@
 }
 .list-row-text{
   font-size: 28px;
-  color: #333;
+  font-family: PingFangSC-Regular;
+
+  color: #333333;
 }
 
 .tip{
@@ -128,19 +150,16 @@
 .tip-container{
   padding-top: 20PX;
   padding-bottom: 10PX;
-
 }
-
-
 .tip-view{
   display: flex;
-  flex:1;
+  //flex:1;
   padding-left: 40px;
   padding-right: 40px;
   //padding-right: 40px;
 }
 .tip-text{
-  flex: 1;
+  //flex: 1;
   text-align: justify;
   //text-align-last:justify;
   text-justify: inter-ideograph;
@@ -157,7 +176,7 @@
   justify-content: flex-end;
 }
 .btn-submit-view{
-  height: 96rpx;
+  height: 100rpx;
   display: flex;
   background: #3299FF;
 }
@@ -166,6 +185,43 @@
   font-family: PingFangSC-Regular;
   color: #FFFFFF;
   margin: auto;
+}
+.acc-info-view{
+  margin-top: 40px;
+  margin-left: 40px;
+  background: #FFFFFF;
+  margin-right: 40px;
+  display:flex;
+  border: 1px dashed rgba(50,153,255,17);
+  border-radius: 40px;
+  height:80rpx;
+}
+.acc-info-cancel{
+  margin-top: 40px;
+  margin-left: 40px;
+  background: #FFFFFF;
+  margin-right: 40px;
+  display: flex;
+  height: 80rpx;
+  border: 1px dashed rgba(229,0,18,17);
+  border-radius: 40px;
+}
+.acc-info-text{
+  margin: auto;
+  font-size: 32px;
+  color: #3299FF;
+  font-family: PingFangSC-Regular;
+}
+.acc-info-cancel-text{
+  margin: auto;
+  font-family: PingFangSC-Regular;
+  font-size: 32px;
+  color: rgba(229,0,18,16);
+}
+.acc-info-container{
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
 }
 .code-view{
   border: 1px dashed #3299FF;
@@ -180,9 +236,22 @@
   width: 180rpx;
 }
 
-
 .textarea-text{
   font-size: 14PX;
   color: #666666;
 }
-
+.modal-view{
+  height: 80PX;
+  width: 280PX;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+.modal-text{
+  font-family: PingFangSC-Medium;
+  font-size: 17PX;
+  color: #191F25;
+}

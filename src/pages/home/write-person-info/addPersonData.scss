@@ -10,10 +10,15 @@
   background: #F5F6F9;
   padding-top: 20px;
 }
+.main{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+}
 .self-info-view{
   margin-left: 40px;
-  line-height: 96rpx;
-  height:96rpx;
+  line-height: 80rpx;
+  height:80rpx;
 }
 .self-info-text{
   font-family: PingFangSC-Regular;
@@ -25,7 +30,7 @@
 }
 
 .list-row-wrap{
-  height:96rpx;
+  height:80rpx;
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
@@ -54,7 +59,7 @@
 }
 .detail-address-textarea{
   padding-top: 18px;
-  height:96rpx;
+  height:78px;
   margin-right: 40px;
   margin-left: 40px;
   display: flex;
@@ -117,7 +122,7 @@
   font-size: 14PX;
   color: #666666;
   padding-left: 58px;
-  flex: 1;
+  //flex: 1;
 }
 
 .list-row-view{
@@ -148,13 +153,13 @@
 }
 .tip-view{
   display: flex;
-  flex:1;
+  //flex:1;
   padding-left: 40px;
   padding-right: 40px;
   //padding-right: 40px;
 }
 .tip-text{
-  flex: 1;
+  //flex: 1;
   text-align: justify;
   //text-align-last:justify;
   text-justify: inter-ideograph;
@@ -171,7 +176,7 @@
   justify-content: flex-end;
 }
 .btn-submit-view{
-  height: 96rpx;
+  height: 100rpx;
   display: flex;
   background: #3299FF;
 }
@@ -189,7 +194,7 @@
   display:flex;
   border: 1px dashed rgba(50,153,255,17);
   border-radius: 40px;
-  height:80rpx;
+  height:96rpx;
 }
 .acc-info-cancel{
   margin-top: 40px;
@@ -197,7 +202,7 @@
   background: #FFFFFF;
   margin-right: 40px;
   display: flex;
-  height: 80rpx;
+  height: 96rpx;
   border: 1px dashed rgba(229,0,18,17);
   border-radius: 40px;
 }
