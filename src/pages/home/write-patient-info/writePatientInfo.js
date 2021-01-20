@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, Input, Text, Textarea, View} from '@tarojs/components'
+import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
 import './writePatientInfo.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -8,9 +8,11 @@ import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from '../../../assets/home/forward.svg'
 import Api from "../../../config/api";
+import {AtModal, AtModalAction} from "taro-ui";
+import {queryAppointRecord} from "../../../services/user";
 
 const WritePatientInfo = () => {
-  const [isIphoneX, setIsIphoneX] = useState(false);
+  const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode, setImgCode] = useState('');
   const [orgName, setOrgName] = useState('');
   const [userType, setUserType] = useState(2);
@@ -32,15 +34,15 @@ const WritePatientInfo = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择所属区域');
   const [verifyCode, setVerifyCode] = useState('');
-  const [timeType, setTimeType] = useState('');
+  const [timeType,setTimeType]=useState('');
   useEffect(() => {
     _initData();
     getImageCode();
   }, [])
   const _initData = async () => {
     const isIphoneX = Taro.getStorageSync('isIphoneX');
-    const {item, obj} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date, appointId, orgName, timeType, price} = JSON.parse(item);
+    const {item,obj} = getCurrentInstance().router.params;
+    const {sourceId, orgId, date,appointId, orgName,timeType, price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
@@ -194,8 +196,8 @@ const WritePatientInfo = () => {
         <View className='list-row-container'>
           <View className='list-row-wrap'>
             <View className='list-row-view  flex-between'>
-                <Text className='list-row-text'>验证码</Text>
-              <Input type='text' className='list-row-padding' onInput={(e) => {
+              <Text className='list-row-text' style='margin-right:60rpx'>验证码</Text>
+              <Input type='text' className='__list-row-input' onInput={(e) => {
                 setVerifyCode(e.detail.value);
               }} placeholder={'请输入图片验证码'}
                      placeholderClass='list-row-input-placeholder'/>
@@ -245,9 +247,8 @@ const WritePatientInfo = () => {
           </Text>
         </View>
       </View>
-      <View className='footer'>
-        <View className='btn-submit-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}
-              onClick={nextStep}>
+      <View className='footer' >
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
@@ -262,8 +263,8 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
-                 placeholderClass='list-row-input-placeholder'
+          <Input type={type}  className={className} onInput={onInput} placeholder={placeholder}
+                  placeholderClass='list-row-input-placeholder'
           />
         </View>
       </View>

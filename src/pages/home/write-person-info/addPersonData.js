@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
-import {AtActionSheet, AtActionSheetItem, AtModal, AtModalAction} from "taro-ui"
+import {AtActionSheet, AtActionSheetItem, AtInput, AtModal, AtModalAction} from "taro-ui"
 import Down from '@assets/down.svg'
 import './addPersonData.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -9,14 +9,16 @@ import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from "../../../assets/home/forward.svg";
+import * as user from "../../../utils/user";
+import Config from "../../../../project.config.json";
 import Api from "../../../config/api";
 
 const AddPersonData = () => {
-  const [isIphoneX, setIsIphoneX] = useState(false);
-  const [imgCode, setImgCode] = useState('');
+  const [isIphoneX,setIsIphoneX]=useState(false);
+  const [imgCode,setImgCode] =useState('');
   const [userId, setUserId] = useState('');
-  const [orgName, setOrgName] = useState('');
-  const [price, setPrice] = useState(0);
+  const [orgName,setOrgName] = useState('');
+  const [price,setPrice] =useState(0);
   const [userType, setUserType] = useState(1);
   const [date, setDate] = useState('');
   const [sourceId, setSourceId] = useState('');
@@ -36,21 +38,21 @@ const AddPersonData = () => {
   // payType	支付方式 0 线上支付
   const [payType, setPayType] = useState(0);
   const [relationList, setRelationList] = useState([{label: 0, value: "父亲"}, {label: 1, value: '母亲'},
-    {label: 2, value: '丈夫'},
-    {label: 3, value: '妻子'},
-    {label: 4, value: '儿子'},
-    {label: 5, value: '女儿'},
-    {label: 6, value: '其他亲属'},
-    {label: 6, value: '非亲属'},
+    {label:2, value: '丈夫'},
+    {label:3,value:'妻子'},
+    {label:4,value:'儿子'},
+    {label:5,value:'女儿'},
+    {label:6,value:'其他亲属'},
+    {label:6,value:'非亲属'},
   ])
-  const [code, setCode] = useState('');
+  const [code,setCode] =useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择所属区域');
   const [visible, setVisible] = useState(false);
   const [insEscortStaff, setInsEscortStaff] = useState(false);
-  const [verifyCode, setVerifyCode] = useState('');
-  const [timeType, setTimeType] = useState('');
-  const [modal, setModal] = useState(false);
+  const [verifyCode,setVerifyCode] =useState('');
+  const [timeType,setTimeType] =useState('');
+  const [modal,setModal]=useState(false);
   useEffect(() => {
     _initData();
     getImageCode();
@@ -58,7 +60,7 @@ const AddPersonData = () => {
   const _initData = async () => {
     const isIphoneX = Taro.getStorageSync('isIphoneX');
     const {item, userType} = getCurrentInstance().router.params;
-    const {sourceId, orgId, timeType, date, orgName, price} = JSON.parse(item);
+    const {sourceId, orgId,timeType, date,orgName,price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
@@ -67,7 +69,7 @@ const AddPersonData = () => {
     setTimeType(timeType);
     setIsIphoneX(isIphoneX);
   }
-  const getRandomCode = () => {
+  const getRandomCode=() =>{
     let code = "";
     const array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
       'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
@@ -80,7 +82,7 @@ const AddPersonData = () => {
     }
     return code;
   }
-  const getImageCode = async () => {
+  const getImageCode=async ()=>{
     // const res = await  fetchImgCodeApi({})
     // console.log(333,res);
     const code = getRandomCode();
@@ -94,8 +96,8 @@ const AddPersonData = () => {
       },
       responseType: 'arraybuffer',
       success: function (res) {
-        console.log(333, res)
-        let url = 'data:image/png;base64,' + Taro.arrayBufferToBase64(res.data);
+        console.log(333,res)
+        let url ='data:image/png;base64,'+Taro.arrayBufferToBase64(res.data);
         setImgCode(url);
         setCode(code);
       }
@@ -158,8 +160,8 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (insEscortStaff) {
-      if (isEmpty(entourageName)) {
+    if(insEscortStaff){
+      if (isEmpty(entourageName)){
         Taro.showToast({
           title: '陪同人姓名不能为空',
           icon: 'none',
@@ -175,7 +177,7 @@ const AddPersonData = () => {
       }
 
 
-      if (entourageIdCard === idCard) {
+      if(entourageIdCard===idCard) {
         Taro.showToast({
           title: '身份证号不允许重复',
           icon: 'none',
@@ -191,7 +193,7 @@ const AddPersonData = () => {
         return;
       }
     }
-    let item = {
+    let item ={
       cityid,
       date,
       docUrl,
@@ -209,14 +211,14 @@ const AddPersonData = () => {
       userType,
       timeType,
       area,
-      orgName, name,
-      phone, idCard, price
+      orgName,name,
+      phone,idCard,price
     }
     console.log(
       333,
       userType,
-      provinceid, docUrl, cityid, districtid, name, phone, idCard, streetdesc,
-      entourageIdCard, entourageRelation, entourageName, entouragePhone,
+      provinceid,docUrl,cityid,districtid,name,phone,idCard, streetdesc,
+      entourageIdCard,entourageRelation,entourageName,entouragePhone,
     );
     Taro.navigateTo({
       url: `/pages/home/certification/certification?item=${JSON.stringify(item)}`
@@ -238,10 +240,10 @@ const AddPersonData = () => {
   const showAreaPicker = () => {
     setShowPicker(true);
   }
-  const deleteEntourage = () => {
+  const deleteEntourage=()=>{
     setModal(true);
   }
-  const _enter = () => {
+  const _enter=()=>{
     setModal(false);
     setEntourageRelation('');
     setEntourageName('');
@@ -262,8 +264,8 @@ const AddPersonData = () => {
         <View className='list-row-container'>
           <View className='list-row-wrap'>
             <View className='list-row-view  flex-between'>
-                <Text className='list-row-text'>验证码</Text>
-              <Input type='text' className='list-row-padding' onInput={(e) => {
+              <Text className='list-row-text' style='margin-right:60rpx'>验证码</Text>
+              <Input type='text' className='__list-row-input' onInput={(e)=>{
                 setVerifyCode(e.detail.value);
               }} placeholder={'请输入图片验证码'}
                      placeholderClass='list-row-input-placeholder'/>
@@ -291,7 +293,7 @@ const AddPersonData = () => {
         </View>
         <View className='detail-address-container'>
           <View className='detail-address-textarea'>
-            <Textarea className='textarea-text' onInput={e => {
+            <Textarea  className='textarea-text' onInput={e => {
               setStreetDesc(e.detail.value)
             }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
           </View>
@@ -306,7 +308,7 @@ const AddPersonData = () => {
               setEntourageName(e.detail.value);
 
             }} label='姓名' placeholder='请输入姓名'/>
-            <View className='address-info-container' onClick={() => setVisible(true)}>
+            <View className='address-info-container' onClick={()=>setVisible(true)}>
               <View className='address-info-wrap'>
                 <View className='address-info-view'>
                   <View style='display:flex;alignItems:center'>
@@ -325,7 +327,7 @@ const AddPersonData = () => {
               setEntourageIdCard(e.detail.value);
             }} label='身份证号' placeholder='请输入身份证号'/>
           </View> : null}
-        {insEscortStaff ? <View className='acc-info-cancel' onClick={deleteEntourage}>
+        {insEscortStaff ? <View className='acc-info-cancel' onClick={deleteEntourage} >
           <Text className='acc-info-cancel-text'>删除陪同人员</Text>
         </View> : null}
         <View className='tip-container'>
@@ -361,8 +363,7 @@ const AddPersonData = () => {
         <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
       </View>
       <View className='footer'>
-        <View className='btn-submit-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}
-              onClick={nextStep}>
+        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
@@ -373,7 +374,7 @@ const AddPersonData = () => {
           <Text className='modal-text'>确定删除该陪同人信息吗？</Text>
         </View>
         <AtModalAction>
-          <Button onClick={() => setModal(false)}>取消</Button>
+          <Button onClick={()=>setModal(false)}>取消</Button>
           <Button onClick={_enter}>确定</Button>
         </AtModalAction>
       </AtModal>
@@ -387,8 +388,8 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
-                 placeholderClass='list-row-input-placeholder'/>
+          <Input  type={type} className={className} onInput={onInput} placeholder={placeholder}
+                  placeholderClass='list-row-input-placeholder'/>
         </View>
       </View>
       <View className='line'/>
