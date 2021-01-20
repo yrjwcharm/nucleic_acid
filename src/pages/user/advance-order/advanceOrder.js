@@ -191,10 +191,7 @@ export class AdvanceOrder extends Component {
           if(_res.code==200){
             if(item.userType==2){
               if(item.payState==1){
-                let timer = setTimeout(()=>{
                   Taro.navigateTo({url:'/pages/user/refund-pay/refund-payment'})
-                    clearTimeout(timer);
-                },1500)
               }
             }
             this.setState({visible: false, page: 1, list: []}, () => {

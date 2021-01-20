@@ -9,7 +9,7 @@ const RefundPayment =()=>{
   const [item,setItem]=useState({});
   const skip=()=>{
     Taro.reLaunch({
-      url:'/pages/user/advance-order/advanceOrder',
+      url:'/pages/index/index',
     })
   }
   useEffect(()=>{
