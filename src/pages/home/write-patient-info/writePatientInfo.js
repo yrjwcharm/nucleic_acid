@@ -216,7 +216,7 @@ const WritePatientInfo = () => {
             <View className='address-info-view'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text'>地区信息</Text>
-                <Text className='select-city-text _list-row-input'>{area}</Text>
+                <Text className='select-city-text _list-row-input' style={'color:#999'}>{area}</Text>
               </View>
               <Image src={Forward} className='list-row-arrow'/>
             </View>

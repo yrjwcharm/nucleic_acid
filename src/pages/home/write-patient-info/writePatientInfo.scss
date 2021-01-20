@@ -10,11 +10,6 @@
   background: #F5F6F9;
   padding-top: 20px;
 }
-.main{
-  display: flex;
-  flex-direction: column;
-  flex:1;
-}
 .self-info-view{
   margin-left: 40px;
   line-height: 80rpx;
@@ -153,13 +148,13 @@
 }
 .tip-view{
   display: flex;
-  //flex:1;
+  flex:1;
   padding-left: 40px;
   padding-right: 40px;
   //padding-right: 40px;
 }
 .tip-text{
-  //flex: 1;
+  flex: 1;
   text-align: justify;
   //text-align-last:justify;
   text-justify: inter-ideograph;

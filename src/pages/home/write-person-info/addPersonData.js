@@ -284,7 +284,7 @@ const AddPersonData = () => {
             <View className='address-info-view flex-between'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text' style={'color:#333'}>地区信息</Text>
-                <Text className='select-city-text _list-row-input'>{area}</Text>
+                <Text className='select-city-text _list-row-input' style={'color:#999'}>{area}</Text>
               </View>
               <Image src={Forward} className='list-row-arrow'/>
             </View>
@@ -313,7 +313,7 @@ const AddPersonData = () => {
                 <View className='address-info-view'>
                   <View style='display:flex;alignItems:center'>
                     <Text className='dist-name-text'>与患者关系</Text>
-                    <Text className='select-city-text _list-row-input'>{entourageRelation}</Text>
+                    <Text className='select-city-text _list-row-input' style={'color:#999'}>{entourageRelation}</Text>
                   </View>
                   <Image src={Down} className='list-row-down'/>
                 </View>
