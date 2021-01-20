@@ -16,7 +16,7 @@ export class AuditRecord extends Component {
     list: [],
     state: '',
     page: 1,
-    limit: 10,
+    limit: 100,
     totalPage: 1,
     userId: '',
     tabList: [{title: '全部', id: 0}, {title: '审核中', id: 1}, {title: '已通过', id: 2}, {title: '已驳回', id: 3}]

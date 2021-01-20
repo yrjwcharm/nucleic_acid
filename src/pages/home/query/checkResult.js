@@ -14,7 +14,7 @@ class Check_Result extends Component {
     type: 0,
     list: [],
     page: 1,
-    limit: 10,
+    limit: 100,
     totalPage: 1,
     userId: '',
   }

@@ -21,7 +21,7 @@ export class AdvanceOrder extends Component {
     state: '',
     page: 1,
     item: {},
-    limit: 10,
+    limit: 100,
     totalPage: 1,
     visible: false,
     userId: '',

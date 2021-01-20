@@ -12,8 +12,8 @@
 }
 .self-info-view{
   margin-left: 40px;
-  line-height: 80rpx;
-  height:80rpx;
+  line-height: 96rpx;
+  height:96rpx;
 }
 .self-info-text{
   font-family: PingFangSC-Regular;
@@ -25,7 +25,7 @@
 }
 
 .list-row-wrap{
-  height:80rpx;
+  height:96rpx;
   margin-left: 40px;
   margin-right: 40px;
   display: flex;
@@ -38,7 +38,7 @@
   transform: scaleY(0.5);
 }
 .address-info-wrap{
-  height:80rpx;
+  height:96rpx;
   margin-right: 40px;
   margin-left: 40px;
   background: #fff;
@@ -54,7 +54,7 @@
 }
 .detail-address-textarea{
   padding-top: 18px;
-  height:78px;
+  height:96rpx;
   margin-right: 40px;
   margin-left: 40px;
   display: flex;
@@ -171,7 +171,7 @@
   justify-content: flex-end;
 }
 .btn-submit-view{
-  height: 100rpx;
+  height: 96rpx;
   display: flex;
   background: #3299FF;
 }

@@ -48,7 +48,7 @@ class Login extends Component {
             <Text className='hospital'>廊坊中医院</Text>
             <View className='line'/>
           </View>
-          <View className='wrap_line'>
+          <View className='wrap_line' cl>
             <View className='line'/>
           </View>
           <View className='_container'>
