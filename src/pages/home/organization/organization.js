@@ -145,21 +145,6 @@ class Organization extends Component {
               )
             }):<Empty/>}
           </View>
-          {/*<View className='container_header'>*/}
-          {/*  <View className='container_header_location'>*/}
-          {/*    <Image src={Marker} className='container_header_location_marker'/>*/}
-          {/*    <Text className='container_header_location_city'>{city}</Text>*/}
-          {/*  </View>*/}
-          {/*  <View className='container_header_wrap'>*/}
-          {/*    <AtSearchBar*/}
-          {/*      className='container_header_wrap_city'*/}
-          {/*      value={this.state.queryName}*/}
-          {/*      onChange={this.onChange}*/}
-          {/*      placeholder={'搜索医院名称'}*/}
-          {/*    />*/}
-          {/*  </View>*/}
-          {/*</View>*/}
-
         </View>
 
       )
