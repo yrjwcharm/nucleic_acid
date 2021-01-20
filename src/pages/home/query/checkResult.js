@@ -15,11 +15,15 @@ class Check_Result extends Component {
     list: [],
     page: 1,
     limit: 100,
+    isEmpty:false,
     totalPage: 1,
     userId: '',
   }
 
   componentDidMount() {
+    Taro.showLoading({
+      title: '加载中...',
+    });
     this._initData();
   }
 
@@ -39,9 +43,6 @@ class Check_Result extends Component {
     }
   }
   _getList = () => {
-    Taro.showLoading({
-      title: '加载中...',
-    });
     getResultQueryListApi({
       userId: this.state.userId,
       page: this.state.page,
@@ -52,9 +53,13 @@ class Check_Result extends Component {
         if (res.data) {
           const {object, totalPage} = res.data;
           if (Array.isArray(object)) {
-            this.setState({list: this.state.list.concat(object), totalPage})
+            if(object.length>0) {
+              this.setState({isEmpty:false,list: this.state.list.concat(object), totalPage})
+            }else{
+              this.setState({isEmpty:true})
+            }
           } else {
-            this.setState({list: this.state.list.concat([]), totalPage})
+            this.setState({isEmpty:true,list: this.state.list.concat([]), totalPage})
           }
         }
       }
@@ -120,11 +125,11 @@ class Check_Result extends Component {
   }
 
   render() {
-    const {list} = this.state;
+    const {list,isEmpty} = this.state;
     return (
       <ScrollView scrollY className='container'>
         <View className='section'>
-          {list.length!==0?list && list.map((item, index) => {
+          {!isEmpty?list.map((item, index) => {
             let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (

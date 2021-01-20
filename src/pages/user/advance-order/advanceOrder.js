@@ -24,6 +24,7 @@ export class AdvanceOrder extends Component {
     limit: 100,
     totalPage: 1,
     visible: false,
+    isEmpty:false,
     userId: '',
     tabList: [{title: '全部', id: 0}, {title: '预约中', id: 1}, {title: '已预约', id: 2}]
   }
@@ -63,10 +64,15 @@ export class AdvanceOrder extends Component {
       if (res.code === 200) {
         if (res.data) {
           const {object, totalPage} = res.data;
+          console.log(123456,res.data);
           if (Array.isArray(object)) {
-            this.setState({list: this.state.list.concat(object), totalPage})
+            if(object.length>0) {
+              this.setState({isEmpty:false,list: this.state.list.concat(object), totalPage})
+            }else{
+              this.setState({isEmpty:true})
+            }
           } else {
-            this.setState({list: this.state.list.concat([]), totalPage})
+            this.setState({isEmpty:true,list: this.state.list.concat([]), totalPage})
           }
         }
       }
@@ -113,7 +119,7 @@ export class AdvanceOrder extends Component {
         break;
     }
     console.log(333, value);
-    this.setState({current: value, state, page: 1, list: []}, () => {
+    this.setState({current: value,isEmpty:false, state, page: 1, list: []}, () => {
       this._getList();
     })
   }
@@ -191,7 +197,7 @@ export class AdvanceOrder extends Component {
           if(_res.code==200){
             if(item.userType==2){
               if(item.payState==1){
-                  Taro.navigateTo({url:'/pages/user/refund-pay/refund-payment'})
+                Taro.navigateTo({url:'/pages/user/refund-pay/refund-payment'})
               }
             }
             this.setState({visible: false, page: 1, list: []}, () => {
@@ -236,9 +242,9 @@ export class AdvanceOrder extends Component {
                 paySign,
                 success: function (result) {
                   // _this._getList();
-                      Taro.navigateTo({
-                        url: `/pages/user/payment-success/payment-success?id=${item.id}`
-                      })
+                  Taro.navigateTo({
+                    url: `/pages/user/payment-success/payment-success?id=${item.id}`
+                  })
                 },
                 fail: function (res) {
                   Taro.showToast({
@@ -265,7 +271,7 @@ export class AdvanceOrder extends Component {
     })
   }
   render() {
-    const {current, tabList, list, visible, item: tipItem} = this.state;
+    const {current, tabList, isEmpty,list, visible, item: tipItem} = this.state;
     console.log(333, list);
     return (
       <ScrollView scrollY className='container'>
@@ -274,7 +280,7 @@ export class AdvanceOrder extends Component {
             {tabList.map((item, index) => {
               return (
                 <AtTabsPane  key={item.id + ""} current={current} index={index}>
-                  {list.length !== 0 ? list.map((_item, index) => {
+                  {!isEmpty ? list.map((_item, index) => {
                     let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
                     return (

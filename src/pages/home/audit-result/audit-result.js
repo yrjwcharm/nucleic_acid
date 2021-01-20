@@ -10,7 +10,7 @@ const AuditResult =()=>{
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [item,setItem]=useState({});
   const lookup=()=>{
-    Taro.reLaunch({
+    Taro.redirectTo({
       url:'/pages/user/advance-order/advanceOrder',
     })
   }

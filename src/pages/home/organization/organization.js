@@ -16,6 +16,7 @@ class Organization extends Component {
     queryName:'',
     city:'北京',
     list:[],
+    isEmpty:false,
   }
   componentDidMount() {
     Taro.showLoading({
@@ -75,7 +76,13 @@ class Organization extends Component {
       provName:'北京',
     }).then(res => {
       console.log(444,res);
-      this.setState({list:Array.isArray(res)?res:[]})
+      if(Array.isArray(res)){
+        if(res.length>0){
+          this.setState({isEmpty:false,list:res})
+        }else{
+          this.setState({isEmpty:true})
+        }
+      }
       Taro.hideLoading();
     })
 
@@ -101,7 +108,7 @@ class Organization extends Component {
       // orgName: "体检医院"
       // orgType: "350200201913000001"
 
-      const {list,city} = this.state;
+      const {list,city,isEmpty} = this.state;
       return (
         <View className='container'>
           <View className='main'>
@@ -123,7 +130,7 @@ class Organization extends Component {
                     </View>
                   </View>
               </View>
-            {list.length!==0?list&&list.map((item,index)=>{
+            {!isEmpty?list.map((item,index)=>{
               return(
                 <View className='list-row-container' onClick={()=>this.goToCombo(item)} key={item.orgId+" "}>
                   <View className='list-row-view'>

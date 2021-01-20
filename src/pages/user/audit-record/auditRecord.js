@@ -10,12 +10,14 @@ import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg';
 import Config from "../../../../project.config.json";
 import _Empty from "@assets/empty.png";
+import {isEmpty} from "../../../utils/EmptyUtil";
 export class AuditRecord extends Component {
   state = {
     current: 0,
     list: [],
     state: '',
     page: 1,
+    isEmpty:false,
     limit: 100,
     totalPage: 1,
     userId: '',
@@ -57,9 +59,13 @@ export class AuditRecord extends Component {
         if (res.data) {
           const {object, totalPage} = res.data;
           if (Array.isArray(object)) {
-            this.setState({list: this.state.list.concat(object), totalPage})
+            if(object.length>0) {
+              this.setState({isEmpty:false,list: this.state.list.concat(object), totalPage})
+            }else{
+              this.setState({isEmpty:true})
+            }
           } else {
-            this.setState({list: this.state.list.concat([]), totalPage})
+            this.setState({isEmpty:true,list: this.state.list.concat([]), totalPage})
           }
         }
       }
@@ -101,7 +107,7 @@ export class AuditRecord extends Component {
         state = 2;
         break;
     }
-    this.setState({ current: value, state, page: 1, list: [] }, () => {
+    this.setState({ current: value,isEmpty:false, state, page: 1, list: [] }, () => {
       this._getList();
     })
   }
@@ -125,15 +131,15 @@ export class AuditRecord extends Component {
     }
   }
   goToPage = (item) => {
-      console.log(333,item);
-     Taro.navigateTo({
-        url:`/pages/home/audit-detail/audit-detail?item=${JSON.stringify(item)}`
-      })
+    console.log(333,item);
+    Taro.navigateTo({
+      url:`/pages/home/audit-detail/audit-detail?item=${JSON.stringify(item)}`
+    })
 
   }
 
   render() {
-    const {current, tabList, list} = this.state;
+    const {current, tabList,isEmpty, list} = this.state;
     console.log(333, list);
     return (
       <ScrollView scrollY className='container'>
@@ -142,7 +148,7 @@ export class AuditRecord extends Component {
             {tabList.map((item, index) => {
               return (
                 <AtTabsPane key={item.id + ""} current={current} index={index}>
-                  {list.length!==0?list && list.map((_item, index) => {
+                  {!isEmpty? list.map((_item, index) => {
                     let date = moment(_item.date).format('YYYY-MM-DD');
                     let week = this._getWeek(_item.date);
                     return (
