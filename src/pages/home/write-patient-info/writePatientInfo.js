@@ -263,12 +263,14 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input  type={type}  onInput={onInput} placeholder={placeholder}
-                  />
+          <Input type={type}  className={className} onInput={onInput} placeholder={placeholder}
+                  placeholderClass='list-row-input-placeholder'
+          />
         </View>
       </View>
       <View className='line'/>
     </View>
   )
 }
+
 export default WritePatientInfo

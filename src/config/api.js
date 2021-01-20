@@ -4,7 +4,7 @@
 // 云平台部署时使用
 let WxApiRoot = 'https://hstest.youjiankang.net';
 export default {
-  tmplIds:['JV3aQWtvMyHmkxlGSN-RbIsYvvKhRCet4M7wS2HqCeY','PfnmBhL-_e7Dyr3cN8XPieC-pJMxZxZLFZ64nP3c5GM','91F5vWCWIp9dYyUdS4QLFh-V7UQI5C0cp6ttAIQy-48'],
+  tmplIds:['91F5vWCWIp9dYyUdS4QLFuIa33gfzDM8WAX9_1Aimog','fjL81130dgH97zF7kO5IRmRn6ZSGR0TQFISyT7bxRwM','DpSCCpT6AjjRQyGEW-a-g1tTcO3jw5P9eQy8w5ryfT8'],
   imgUrl :'http://hstest.youjiankang.net/',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口
   AboutUrl: WxApiRoot + 'home/about', //介绍信息

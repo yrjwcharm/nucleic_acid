@@ -28,29 +28,45 @@
 }
 
 .auth{
-  margin-top: 58rpx;
   font-size: 32px;
   color: #333333;
-  margin-left: 72rpx;
 }
 .info{
   font-size: 28px;
-  margin-top: 26rpx;
   color: #999999;
-  margin-left: 72rpx;
 
 }
 .wx-login-btn{
   margin-top: 50rpx;
   background: #00B100;
-  width: 302PX;
-  height:44PX;
+  width: 640rpx;
+  height:88rpx;
   text-align: center;
   color:#fff;
   border-radius: 10PX;
 }
+._container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.wrap{
+  width: 640rpx;
+  margin-top: 26rpx;
+  //height: 88rpx;
+  text-align: left;
+}
+.wrap_line{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
 .line{
   height:0;
+  width: 640rpx;
   border-bottom: 1px solid #eee;
   transform: scaleY(0.5);
 }
