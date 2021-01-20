@@ -30,7 +30,9 @@ export class AdvanceOrder extends Component {
   }
 
   componentDidMount() {
-
+    Taro.showLoading({
+      title: '加载中...',
+    });
     this._initData();
   }
 
@@ -51,9 +53,6 @@ export class AdvanceOrder extends Component {
   }
 
   _getList = () => {
-    Taro.showLoading({
-      title: '加载中...',
-    });
     getMyAppointListApi({
       userId: this.state.userId,
       page: this.state.page,

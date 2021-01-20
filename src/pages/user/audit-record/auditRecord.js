@@ -25,6 +25,9 @@ export class AuditRecord extends Component {
   }
 
   componentDidMount() {
+    Taro.showLoading({
+      title: '加载中...',
+    });
     this._initData();
   }
 
@@ -45,9 +48,6 @@ export class AuditRecord extends Component {
 
 
   _getList = () => {
-    Taro.showLoading({
-      title: '加载中...',
-    });
     getAuditRecordApi({
       userId: this.state.userId,
       page: this.state.page,
