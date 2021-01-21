@@ -193,17 +193,29 @@ class Combo extends Component {
    * @private
    */
   _nextStep = (item) => {
+    let date =new Date();
+    let _date = moment(item.date).format('YYYY-MM-DD');
+    let _date_ = moment(date).format('YYYY-MM-DD')
+    if(item.timeType===0){
+      if((item.amount > 0&&(_date==_date_&&date.getHours()<12))||(item.amount>0&&_date!==_date_)){
+      this._skip(item);
+      }
+    }else{
+      if((item.amount > 0&&(_date==_date_&&date.getHours()<16)||(item.amount>0&&_date!==_date_)) ){
+        this._skip(item);
+      }
+    }
+
+  }
+  _skip=(item)=>{
     const { dateArr, userType, orgName, obj } = this.state;
     let source = { comboId: this.state.comboId, ...item, orgName, price: this.state.price }
-    console.log(333, userType);
-    if (item.amount > 0) {
-      userType == 1 && Taro.navigateTo({
-        url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
-      })
-      userType == 2 && Taro.navigateTo({
-        url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
-      })
-    }
+    userType == 1 && Taro.navigateTo({
+      url: `/pages/home/write-person-info/addPersonData?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
+    })
+    userType == 2 && Taro.navigateTo({
+      url: `/pages/home/write-patient-info/writePatientInfo?item=${JSON.stringify(source)}&obj=${JSON.stringify(obj)}`
+    })
   }
 
   render() {
@@ -293,6 +305,9 @@ class Combo extends Component {
             )
           })}
           {_sourceList.length !== 0 && _sourceList.map(item => {
+            let date =new Date();
+            let _date = moment(item.date).format('YYYY-MM-DD');
+            let _date_ = moment(date).format('YYYY-MM-DD')
             return (
               <View className='list-row' key={item.sourceId + " "}>
                 <View className='list-row-wrap'>
@@ -305,7 +320,7 @@ class Combo extends Component {
                     <Text className='sy-text'>剩余：</Text>
                     <Text className='surplus--text'>{item.surplus}</Text>
                   </View>
-                  <View className='right-away-order-view' style={item.amount > 0 ? 'background-color:#3299FF' : 'background: #DDDDDD'} onClick={() => this._nextStep(item)}>
+                  <View className='right-away-order-view' style={item.timeType===0?(item.amount > 0&&(_date==_date_&&date.getHours()<12))||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD':(item.amount > 0&&(_date==_date_&&date.getHours()<16))||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD'} onClick={() => this._nextStep(item)}>
                     <Text className='right-away-order-text'>立即预约</Text>
                   </View>
                 </View>

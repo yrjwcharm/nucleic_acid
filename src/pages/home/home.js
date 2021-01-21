@@ -108,8 +108,7 @@ export default class Home extends Component {
             <View className='tip-view'>
               <Text className='tip-text'>
                 1. 请您根据个人实际情况选择预约检测入口，个人自费核酸检
-                测预约入口所有人均可预约， 个人免费核酸检测预约必须是发
-                热门诊或住院患者，同时需要拍照上传证明资料， 同时陪同家
+                测预约入口所有人均可预约，个人免费核酸检测预约必须是发热门诊或住院患者，同时需要拍照上传证明资料，同时陪同家
                 属有一个免费检测名额；
               </Text>
             </View>
