@@ -320,7 +320,10 @@ class Combo extends Component {
                     <Text className='sy-text'>剩余：</Text>
                     <Text className='surplus--text'>{item.surplus}</Text>
                   </View>
-                  <View className='right-away-order-view' style={item.timeType===0?(item.amount > 0&&(_date==_date_&&date.getHours()<12))||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD':(item.amount > 0&&(_date==_date_&&date.getHours()<16))||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD'} onClick={() => this._nextStep(item)}>
+                  <View className='right-away-order-view'
+                        style={item.timeType===0?(item.amount > 0&&(_date==_date_&&date.getHours()<12))
+                        ||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD': (item.amount > 0&&(_date==_date_&&date.getHours()<16))
+                        ||(item.amount>0&&_date!==_date_) ? 'background-color:#3299FF' : 'background: #DDDDDD'} onClick={() => this._nextStep(item)}>
                     <Text className='right-away-order-text'>立即预约</Text>
                   </View>
                 </View>
