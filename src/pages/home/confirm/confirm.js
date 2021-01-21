@@ -42,7 +42,7 @@ const Confirm = () => {
   }
   const _enterOrder = async () => {
     Taro.showLoading({
-      title: '加载中...',
+      title: '请稍等...',
     });
     let { item, userType } = getCurrentInstance().router.params;
     const {
