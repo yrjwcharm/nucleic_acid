@@ -19,7 +19,8 @@ export default {
     'pages/user/entourage-success/entourage-success',
     'pages/home/audit-result/audit-result',
     'pages/user/payment-success/payment-success',
-    'pages/user/refund-pay/refund-payment'
+    'pages/user/refund-pay/refund-payment',
+    'pages/user/appoint-wait/appoint-wait'
 
   ],
   window: {

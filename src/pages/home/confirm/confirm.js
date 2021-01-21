@@ -8,7 +8,7 @@ import Config from "../../../../project.config.json";
 import { fetchApplyTradeApi, fetchAppointDetectApi, fetchAppointSuccessQrCodeApi } from "../../../services/combo";
 import Taro from "@tarojs/taro";
 import Api from "../../../config/api";
-
+import {throttle} from '../../../utils/common'
 const Confirm = () => {
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [item, setItem] = useState({})
@@ -41,6 +41,9 @@ const Confirm = () => {
     }
   }
   const _enterOrder = async () => {
+    Taro.showLoading({
+      title: '加载中...',
+    });
     let { item, userType } = getCurrentInstance().router.params;
     const {
       cityid,
@@ -59,9 +62,6 @@ const Confirm = () => {
       orgName, name,
       phone, idCard, price,
     } = JSON.parse(item);
-    Taro.showLoading({
-      title: '加载中...',
-    });
     const _res = await user.loginByWeixin({ appid: Config.appid });
     if (_res.code === 200) {
       const { userId, wxid, unionid, sectionKey } = _res.data;
@@ -130,7 +130,7 @@ const Confirm = () => {
                         success: function (result) {
 
                           Taro.navigateTo({
-                            url: `/pages/user/payment-success/payment-success?id=${res.data}`
+                            url: `/pages/user/appoint-wait/appoint-wait?id=${res.data}`
                           })
                         },
                         fail: function (res) {
@@ -258,7 +258,7 @@ const Confirm = () => {
             <Text className='RMB'>￥</Text>
             <Text className={userType == 1 ? 'price' : '_price'}>{item && item.price}</Text>
           </View>
-          <View className='enter-view' onClick={_enterOrder}>
+          <View className='enter-view' onClick={throttle( _enterOrder,3000)}>
             <Text className='enter-pay'>确认预约</Text>
           </View>
         </View>

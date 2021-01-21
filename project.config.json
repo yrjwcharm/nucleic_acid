@@ -1,8 +1,8 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "nucleic_acid",
-  "description": "核酸小程序",
-  "appid": "wx99bc91f0ade99f16",
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -29,7 +29,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -40,5 +39,29 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "condition": {}
+  "appid": "wx99bc91f0ade99f16",
+  "projectname": "nucleic_acid",
+  "miniprogramRoot": "dist/",
+  "cloudfunctionTemplateRoot": "",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": []
+    }
+  }
 }

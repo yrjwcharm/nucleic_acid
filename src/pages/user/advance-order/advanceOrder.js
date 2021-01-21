@@ -11,7 +11,7 @@ import Forward from '@assets/home/forward.svg'
 import Config from "../../../../project.config.json";
 import _Empty from "@assets/empty.png";
 import {fetchApplyTradeApi} from "../../../services/combo";
-
+import {throttle} from '../../../utils/common'
 let i = 1;
 
 export class AdvanceOrder extends Component {
@@ -165,6 +165,7 @@ export class AdvanceOrder extends Component {
     this.setState({visible: true, item})
   }
   _enter = () => {
+    this.setState({visible:false})
     const {item} = this.state;
     if (item.state == 3) {
       Taro.request({
@@ -177,12 +178,15 @@ export class AdvanceOrder extends Component {
         success: (res) => {
           const _res = res.data;
           console.log(222, _res);
-          _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
+          _res.code == 200 && this.setState({page: 1, list: []}, () => {
             this._getList();
           })
         }
       })
     } else if (item.state == 1 || item.state == 0) {
+      Taro.showLoading({
+        title: '请稍等...',
+      });
       Taro.request({
         url: Api.cancelOrder + `?id=${item.id}`, //仅为示例，并非真实的接口地址
         data: {},
@@ -193,14 +197,20 @@ export class AdvanceOrder extends Component {
         success: (res) => {
           console.log(333, res);
           const _res = res.data;
+          Taro.hideLoading();
           if(_res.code==200){
             if(item.userType==2){
               if(item.payState==1){
                 Taro.navigateTo({url:'/pages/user/refund-pay/refund-payment'})
               }
             }
-            this.setState({visible: false, page: 1, list: []}, () => {
+            this.setState({page: 1, list: []}, () => {
               this._getList();
+            })
+          }else{
+            Taro.showToast({
+              title:_res.msg,
+              icon:'none'
             })
           }
         }
@@ -300,7 +310,7 @@ export class AdvanceOrder extends Component {
                           </View>
                           <View className='footer'>
                             {(_item.state == 0 || _item.state == 1) &&
-                            <View className='op_btn_1' onClick={() => this._cancelAppoint(_item)}>
+                            <View className='op_btn_1' onClick={() => throttle(this._cancelAppoint(_item),3000)}>
                               <Text style={'margin:auto;'}>取消预约</Text>
                             </View>}
                             {(_item.state ==0&&_item.userType==2)&&<View className='op_btn_2' style={'border-color:red;border-width:1px;border-style:solid'} onClick={() => this._waitPay(_item)}>
