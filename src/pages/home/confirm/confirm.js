@@ -290,7 +290,7 @@ const Confirm = () => {
             <Text className='RMB'>￥</Text>
             <Text className={userType == 1 ? 'price' : '_price'}>{item && item.price}</Text>
           </View>
-          <View className='enter-view' onClick={debounce(_enterOrder, 500)}>
+          <View className='enter-view' onClick={_enterOrder}>
             <Text className='enter-pay'>确认预约</Text>
           </View>
         </View>
