@@ -141,7 +141,7 @@ class Check_Result extends Component {
                   <Text className='listItem_left_date'>{date} {week}</Text>
                 </View>
                 <View className='listItem_right'>
-                  {/*<Text className='listItem_right_status'>{item.state === '1' ? '立即查看' : '结果正在生成中'}</Text>*/}
+                  <Text className='listItem_right_status'>{item.checkState == 1 ? '立即查看' : '结果正在生成中'}</Text>
                   <Image src={Forward} className='listItem_right_arrow'/>
                 </View>
               </View>

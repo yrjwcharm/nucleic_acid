@@ -121,6 +121,7 @@ export default class UploadCertification extends Component {
 
   render() {
     const {url,isIphoneX} = this.state;
+    console.log(333,url);
     return (
       <View className='container'>
 

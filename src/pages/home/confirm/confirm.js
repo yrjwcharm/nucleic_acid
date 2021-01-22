@@ -232,7 +232,7 @@ const Confirm = () => {
           <View className='info-confirm-wrap'>
             <Text className='label'>家庭住址</Text>
             <Text
-              className='value'>{(item && item.area + '' + item.streetdesc).length > 0 ? (item && item.area + '' + item.streetdesc).substring(0, 10) + '...' : (item && item.area + '' + item.streetdesc)}</Text>
+              className='value'>{(item && item.area + '' + item.streetdesc).length > 0 ? (item && item.area + '' + item.streetdesc).substring(0, 20) + '...' : (item && item.area + '' + item.streetdesc)}</Text>
           </View>
           <View className='info-confirm-wrap'>
             <Text className='label'>联系电话</Text>
