@@ -1,21 +1,21 @@
 import Taro from '@tarojs/taro'
 import {Image, ScrollView, Text, View} from '@tarojs/components'
 import './checkResult.scss'
-import {getResultQueryListApi,getCheckResult} from "../../../services/result_query";
+import {getCheckResult, getResultQueryListApi} from "../../../services/result_query";
 import moment from 'moment'
 import React, {Component} from 'react'
 import * as user from "../../../utils/user";
 import Forward from '@assets/home/forward.svg'
 import Config from "../../../../project.config.json";
 import _Empty from "@assets/empty.png";
-import {AtTabsPane} from "taro-ui";
+
 class Check_Result extends Component {
   state = {
     type: 0,
     list: [],
     page: 1,
     limit: 100,
-    isEmpty:false,
+    isEmpty: false,
     totalPage: 1,
     userId: '',
   }
@@ -53,13 +53,13 @@ class Check_Result extends Component {
         if (res.data) {
           const {object, totalPage} = res.data;
           if (Array.isArray(object)) {
-            if(object.length>0) {
-              this.setState({isEmpty:false,list: this.state.list.concat(object), totalPage})
-            }else{
-              this.setState({isEmpty:true})
+            if (object.length > 0) {
+              this.setState({isEmpty: false, list: this.state.list.concat(object), totalPage})
+            } else {
+              this.setState({isEmpty: true})
             }
           } else {
-            this.setState({isEmpty:true,list: this.state.list.concat([]), totalPage})
+            this.setState({isEmpty: true, list: this.state.list.concat([]), totalPage})
           }
         }
       }
@@ -86,17 +86,25 @@ class Check_Result extends Component {
     }
   }
 
-  _goToDetail =async (item) => {
-    const res  = await  getCheckResult({
-      appointId:item.id
+  _goToDetail = async (item) => {
+    const res = await getCheckResult({
+      appointId: item.id
     })
-    console.log(333,res);
-    // if(res.code==200){
-    //
-    // }
+    console.log(333, res);
+    if (res.code == 200) {
+      const {result} = res.data;
+      if (result) {
+        Taro.navigateTo({
+          url: `/pages/home/detail/detail?item=${JSON.stringify(item)}&result=${result}`
+        });
 
-    Taro.navigateTo({
-      url: `/pages/home/detail/detail?item=${JSON.stringify(item)}`});
+      }else{
+        Taro.showToast({
+          title:'结果正在生成中',
+          icon:'none',
+        })
+      }
+    }
   }
   _getWeek = (date) => {
     let week = moment(date).day()
@@ -119,31 +127,33 @@ class Check_Result extends Component {
   }
 
   render() {
-    const {list,isEmpty} = this.state;
+    const {list, isEmpty} = this.state;
     return (
       <ScrollView scrollY className='container'>
         <View className='section'>
-          {!isEmpty?list.map((item, index) => {
+          {!isEmpty ? list.map((item, index) => {
             let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (
-                <View className='listItem' key={item.id + ""} onClick={()=>this._goToDetail(item)}>
-                  <View className='listItem_left'>
-                    <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
-                    <Text className='listItem_left_date'>{date} {week}</Text>
-                  </View>
-                  <View className='listItem_right'>
-                    <Text className='listItem_right_status'>{item.state === '1' ? '立即查看' : '结果正在生成中'}</Text>
-                    <Image src={Forward} className='listItem_right_arrow'/>
-                  </View>
+              <View className='listItem' key={item.id + ""} onClick={() => this._goToDetail(item)}>
+                <View className='listItem_left'>
+                  <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
+                  <Text className='listItem_left_date'>{date} {week}</Text>
                 </View>
-            )}):<Empty/>}
+                <View className='listItem_right'>
+                  {/*<Text className='listItem_right_status'>{item.state === '1' ? '立即查看' : '结果正在生成中'}</Text>*/}
+                  <Image src={Forward} className='listItem_right_arrow'/>
+                </View>
+              </View>
+            )
+          }) : <Empty/>}
         </View>
       </ScrollView>
     )
 
   }
 }
+
 const Empty = () => {
   return (
     <View className='empty-view'>

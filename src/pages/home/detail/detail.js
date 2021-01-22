@@ -7,37 +7,57 @@ import moment from 'moment';
 import Api from "../../../config/api";
 const Detail = (props) => {
   const [item,setItem]=useState({});
+  const [result,setResult] =useState('');
   useEffect(()=>{
-    let {item} = getCurrentInstance().router.params;
-    console.log(333,item);
+    let {item,result} = getCurrentInstance().router.params;
     setItem(JSON.parse(item))
+    setResult(result);
   },[])
-
+ const  _getWeek = (date) => {
+    let week = moment(date).day()
+    switch (week) {
+      case 0:
+        return '周日';
+      case 1:
+        return '周一';
+      case 2:
+        return '周二';
+      case 3:
+        return '周三';
+      case 4:
+        return '周四';
+      case 5:
+        return '周五';
+      case 6:
+        return '周六'
+    }
+  }
   return (
     <View className='container'>
       <View className='main'>
-        <View className='img-view'>
-          <Image src={Api.imgUrl+item.resultUrl} />
+        {/*<View className='img-view'>*/}
+        {/*  <Image src={Api.imgUrl+item.resultUrl} />*/}
+        {/*</View>*/}
+        <View className='result-view'>
+          <Text className='result-text'>nCoV-RNA核酸检测结果</Text>
         </View>
-        {/*<View className='result-view'>*/}
-        {/*  <Text className='result-text'>2020-nCoV-RNA核酸检测结果</Text>*/}
-        {/*</View>*/}
-        {/*<View className='status-view'>*/}
-        {/*  <Text className='status-text'>阴性</Text>*/}
-        {/*  <Image src={Status} className='status-img'/>*/}
-        {/*</View>*/}
-        {/*<View className='list-row-view '>*/}
-        {/*  <Text className='label'>检测人姓名</Text>*/}
-        {/*  <Text className='value'>王琰龙</Text>*/}
-        {/*</View>*/}
+        <View className='status-view'>
+          <Text className='status-text'>{result}</Text>
+          {/*<Image src={Status} className='status-img'/>*/}
+        </View>
+        <View className='list-row-view'>
+          <Text className='label'>检测人姓名</Text>
+          <Text className='value'>{item.name}</Text>
+        </View>
+        <View className='list-row-view '>
+          <Text className='label'>检测人医院</Text>
+          <Text className='value'>{item.orgName}</Text>
+        </View>
         <View className='list-row-view'>
         <Text className='label'>检测日期</Text>
-        <Text className='value'>{moment(item.date).format('YYYY-MM-DD')}</Text>
+        <Text className='value'>{moment(item.date).format('YYYY-MM-DD')} {_getWeek(item.date)} </Text>
       </View>
-        <View className='list-row-view'>
-        <Text className='label'>检测人姓名</Text>
-        <Text className='value'>{item.name}</Text>
-      </View>
+
       </View>
     </View>
   )
