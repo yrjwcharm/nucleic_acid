@@ -5,15 +5,16 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
 import {fetchApplyTradeApi, fetchAppointDetectApi} from "../../../services/combo";
 import Taro from "@tarojs/taro";
-import {debounce} from '../../../utils/common'
+import {throttle} from '../../../utils/common'
 import {AtModal, AtModalAction} from "taro-ui";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
 import Api from "../../../config/api";
-
+let _timer =null;
 const Confirm = () => {
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [item, setItem] = useState({})
+  const [isWait,setIsWait] =useState(false);
   const [userType, setUserType] = useState(0);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -44,30 +45,41 @@ const Confirm = () => {
     }
   }
   const _enterOrder = async () => {
-    let {item, userType} = getCurrentInstance().router.params;
-    const {
-      orgId,
-      idCard,
-    } = JSON.parse(item);
-    Taro.request({
-      url: Api.getPreAppoint + `?orgId=${orgId}&idCard=${idCard}`, //仅为示例，并非真实的接口地址
-      data: {},
-      method: 'GET',
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (result) {
-        console.log(333, result.data);
-        const _result = result.data;
-        if (_result.code == 200) {
-          if (!_result.data) {
-            setVisible(true);
-            return;
+    if(!isWait){
+      setIsWait(true);
+      let {item, userType} = getCurrentInstance().router.params;
+      const {
+        orgId,
+        idCard,
+      } = JSON.parse(item);
+      Taro.request({
+        url: Api.getPreAppoint + `?orgId=${orgId}&idCard=${idCard}`, //仅为示例，并非真实的接口地址
+        data: {},
+        method: 'GET',
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (result) {
+          console.log(333, result.data);
+          const _result = result.data;
+          if (_result.code == 200) {
+            if (!_result.data) {
+              setVisible(true);
+              return;
+            }
+            _proceed();
           }
-          _proceed();
         }
+      })
+    }else{
+      if(_timer==null) {
+        _timer = setTimeout(() => {
+          setIsWait(false);
+          clearTimeout(_timer);
+        }, 3000)
       }
-    })
+    }
+
   }
   const _proceed = async () => {
     Taro.showLoading({
@@ -172,6 +184,11 @@ const Confirm = () => {
                           title: '支付已取消,请在我的预约-进行支付',
                           icon: 'none',
                         })
+                        let timer = setTimeout(() => {
+                          Taro.reLaunch({url: '/pages/index/index'})
+                          clearTimeout(timer);
+                        }, 3000)
+
                       }
                     })
                   }
@@ -196,7 +213,7 @@ const Confirm = () => {
         let timer = setTimeout(() => {
           Taro.reLaunch({url: '/pages/index/index'})
           clearTimeout(timer);
-        }, 1500)
+        }, 3000)
       }
     }
 
@@ -296,6 +313,7 @@ const Confirm = () => {
         </View>
       </View>
       <AtModal
+        closeOnClickOverlay={false}
         isOpened={visible}
       >
         <View className='modal-view'>
@@ -305,7 +323,9 @@ const Confirm = () => {
         </View>
         <AtModalAction>
           <Button className={'btn'} onClick={() => {
-            Taro.hideLoading();
+            Taro.reLaunch({
+              url:'/pages/index/index'
+            })
             setVisible(false)
           }}>取消</Button>
 

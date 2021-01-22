@@ -7,45 +7,48 @@ import Wait from '@assets/wait.svg'
 import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import {AtModal, AtModalAction} from "taro-ui";
 
+let timer = null;
 const AppointWait = () => {
   const [visible, setVisible] = useState(false);
   const skip = async () => {
     Taro.showLoading({
       title: '请稍等...',
     });
-    let timer = setInterval(async () => {
+    if (timer == null) {
+      timer = setInterval(async () => {
 
-      const {id} = getCurrentInstance().router.params;
-      const res = await fetchAppointSuccessQrCodeApi({appointId: id})
-      // console.log(333, res);
-      if (res.code === 200) {
-        const {
-          state
-        } = res.data;
-        if (state == 1) {
-          Taro.hideLoading();
-          Taro.navigateTo({
-            url: `/pages/user/payment-success/payment-success?id=${id}`
-          })
+        const {id} = getCurrentInstance().router.params;
+        const res = await fetchAppointSuccessQrCodeApi({appointId: id})
+        // console.log(333, res);
+        if (res.code === 200) {
+          const {
+            state
+          } = res.data;
+          if (state == 1) {
+            Taro.hideLoading();
+            Taro.navigateTo({
+              url: `/pages/user/payment-success/payment-success?id=${id}`
+            })
+            clearInterval(timer);
+          } else if (state == 2) {
+            Taro.hideLoading();
+            Taro.showToast({
+              icon: 'none',
+              title: res.msg
+            })
+            // Taro.reLaunch({url: '/pages/index/index'})
+            clearInterval(timer);
+          }
+        } else {
           clearInterval(timer);
-        } else if (state == 2) {
           Taro.hideLoading();
           Taro.showToast({
             icon: 'none',
             title: res.msg
           })
-          Taro.reLaunch({url: '/pages/index/index'})
-          clearInterval(timer);
         }
-      } else {
-        clearInterval(timer);
-        Taro.hideLoading();
-        Taro.showToast({
-          icon: 'none',
-          title: res.msg
-        })
-      }
-    }, 1000)
+      }, 1000)
+    }
 
   }
   const back = () => {

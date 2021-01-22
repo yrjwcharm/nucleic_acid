@@ -68,6 +68,7 @@
   justify-content: space-between;
 }
 .dist-name-text{
+  width: 142px;
   font-size: 28px;
   font-family: PingFangSC-Regular;
 
@@ -235,39 +236,90 @@
   font-size: 14PX;
   color: #666666;
 }
-.modal-view{
-  height: 80PX;
-  width: 280PX;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: #FFFFFF;
-  border-radius: 5px;
-}
-.modal-text{
-  font-family: PingFangSC-Medium;
-  font-size: 17PX;
-  color: #191F25;
-}
+//.modal-view{
+//  height: 80PX;
+//  width: 280PX;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  flex-direction: column;
+//  background: #FFFFFF;
+//  border-radius: 5px;
+//}
+//.modal-text{
+//  font-family: PingFangSC-Medium;
+//  font-size: 17PX;
+//  color: #191F25;
+//}
 .location{
   width: 11PX;
   height:14PX
 }
-.modal-header{
-  background: #3299FF;
-  color: #fff;
-  font-size: 14PX;
-}
-.modal-content{
-  color: #333;
-  //color: #fff;
-  font-size: 14PX;
-}
+//.modal-header{
+//  background: #3299FF;
+//  color: #fff;
+//  font-size: 14PX;
+//}
+//.modal-content{
+//  color: #333;
+//  width: 100%;
+//  //color: #fff;
+//  font-size: 14PX;
+//}
 .modal-footer{
   background: #3299FF;
 }
-.ok{
-  color:#fff;
+
+.bt-ok{
   font-size: 14PX;
+}
+.notice-view{
+  padding-left: 34px;
+  padding-right: 34px;
+  display: flex;
+  text-justify: inter-ideograph;
+  text-align: justify;
+}
+.notice-text{
+  display: flex;
+  flex:1;
+  font-size: 28px;
+  color: #333333;
+}
+.enter-view{
+  display: flex;
+  flex:1;
+  margin-top: 30PX;
+  padding-bottom: 40px;
+  //flex-direction: r;
+  justify-content: center;
+  align-items: center;
+}
+.enter-wrap{
+  display: flex;
+  width: 492px;
+  height: 80px;
+  background: #3299FF;
+  border-radius: 40px;
+}
+.enter-text{
+  margin: auto;
+  font-size: 28px;
+  color: #FFFFFF;
+}
+.title-view{
+  margin-top: 40px;
+    display: flex;
+  margin-bottom: 22px;
+}
+.title-text{
+  margin: auto;
+  font-size: 32px;
+  color: #333333;
+}
+::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }

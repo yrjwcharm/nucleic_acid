@@ -6,14 +6,13 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
-import Forward from '../../../assets/home/forward.svg'
 import Api from "../../../config/api";
 import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
-import {queryAppointRecord} from "../../../services/user";
 import Location from '@assets/location.png';
+
 const WritePatientInfo = () => {
-  const [visible,setVisible] =useState(false);
-  const [isIphoneX,setIsIphoneX]=useState(false);
+  const [visible, setVisible] = useState(true);
+  const [isIphoneX, setIsIphoneX] = useState(false);
   const [imgCode, setImgCode] = useState('');
   const [orgName, setOrgName] = useState('');
   const [userType, setUserType] = useState(2);
@@ -35,15 +34,15 @@ const WritePatientInfo = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [area, setArea] = useState('请选择所属区域');
   const [verifyCode, setVerifyCode] = useState('');
-  const [timeType,setTimeType]=useState('');
+  const [timeType, setTimeType] = useState('');
   useEffect(() => {
     _initData();
     getImageCode();
   }, [])
   const _initData = async () => {
     const isIphoneX = Taro.getStorageSync('isIphoneX');
-    const {item,obj} = getCurrentInstance().router.params;
-    const {sourceId, orgId, date,appointId, orgName,timeType, price} = JSON.parse(item);
+    const {item, obj} = getCurrentInstance().router.params;
+    const {sourceId, orgId, date, appointId, orgName, timeType, price} = JSON.parse(item);
     setSourceId(sourceId);
     setOrgId(orgId);
     setDate(date);
@@ -131,7 +130,7 @@ const WritePatientInfo = () => {
       })
       return;
     }
-    if (area==='请选择所属区域') {
+    if (area === '请选择所属区域') {
       Taro.showToast({
         title: '请选择省市区',
         icon: 'none',
@@ -181,7 +180,7 @@ const WritePatientInfo = () => {
   const showAreaPicker = () => {
     setShowPicker(true);
   }
-  const getLocation = ()=>{
+  const getLocation = () => {
     Taro.getSetting({
       success: function (res) {
         if (!res.authSetting['scope.userLocation']) {
@@ -192,25 +191,38 @@ const WritePatientInfo = () => {
               _chooseLocation();
             }
           })
-        }else{
+        } else {
           _chooseLocation();
         }
       }
     })
 
   }
-  const  _chooseLocation =()=>{
+  const _chooseLocation = () => {
     Taro.chooseLocation({
-      success:function (res){
-        console.log(333,res);
-        const {address}=res;
+      success: function (res) {
+        const {address} = res;
         setArea(address);
       },
-      complete:function (res){
-        console.log(333,res);
+      complete: function (res) {
+        // console.log(333, res);
+        // const {address,latitude, longitude} =res;
+        // // https://restapi.amap.com/v3/geocode/geo?parameters
+        //   Taro.request({
+        //     url:`https://restapi.amap.com/v3/geocode/geo?output=json&key=${Api.key}&address=${'北京'}`,
+        //     data:{},
+        //     method:'GET',
+        //     header: {
+        //       'content-type': 'application/json' // 默认值
+        //     },
+        //     success:function (res){
+        //           console.log(3333,res);
+        //     }
+        //   })
+
 
       },
-      fail:function (res){
+      fail: function (res) {
 
       }
     })
@@ -282,25 +294,44 @@ const WritePatientInfo = () => {
           </Text>
         </View>
       </View>
-      <View className='footer' >
-        <View className='btn-submit-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'} onClick={nextStep}>
+      <View className='footer'>
+        <View className='btn-submit-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}
+              onClick={nextStep}>
           <Text className='btn-submit-text'>下一步</Text>
         </View>
       </View>
       <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
-      {/*<AtModal isOpened={true}>*/}
-      {/*  <AtModalHeader className='modal-header'>预约提醒</AtModalHeader>*/}
-      {/*  <AtModalContent className='modal-content'>*/}
-      {/*    1.就诊人应保证提供真实、有效的个人信息。*/}
-      {/*    2.核酸检测取报告时需要出示身份证核实身份，请仔细输入并核对，冒用身份需承担法律责任；*/}
-      {/*    3.地址必须为本人现住宅或办公真实地址，精确到门牌号；*/}
-      {/*    4.核酸检测门诊仅面向无流行病学史，无任何症状的自愿进行新冠病素核酸检测人员；*/}
-      {/*    5.发热患者请去最近医院的发热门诊就诊。*/}
-      {/*  </AtModalContent>*/}
-      {/*  <AtModalAction className='modal-footer'>*/}
-      {/*    <Button className='ok' onClick={()=>setVisible(false)}>确定</Button>*/}
-      {/*  </AtModalAction>*/}
-      {/*</AtModal>*/}
+      <AtModal isOpened={visible} >
+        <AtModalContent className='modal-content'>
+          <View className='title-view'>
+              <Text className='title-text'>预约提醒</Text>
+          </View>
+          <View className='notice-view'>
+            <Text className='notice-text'>1.就诊人应保证提供真实、有效的个人信息；</Text>
+          </View>
+          <View className='notice-view'>
+            <Text className='notice-text'>2.核酸检测取报告时需要出示身份证核实身份，请仔细输入并核对，冒用身份需承担法律责任；</Text>
+          </View>
+          <View className='notice-view'>
+            <Text className='notice-text'>3.地址必须为本人现住宅或办公真实地址，精确到门牌号；</Text>
+          </View>
+          <View className='notice-view'>
+          <Text className='notice-text'>4.核酸检测门诊仅面向无流行病学史，无任何症状的自愿进行新冠病素核酸检测人员；
+          </Text>
+        </View>
+          <View className='notice-view'>
+          <Text className='notice-text'>5.发热患者请去最近医院的发热门诊就诊；</Text>
+        </View>
+          <View className='enter-view' onClick={()=>setVisible(false)}>
+            <View className='enter-wrap'>
+              <Text className='enter-text'>知道了</Text>
+            </View>
+          </View>
+        </AtModalContent>
+        {/*<AtModalAction className='modal-footer'>*/}
+        {/*  <Button type='#fff' className='bt-ok' onClick={() => setVisible(false)}>确定</Button>*/}
+        {/*</AtModalAction>*/}
+      </AtModal>
     </View>
   )
 }
@@ -311,8 +342,8 @@ const ListRow = (props) => {
       <View className='list-row-wrap'>
         <View className='list-row-view'>
           <Text className='list-row-text'>{label}</Text>
-          <Input type={type}  className={className} onInput={onInput} placeholder={placeholder}
-                  placeholderClass='list-row-input-placeholder'
+          <Input type={type} className={className} onInput={onInput} placeholder={placeholder}
+                 placeholderClass='list-row-input-placeholder'
           />
         </View>
       </View>

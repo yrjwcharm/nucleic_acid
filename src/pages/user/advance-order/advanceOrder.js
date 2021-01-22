@@ -241,8 +241,11 @@ export class AdvanceOrder extends Component {
                 paySign,
                 success: function (result) {
                   // _this._getList();
+                  // Taro.navigateTo({
+                  //   url: `/pages/user/payment-success/payment-success?id=${item.id}`
+                  // })
                   Taro.navigateTo({
-                    url: `/pages/user/payment-success/payment-success?id=${item.id}`
+                    url: `/pages/user/appoint-wait/appoint-wait?id=${item.id}`
                   })
                 },
                 fail: function (res) {
@@ -295,7 +298,7 @@ export class AdvanceOrder extends Component {
                               <Text
                                 className='listItem_right_status'
                                 style={_item.state == 0 ? 'color:red' : _item.state == 1 ? 'color:green' : _item.state == 2 ? '#333' : '#999'}>{_item.state == 0 ? '预约中' : _item.state == 1 ? '已预约' : _item.state == 2 ? '已完成' : '已取消'}</Text>
-                              {_item.state != 3 && <Image src={Forward} className='listItem_right_arrow'/>}
+                              {_item.state != 3||_item.state!=0 && <Image src={Forward} className='listItem_right_arrow'/>}
                             </View>
                           </View>
                           <View className='footer'>
