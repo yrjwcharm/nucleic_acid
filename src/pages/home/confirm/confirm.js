@@ -1,21 +1,24 @@
-import { Text, View } from '@tarojs/components'
-import React, { useEffect, useState } from 'react';
+import {Button, Text, View} from '@tarojs/components'
+import React, {useEffect, useState} from 'react';
 import './confirm.scss'
-import { getCurrentInstance } from "@tarojs/runtime";
+import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
+import {fetchApplyTradeApi, fetchAppointDetectApi, fetchPreAppointDetectApi} from "../../../services/combo";
+import Taro from "@tarojs/taro";
+import {throttle} from '../../../utils/common'
+import {AtModal, AtModalAction} from "taro-ui";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
-import { fetchApplyTradeApi, fetchAppointDetectApi, fetchAppointSuccessQrCodeApi } from "../../../services/combo";
-import Taro from "@tarojs/taro";
 import Api from "../../../config/api";
-import {throttle} from '../../../utils/common'
+
 const Confirm = () => {
-  const [isIphoneX,setIsIphoneX]=useState(false);
+  const [isIphoneX, setIsIphoneX] = useState(false);
   const [item, setItem] = useState({})
   const [userType, setUserType] = useState(0);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     const isIphoneX = Taro.getStorageSync('isIphoneX');
-    let { item, userType } = getCurrentInstance().router.params;
+    let {item, userType} = getCurrentInstance().router.params;
     const _item = JSON.parse(item);
     setUserType(userType);
     setItem(_item);
@@ -44,7 +47,33 @@ const Confirm = () => {
     Taro.showLoading({
       title: '请稍等...',
     });
-    let { item, userType } = getCurrentInstance().router.params;
+    let {item, userType} = getCurrentInstance().router.params;
+    const {
+      orgId,
+      idCard,
+    } = JSON.parse(item);
+    Taro.request({
+      url: Api.getPreAppoint+`?orgId=${orgId}&idCard=${idCard}`, //仅为示例，并非真实的接口地址
+      data: {},
+      method: 'GET',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success:function (result){
+        console.log(333,result.data);
+        const _result = result.data;
+        if (_result.code == 200) {
+          if (!_result.data) {
+            setVisible(true);
+            return;
+          }
+          _proceed();
+        }
+    }
+    })
+  }
+  const _proceed=async ()=>{
+    let {item, userType} = getCurrentInstance().router.params;
     const {
       cityid,
       date,
@@ -63,28 +92,13 @@ const Confirm = () => {
       orgName, name,
       phone, idCard, price,
     } = JSON.parse(item);
-    console.log(1111,  cityid,
-      date,
-      districtid,
-      docUrl,
-      idCard,
-      name,
-      orgId,
-      payType,
-      phone,
-      area,
-      provinceid,
-      sourceId,
-      streetdesc,
-      userType,
-      entourageIdCard,
-      entourageName,
-      entouragePhone,
-      entourageRelation,);
-
     const _res = await user.loginByWeixin({ appid: Config.appid });
+    console.log(123456,_res);
+
     if (_res.code === 200) {
       const { userId, wxid, unionid, sectionKey } = _res.data;
+
+
       const res = await fetchAppointDetectApi({
         cityid,
         date,
@@ -106,6 +120,7 @@ const Confirm = () => {
         entouragePhone,
         entourageRelation,
       })
+      console.log(123456,res);
       Taro.hideLoading();
       if (res.code === 200) {
         if (userType == 1) {
@@ -113,7 +128,6 @@ const Confirm = () => {
             url: '/pages/home/audit-result/audit-result'
           })
         } else if (userType == 2) {
-          if (res.code == 200) {
             Taro.request({
               url: Api.createOrder + `?appointId=${res.data}`, //仅为示例，并非真实的接口地址
               data: {},
@@ -170,18 +184,10 @@ const Confirm = () => {
                     icon: 'none',
                   })
                 }
-                // const _res = res.data;
-                // _res.code == 200 && this.setState({visible: false, page: 1, list: []}, () => {
-                //   this._getList();
-                // })
               }
             })
           }
 
-        }
-        // userType==2&&Taro.reLaunch({
-        //   url:'/pages/index/index'
-        // })
       } else {
         Taro.showToast({
           title: res.msg,
@@ -193,6 +199,11 @@ const Confirm = () => {
         }, 1500)
       }
     }
+
+  }
+  const _enter = () => {
+    setVisible(false);
+    _proceed();
   }
   return (
     <View className='container'>
@@ -220,7 +231,8 @@ const Confirm = () => {
           </View>
           <View className='info-confirm-wrap'>
             <Text className='label'>家庭住址</Text>
-            <Text className='value'>{(item && item.area + '' + item.streetdesc).length>0?(item&&item.area+''+item.streetdesc).substring(0,10)+'...':(item && item.area + '' + item.streetdesc)}</Text>
+            <Text
+              className='value'>{(item && item.area + '' + item.streetdesc).length > 0 ? (item && item.area + '' + item.streetdesc).substring(0, 10) + '...' : (item && item.area + '' + item.streetdesc)}</Text>
           </View>
           <View className='info-confirm-wrap'>
             <Text className='label'>联系电话</Text>
@@ -230,7 +242,7 @@ const Confirm = () => {
             <Text className='label'>身份证号</Text>
             <Text className='value'>{item && item.idCard}</Text>
           </View>
-          {item.entourageIdCard&&
+          {item.entourageIdCard &&
           <View>
             <View className='info-confirm-wrap'>
               <Text className='label'>陪同人姓名</Text>
@@ -273,16 +285,32 @@ const Confirm = () => {
         </View>
       </View>
       <View className='footer'>
-        <View className='btn-wrap-view' style={isIphoneX?'margin-bottom:34rpx':'margin-bottom:0rpx'}>
+        <View className='btn-wrap-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}>
           <View className='price-view'>
             <Text className='RMB'>￥</Text>
             <Text className={userType == 1 ? 'price' : '_price'}>{item && item.price}</Text>
           </View>
-          <View className='enter-view' onClick={throttle( _enterOrder,3000)}>
+          <View className='enter-view' onClick={throttle(_enterOrder, 3000)}>
             <Text className='enter-pay'>确认预约</Text>
           </View>
         </View>
       </View>
+      <AtModal
+        isOpened={visible}
+      >
+        <View className='modal-view'>
+          <Text className='modal-text'>确定</Text>
+        </View>
+        <AtModalAction>
+          <Button className={'btn'} onClick={() =>
+          {
+            Taro.hideLoading();
+            setVisible(false)
+          }}>取消</Button>
+
+          <Button onClick={_enter}>确定</Button>
+        </AtModalAction>
+      </AtModal>
     </View>
   )
 }

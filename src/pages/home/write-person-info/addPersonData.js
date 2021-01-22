@@ -116,7 +116,11 @@ const AddPersonData = () => {
           })
         }else{
           _chooseLocation();
+          console.log(333,'zoule');
         }
+      },
+      fail:function (res){
+
       }
     })
 

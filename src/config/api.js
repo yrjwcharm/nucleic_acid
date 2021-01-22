@@ -40,5 +40,6 @@ export default {
   getImgCode:WxApiRoot + `/ncov/BaAppointmentController/authImg`,
   QueryAppointRecord:WxApiRoot+`/ncov/BaAppointmentController/baseInfo/get`,
   createOrder :WxApiRoot +`/ncov/order/create`,
-  getApplyTrade:WxApiRoot + `/ncov/trade/apply`
+  getApplyTrade:WxApiRoot + `/ncov/trade/apply`,
+  getPreAppoint:WxApiRoot + `/ncov/BaAppointmentController/check/done`,
 };

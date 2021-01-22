@@ -128,7 +128,7 @@ export default class UploadCertification extends Component {
           <View className='upload-img-container'>
             <View className='upload-img-view'>
               <View className='upload-img-wrap' onClick={this._chooseImage}>
-                <Image src={url?Api.imgUrl +url:Img} className='upload-img'/>
+                <Image src={url?Api.imgUrl+url:Img} className='upload-img'/>
                 <Text className='upload-text'>上传证明</Text>
               </View>
             </View>

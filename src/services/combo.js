@@ -26,3 +26,6 @@ export  async  function  fetchImgCodeApi(payload){
 export async  function  fetchApplyTradeApi(payload){
   return request.post(Api.getApplyTrade,payload)
 }
+export async  function  fetchPreAppointDetectApi(payload){
+  return request.get(Api.getPreAppoint,payload)
+}

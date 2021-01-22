@@ -10,7 +10,6 @@ import {getQueryOrgListByNameApi} from "../../../services/home";
 import {getCurrentInstance} from "@tarojs/runtime";
 import Search from '@assets/search.png'
 import _Empty from "@assets/empty.png";
-let QQMapWX = require('../../../utils/qqmap-wx-jssdk.min');
 class Organization extends Component {
   state={
     queryName:'',
