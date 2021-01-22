@@ -90,6 +90,10 @@ class Check_Result extends Component {
     const res  = await  getCheckResult({
       appointId:item.id
     })
+    console.log(333,res);
+    // if(res.code==200){
+    //
+    // }
 
     Taro.navigateTo({
       url: `/pages/home/detail/detail?item=${JSON.stringify(item)}`});
@@ -123,7 +127,6 @@ class Check_Result extends Component {
             let date = moment(item.date).format('YYYY-MM-DD');
             let week = this._getWeek(item.date);
             return (
-              <View className='query-view'>
                 <View className='listItem' key={item.id + ""} onClick={()=>this._goToDetail(item)}>
                   <View className='listItem_left'>
                     <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
@@ -134,9 +137,7 @@ class Check_Result extends Component {
                     <Image src={Forward} className='listItem_right_arrow'/>
                   </View>
                 </View>
-              </View>
-            )
-          }):<Empty/>}
+            )}):<Empty/>}
         </View>
       </ScrollView>
     )

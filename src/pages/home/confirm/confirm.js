@@ -44,9 +44,6 @@ const Confirm = () => {
     }
   }
   const _enterOrder = async () => {
-    Taro.showLoading({
-      title: '请稍等...',
-    });
     let {item, userType} = getCurrentInstance().router.params;
     const {
       orgId,
@@ -73,6 +70,9 @@ const Confirm = () => {
     })
   }
   const _proceed=async ()=>{
+    Taro.showLoading({
+      title: '请稍等...',
+    });
     let {item, userType} = getCurrentInstance().router.params;
     const {
       cityid,
@@ -299,7 +299,7 @@ const Confirm = () => {
         isOpened={visible}
       >
         <View className='modal-view'>
-          <Text className='modal-text'>确定</Text>
+          <Text className='modal-text'>当前患者存在未完成的预约,确定继续预约？</Text>
         </View>
         <AtModalAction>
           <Button className={'btn'} onClick={() =>
