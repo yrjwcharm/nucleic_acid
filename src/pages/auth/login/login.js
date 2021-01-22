@@ -65,6 +65,7 @@ class Login extends Component {
                   onGetUserInfo={this.wxLogin}>确认登录</Button>
         </View>
         <AtModal
+          closeOnClickOverlay={false}
           isOpened={this.state.visible}
         >
           <View className='modal-view'>

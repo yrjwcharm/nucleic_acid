@@ -301,7 +301,7 @@ const WritePatientInfo = () => {
         </View>
       </View>
       <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
-      <AtModal isOpened={visible} >
+      <AtModal isOpened={visible} closeOnClickOverlay={false}>
         <AtModalContent className='modal-content'>
           <View className='title-view'>
               <Text className='title-text'>预约提醒</Text>

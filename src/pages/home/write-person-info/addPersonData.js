@@ -403,6 +403,7 @@ const AddPersonData = () => {
         </View>
       </View>
       <AtModal
+        closeOnClickOverlay={false}
         isOpened={modal}
       >
         <View className='modal-view'>

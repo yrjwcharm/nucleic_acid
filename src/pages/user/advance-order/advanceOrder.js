@@ -323,6 +323,7 @@ export class AdvanceOrder extends Component {
           </AtTabs>
         </View>
         <AtModal
+          closeOnClickOverlay={false}
           isOpened={visible}
         >
           <View className='modal-view'>
