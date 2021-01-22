@@ -60,6 +60,9 @@ class Combo extends Component {
     }
   }
   _initData = async (orgId) => {
+    Taro.showLoading({
+      title: '加载中...',
+    });
     const startDate = moment().format('YYYY-MM-DD');
     const endDate = moment().add('days', max).format('YYYY-MM-DD');
     let dateArr = [];
@@ -108,6 +111,7 @@ class Combo extends Component {
         })
       }
     }
+    Taro.hideLoading();
   }
   /**
    * 初始化获取号源
