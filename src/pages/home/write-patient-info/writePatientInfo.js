@@ -263,7 +263,7 @@ const WritePatientInfo = () => {
             <View className='address-info-view'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text'>地区信息</Text>
-                <Text className='select-city-text _list-row-input' style={'color:#999'}>{area}</Text>
+                <Text className='select-city-text _list-row-input' style={area==='请选择所属区域'?'color:#999':'color:#666'}>{area}</Text>
               </View>
               <Image src={Location} className='location'/>
             </View>
