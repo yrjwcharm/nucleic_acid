@@ -5,7 +5,7 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
 import {fetchApplyTradeApi, fetchAppointDetectApi} from "../../../services/combo";
 import Taro from "@tarojs/taro";
-import {throttle} from '../../../utils/common'
+import {debounce} from '../../../utils/common'
 import {AtModal, AtModalAction} from "taro-ui";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
@@ -290,7 +290,7 @@ const Confirm = () => {
             <Text className='RMB'>￥</Text>
             <Text className={userType == 1 ? 'price' : '_price'}>{item && item.price}</Text>
           </View>
-          <View className='enter-view' onClick={throttle(_enterOrder, 3000)}>
+          <View className='enter-view' onClick={debounce(_enterOrder, 500)}>
             <Text className='enter-pay'>确认预约</Text>
           </View>
         </View>

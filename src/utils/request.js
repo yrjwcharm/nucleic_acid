@@ -1,6 +1,4 @@
 import Taro from '@tarojs/taro';
-import {showErrorToast} from '../utils/util';
-
 
 /**
  * 封封微信的的request

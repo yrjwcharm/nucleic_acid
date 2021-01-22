@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro'
 import {Image, Text, View} from "@tarojs/components";
 import './refund-payment.scss'
 import submitSuccess from '@assets/submit.png'
-import {getCurrentInstance} from "@tarojs/runtime";
 const RefundPayment =()=>{
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [item,setItem]=useState({});

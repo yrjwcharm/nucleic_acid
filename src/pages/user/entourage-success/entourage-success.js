@@ -3,8 +3,6 @@ import React, {useEffect, useState} from 'react'
 import './entourage-success.scss'
 import {Barcode, QRCode} from 'taro-code'
 import {getCurrentInstance} from "@tarojs/runtime";
-import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
-import moment from 'moment';
 import Taro from "@tarojs/taro";
 const EntourageSuccess = (props) => {
   const [isIphoneX,setIsIphoneX]=useState(false);

@@ -1,8 +1,6 @@
 import Taro from '@tarojs/taro'
-import {View, Text, ScrollView, Image, Input} from '@tarojs/components'
-import {AtSearchBar, AtIcon} from 'taro-ui'
+import {View, Text, Image, Input} from '@tarojs/components'
 import Marker from '@assets/home/location.png';
-import Pic from '@assets/home/pic.svg'
 import Api from '../../../config/api'
 import './organization.scss'
 import React, { Component } from 'react'

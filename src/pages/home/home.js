@@ -5,13 +5,7 @@ import React, {Component} from 'react'
 import Carousel from '@assets/home/banner.png'
 import Order from '@assets/home/yuyue.png'
 import Query from '@assets/home/query.png'
-import Free from '@assets/home/free.png'
-import {AtTabBar} from "taro-ui";
 import {getQueryOrgListByNameApi} from "../../services/home";
-import {fetchAppointSuccessQrCodeApi} from "../../services/combo";
-
-const RECOMMEND_SIZE = 20
-
 // @connect(state => state.home, { ...actions, dispatchCartNum })
 export default class Home extends Component {
   constructor() {
@@ -84,14 +78,14 @@ export default class Home extends Component {
                 <Text className='home_wrap_desp_detail'>快速自费预约入口，安心筛选</Text>
               </View>
             </View>
-            <View className='home_wrap' onClick={() => this.goToOrganization(1)}>
-              <Image className='home_wrap_img'
-                     src={Free}/>
-              <View className='home_wrap_desp'>
-                <Text className='home_wrap_desp_title'>个人免费核酸检测预约</Text>
-                <Text className='home_wrap_desp_detail'>发热门诊或住院患者可免费预约核酸检测</Text>
-              </View>
-            </View>
+            {/*<View className='home_wrap' onClick={() => this.goToOrganization(1)}>*/}
+            {/*  <Image className='home_wrap_img'*/}
+            {/*         src={Free}/>*/}
+            {/*  <View className='home_wrap_desp'>*/}
+            {/*    <Text className='home_wrap_desp_title'>个人免费核酸检测预约</Text>*/}
+            {/*    <Text className='home_wrap_desp_detail'>发热门诊或住院患者可免费预约核酸检测</Text>*/}
+            {/*  </View>*/}
+            {/*</View>*/}
             <View className='home_wrap' onClick={this._goToCheck_Result}>
               <Image className='home_wrap_img'
                      src={Query}/>

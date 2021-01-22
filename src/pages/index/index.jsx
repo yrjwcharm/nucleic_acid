@@ -16,20 +16,6 @@ export default class Index extends Component {
       current:0,
     }
   }
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  componentDidShow() {
-  }
-
-  componentDidHide() {
-  }
   handleClick= (value)=> {
     this.setState({
       current: value

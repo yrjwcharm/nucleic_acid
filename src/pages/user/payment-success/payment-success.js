@@ -5,7 +5,6 @@ import { Barcode, QRCode } from 'taro-code'
 import { getCurrentInstance } from "@tarojs/runtime";
 import { fetchAppointSuccessQrCodeApi } from "../../../services/combo";
 import moment from 'moment';
-import Forward from '@assets/home/forward.svg'
 import  Taro from '@tarojs/taro'
 const PaymentSuccess = (props) => {
   const [isIphoneX,setIsIphoneX]=useState(false);

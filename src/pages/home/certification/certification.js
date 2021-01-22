@@ -5,7 +5,6 @@ import './certification.scss'
 import Api from "../../../config/api";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {getCurrentInstance} from "@tarojs/runtime";
-import {fetchAppointDetectApi} from "../../../services/combo";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
 import Img from '@assets/certification.png';

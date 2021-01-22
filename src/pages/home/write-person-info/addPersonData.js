@@ -8,9 +8,6 @@ import {getCurrentInstance} from "@tarojs/runtime";
 import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
-import Forward from "../../../assets/home/forward.svg";
-import * as user from "../../../utils/user";
-import Config from "../../../../project.config.json";
 import Api from "../../../config/api";
 import Location from '@assets/location.png';
 const AddPersonData = () => {

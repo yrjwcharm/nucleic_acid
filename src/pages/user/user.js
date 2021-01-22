@@ -1,15 +1,11 @@
 import Taro,{Events} from '@tarojs/taro'
 import {View, Text, ScrollView, Image} from '@tarojs/components'
-import Arrow from '@assets/home/check-result-query/arrow__right.svg'
-import List from '@assets/ucenter/list.svg';
 import Order from '@assets/order.png';
 import Audit from '@assets/audit.png';
-import ArrowRight from '@assets/ucenter/arrow.svg'
+import ArrowRight from '@assets/home/forward.svg'
 import './user.scss'
 import DefaultAvatar from '@assets/ucenter/avatar.png'
 import React, {useState, useEffect, Component} from 'react'
-import {get} from "../../global_data";
-const events = new Events()
 class User  extends Component {
   constructor() {
     super();

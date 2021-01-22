@@ -8,10 +8,11 @@ import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Forward from '../../../assets/home/forward.svg'
 import Api from "../../../config/api";
-import {AtModal, AtModalAction} from "taro-ui";
+import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
 import {queryAppointRecord} from "../../../services/user";
 import Location from '@assets/location.png';
 const WritePatientInfo = () => {
+  const [visible,setVisible] =useState(false);
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode, setImgCode] = useState('');
   const [orgName, setOrgName] = useState('');
@@ -287,6 +288,19 @@ const WritePatientInfo = () => {
         </View>
       </View>
       <AddressPicker pickerShow={showPicker} onHandleToggleShow={toggleAddressPicker}/>
+      {/*<AtModal isOpened={true}>*/}
+      {/*  <AtModalHeader className='modal-header'>预约提醒</AtModalHeader>*/}
+      {/*  <AtModalContent className='modal-content'>*/}
+      {/*    1.就诊人应保证提供真实、有效的个人信息。*/}
+      {/*    2.核酸检测取报告时需要出示身份证核实身份，请仔细输入并核对，冒用身份需承担法律责任；*/}
+      {/*    3.地址必须为本人现住宅或办公真实地址，精确到门牌号；*/}
+      {/*    4.核酸检测门诊仅面向无流行病学史，无任何症状的自愿进行新冠病素核酸检测人员；*/}
+      {/*    5.发热患者请去最近医院的发热门诊就诊。*/}
+      {/*  </AtModalContent>*/}
+      {/*  <AtModalAction className='modal-footer'>*/}
+      {/*    <Button className='ok' onClick={()=>setVisible(false)}>确定</Button>*/}
+      {/*  </AtModalAction>*/}
+      {/*</AtModal>*/}
     </View>
   )
 }

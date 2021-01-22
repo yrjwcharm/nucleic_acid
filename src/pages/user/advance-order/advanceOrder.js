@@ -151,16 +151,6 @@ export class AdvanceOrder extends Component {
   _cancelAppoint = async (item) => {
     this.setState({visible: true, item});
   }
-  // _againAppoint = async (item) => {
-  //   const res = await queryAppointRecord({
-  //     id: item.id,
-  //   })
-  //   console.log(333, res);
-  //   if (res.code == 200) {
-  //     const {userType} = res.data;
-  //     Taro.redirectTo({url: `/pages/home/organization/organization?userType=${userType}&obj=${JSON.stringify(res.data)}`});
-  //   }
-  // }
   _deleteAppoint = (item) => {
     this.setState({visible: true, item})
   }

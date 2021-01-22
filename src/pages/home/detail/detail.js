@@ -1,10 +1,8 @@
 import {Image, Text, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react'
 import './detail.scss'
-import Status from '@assets/status.png'
 import {getCurrentInstance} from "@tarojs/runtime";
 import moment from 'moment';
-import Api from "../../../config/api";
 const Detail = (props) => {
   const [item,setItem]=useState({});
   const [result,setResult] =useState('');
@@ -35,15 +33,11 @@ const Detail = (props) => {
   return (
     <View className='container'>
       <View className='main'>
-        {/*<View className='img-view'>*/}
-        {/*  <Image src={Api.imgUrl+item.resultUrl} />*/}
-        {/*</View>*/}
         <View className='result-view'>
           <Text className='result-text'>nCoV-RNA核酸检测结果</Text>
         </View>
         <View className='status-view'>
           <Text className='status-text'>{result}</Text>
-          {/*<Image src={Status} className='status-img'/>*/}
         </View>
         <View className='list-row-view'>
           <Text className='label'>检测人姓名</Text>

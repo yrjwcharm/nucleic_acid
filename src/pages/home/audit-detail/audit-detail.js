@@ -1,9 +1,6 @@
-import React, {Component, useEffect, useState} from 'react'
-import Taro from '@tarojs/taro'
+import React, {useEffect, useState} from 'react'
 import {Image, Text, View} from "@tarojs/components";
 import './audit-detail.scss'
-import Api from "../../../config/api";
-import {isEmpty} from "../../../utils/EmptyUtil";
 import AuditIn from '@assets/audit-in.svg'
 import AuditSuccess from '@assets/audit-success.svg';
 import AuditRefund from '@assets/audit-refund.png'
