@@ -65,6 +65,8 @@
 .modal-view{
   height: 80PX;
   width: 280PX;
+  padding-left: 20PX;
+  padding-right: 20PX;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,15 +74,13 @@
   background: #FFFFFF;
   border-radius: 5px;
 }
-.modal-wrap{
-  width:240PX ;
-}
 .modal-text{
-  text-align: center;
+  flex: 1;
   font-family: PingFangSC-Medium;
   font-size: 17PX;
   color: #191F25;
 }
+
 
 .btn{
   border-right: 1px solid #EEE;

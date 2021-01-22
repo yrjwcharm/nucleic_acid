@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import './confirm.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
 import moment from "moment";
-import {fetchApplyTradeApi, fetchAppointDetectApi, fetchPreAppointDetectApi} from "../../../services/combo";
+import {fetchApplyTradeApi, fetchAppointDetectApi} from "../../../services/combo";
 import Taro from "@tarojs/taro";
 import {throttle} from '../../../utils/common'
 import {AtModal, AtModalAction} from "taro-ui";
@@ -50,14 +50,14 @@ const Confirm = () => {
       idCard,
     } = JSON.parse(item);
     Taro.request({
-      url: Api.getPreAppoint+`?orgId=${orgId}&idCard=${idCard}`, //仅为示例，并非真实的接口地址
+      url: Api.getPreAppoint + `?orgId=${orgId}&idCard=${idCard}`, //仅为示例，并非真实的接口地址
       data: {},
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success:function (result){
-        console.log(333,result.data);
+      success: function (result) {
+        console.log(333, result.data);
         const _result = result.data;
         if (_result.code == 200) {
           if (!_result.data) {
@@ -66,10 +66,10 @@ const Confirm = () => {
           }
           _proceed();
         }
-    }
+      }
     })
   }
-  const _proceed=async ()=>{
+  const _proceed = async () => {
     Taro.showLoading({
       title: '请稍等...',
     });
@@ -92,11 +92,11 @@ const Confirm = () => {
       orgName, name,
       phone, idCard, price,
     } = JSON.parse(item);
-    const _res = await user.loginByWeixin({ appid: Config.appid });
-    console.log(123456,_res);
+    const _res = await user.loginByWeixin({appid: Config.appid});
+    console.log(123456, _res);
 
     if (_res.code === 200) {
-      const { userId, wxid, unionid, sectionKey } = _res.data;
+      const {userId, wxid, unionid, sectionKey} = _res.data;
 
 
       const res = await fetchAppointDetectApi({
@@ -106,7 +106,7 @@ const Confirm = () => {
         docUrl,
         idCard,
         name,
-        addrHome:area,
+        addrHome: area,
         orgId,
         payType,
         phone,
@@ -120,7 +120,7 @@ const Confirm = () => {
         entouragePhone,
         entourageRelation,
       })
-      console.log(123456,res);
+      console.log(123456, res);
       Taro.hideLoading();
       if (res.code === 200) {
         if (userType == 1) {
@@ -128,65 +128,65 @@ const Confirm = () => {
             url: '/pages/home/audit-result/audit-result'
           })
         } else if (userType == 2) {
-            Taro.request({
-              url: Api.createOrder + `?appointId=${res.data}`, //仅为示例，并非真实的接口地址
-              data: {},
-              method: 'POST',
-              header: {
-                'content-type': 'application/json' // 默认值
-              },
-              success: (result) => {
-                console.log(333,result);
-                const { code, data } = result.data;
-                if (code == 200) {
-                  fetchApplyTradeApi({
-                    payType: '02',
-                    orderId: data
-                  }).then(response => {
-                    // appId: "wx99bc91f0ade99f16"
-                    // nonceStr: "mygY7r2Ac0pyI6XL"
-                    // packageValue: "prepay_id=wx17140433899831f06b0a174a946b0a0000"
-                    // paySign: "9B50AD71302BEB2F6DC9190C3F743F5C"
-                    // signType: "MD5"
-                    // timeStamp: "1610863474"
-                    if (response.code == 200) {
-                      const {
-                        payResult: { timeStamp, paySign, nonceStr, appId, signType, packageValue },
-                        tradeId
-                      } = response.data;
-                      Taro.requestPayment({
-                        appId,
-                        timeStamp,
-                        nonceStr,
-                        package: packageValue,
-                        signType,
-                        paySign,
-                        success: function (result) {
+          Taro.request({
+            url: Api.createOrder + `?appointId=${res.data}`, //仅为示例，并非真实的接口地址
+            data: {},
+            method: 'POST',
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            success: (result) => {
+              console.log(333, result);
+              const {code, data} = result.data;
+              if (code == 200) {
+                fetchApplyTradeApi({
+                  payType: '02',
+                  orderId: data
+                }).then(response => {
+                  // appId: "wx99bc91f0ade99f16"
+                  // nonceStr: "mygY7r2Ac0pyI6XL"
+                  // packageValue: "prepay_id=wx17140433899831f06b0a174a946b0a0000"
+                  // paySign: "9B50AD71302BEB2F6DC9190C3F743F5C"
+                  // signType: "MD5"
+                  // timeStamp: "1610863474"
+                  if (response.code == 200) {
+                    const {
+                      payResult: {timeStamp, paySign, nonceStr, appId, signType, packageValue},
+                      tradeId
+                    } = response.data;
+                    Taro.requestPayment({
+                      appId,
+                      timeStamp,
+                      nonceStr,
+                      package: packageValue,
+                      signType,
+                      paySign,
+                      success: function (result) {
 
-                          Taro.navigateTo({
-                            url: `/pages/user/appoint-wait/appoint-wait?id=${res.data}`
-                          })
-                        },
-                        fail: function (res) {
-                          Taro.showToast({
-                            title: '支付已取消,请在我的预约-进行支付',
-                            icon: 'none',
-                          })
-                        }
-                      })
-                    }
-                  }).catch(error => {
-                    console.log(333, error);
-                  })
-                } else {
-                  Taro.showToast({
-                    title: '交易失败',
-                    icon: 'none',
-                  })
-                }
+                        Taro.navigateTo({
+                          url: `/pages/user/appoint-wait/appoint-wait?id=${res.data}`
+                        })
+                      },
+                      fail: function (res) {
+                        Taro.showToast({
+                          title: '支付已取消,请在我的预约-进行支付',
+                          icon: 'none',
+                        })
+                      }
+                    })
+                  }
+                }).catch(error => {
+                  console.log(333, error);
+                })
+              } else {
+                Taro.showToast({
+                  title: '交易失败',
+                  icon: 'none',
+                })
               }
-            })
-          }
+            }
+          })
+        }
 
       } else {
         Taro.showToast({
@@ -194,7 +194,7 @@ const Confirm = () => {
           icon: 'none',
         })
         let timer = setTimeout(() => {
-          Taro.reLaunch({ url: '/pages/index/index' })
+          Taro.reLaunch({url: '/pages/index/index'})
           clearTimeout(timer);
         }, 1500)
       }
@@ -299,11 +299,12 @@ const Confirm = () => {
         isOpened={visible}
       >
         <View className='modal-view'>
-          <Text className='modal-text'>当前患者存在未完成的预约,确定继续预约？</Text>
+          <View className='modal-wrap'>
+            <Text className='modal-text'>当前患者存在未完成的预约,确定继续预约？</Text>
+          </View>
         </View>
         <AtModalAction>
-          <Button className={'btn'} onClick={() =>
-          {
+          <Button className={'btn'} onClick={() => {
             Taro.hideLoading();
             setVisible(false)
           }}>取消</Button>

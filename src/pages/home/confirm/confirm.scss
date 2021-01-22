@@ -112,6 +112,8 @@
 .modal-view{
   height: 80PX;
   width: 280PX;
+  padding-left: 20PX;
+  padding-right: 20PX;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,6 +122,7 @@
   border-radius: 5px;
 }
 .modal-text{
+  flex: 1;
   font-family: PingFangSC-Medium;
   font-size: 17PX;
   color: #191F25;
