@@ -76,6 +76,7 @@ const AppointWait = () => {
         </View>
       </View>
       <AtModal
+        closeOnClickOverlay={false}
         isOpened={visible}
       >
         <View className='modal-view'>
