@@ -261,7 +261,7 @@ const WritePatientInfo = () => {
           <View className='detail-address-textarea'>
             <Textarea onInput={e => {
               setStreetDesc(e.detail.value)
-            }} className='textarea-text' placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
+            }} className='textarea-text' placeholder='街道、楼牌号等' placeholderClass='list-row-input-placeholder'/>
           </View>
         </View>
         <View className='tip-container'>

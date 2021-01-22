@@ -333,7 +333,7 @@ const AddPersonData = () => {
           <View className='detail-address-textarea'>
             <Textarea  className='textarea-text' onInput={e => {
               setStreetDesc(e.detail.value)
-            }} placeholder='详细地址' placeholderClass='list-row-input-placeholder'/>
+            }} placeholder='街道、楼牌号等' placeholderClass='list-row-input-placeholder'/>
           </View>
         </View>
 
