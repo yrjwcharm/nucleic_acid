@@ -12,7 +12,7 @@ import Forward from "../../../assets/home/forward.svg";
 import * as user from "../../../utils/user";
 import Config from "../../../../project.config.json";
 import Api from "../../../config/api";
-
+import Location from '@assets/location.png';
 const AddPersonData = () => {
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode,setImgCode] =useState('');
@@ -103,8 +103,42 @@ const AddPersonData = () => {
       }
     })
   }
+  const getLocation = ()=>{
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.userLocation']) {
+          Taro.authorize({
+            scope: 'scope.userLocation',
+            success: function () {
+              // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
+              _chooseLocation();
+            }
+          })
+        }else{
+          _chooseLocation();
+        }
+      }
+    })
+
+  }
+ const  _chooseLocation =()=>{
+   Taro.chooseLocation({
+     success:function (res){
+       console.log(333,res);
+       const {address}=res;
+       setArea(address);
+     },
+     complete:function (res){
+       console.log(333,res);
+
+     },
+     fail:function (res){
+
+     }
+   })
+  }
   const nextStep = async () => {
-    if (isEmpty(name)) {
+       if (isEmpty(name)) {
       Taro.showToast({
         title: '姓名不能为空',
         icon: 'none'
@@ -146,7 +180,7 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
+    if (area==='请选择所属区域') {
       Taro.showToast({
         title: '请选择省市区',
         icon: 'none',
@@ -279,14 +313,14 @@ const AddPersonData = () => {
         <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号' placeholder='请输入身份证号'/>
-        <View className='address-info-container' onClick={showAreaPicker}>
+        <View className='address-info-container' onClick={getLocation}>
           <View className='address-info-wrap'>
             <View className='address-info-view flex-between'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text' style={'color:#333'}>地区信息</Text>
                 <Text className='select-city-text _list-row-input' style={'color:#999'}>{area}</Text>
               </View>
-              <Image src={Forward} className='list-row-arrow'/>
+              <Image src={Location} className='location'/>
             </View>
           </View>
           <View className='line'/>

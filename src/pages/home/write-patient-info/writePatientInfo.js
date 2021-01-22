@@ -10,7 +10,7 @@ import Forward from '../../../assets/home/forward.svg'
 import Api from "../../../config/api";
 import {AtModal, AtModalAction} from "taro-ui";
 import {queryAppointRecord} from "../../../services/user";
-
+import Location from '@assets/location.png';
 const WritePatientInfo = () => {
   const [isIphoneX,setIsIphoneX]=useState(false);
   const [imgCode, setImgCode] = useState('');
@@ -130,7 +130,7 @@ const WritePatientInfo = () => {
       })
       return;
     }
-    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
+    if (area==='请选择所属区域') {
       Taro.showToast({
         title: '请选择省市区',
         icon: 'none',
@@ -162,7 +162,7 @@ const WritePatientInfo = () => {
       streetdesc,
       userType,
       orgName,
-      price
+      price,
     };
     Taro.navigateTo({
       url: `/pages/home/confirm/confirm?item=${JSON.stringify(item)}&userType=2`
@@ -179,6 +179,40 @@ const WritePatientInfo = () => {
   }
   const showAreaPicker = () => {
     setShowPicker(true);
+  }
+  const getLocation = ()=>{
+    Taro.getSetting({
+      success: function (res) {
+        if (!res.authSetting['scope.userLocation']) {
+          Taro.authorize({
+            scope: 'scope.userLocation',
+            success: function () {
+              // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
+              _chooseLocation();
+            }
+          })
+        }else{
+          _chooseLocation();
+        }
+      }
+    })
+
+  }
+  const  _chooseLocation =()=>{
+    Taro.chooseLocation({
+      success:function (res){
+        console.log(333,res);
+        const {address}=res;
+        setArea(address);
+      },
+      complete:function (res){
+        console.log(333,res);
+
+      },
+      fail:function (res){
+
+      }
+    })
   }
   return (
     <View className='container'>
@@ -211,14 +245,14 @@ const WritePatientInfo = () => {
         <ListRow className='_list-row-input' type='idcard' onInput={(e) => {
           setIdCard(e.detail.value);
         }} label='身份证号' placeholder='请输入身份证号'/>
-        <View className='address-info-container' onClick={showAreaPicker}>
+        <View className='address-info-container' onClick={getLocation}>
           <View className='address-info-wrap'>
             <View className='address-info-view'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text'>地区信息</Text>
                 <Text className='select-city-text _list-row-input' style={'color:#999'}>{area}</Text>
               </View>
-              <Image src={Forward} className='list-row-arrow'/>
+              <Image src={Location} className='location'/>
             </View>
           </View>
           <View className='line'/>

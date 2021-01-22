@@ -7,3 +7,6 @@ import Api from '../config/api';
 export async function getResultQueryListApi(payload) {
   return request.get(Api.CheckResultQuery, payload);
 }
+export async  function getCheckResult(payload){
+  return request.get(Api.checkResult,payload);
+}

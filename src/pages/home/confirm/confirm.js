@@ -54,6 +54,7 @@ const Confirm = () => {
       payType,
       provinceid,
       sourceId,
+      area,
       streetdesc,
       entourageIdCard,
       entourageName,
@@ -62,6 +63,25 @@ const Confirm = () => {
       orgName, name,
       phone, idCard, price,
     } = JSON.parse(item);
+    console.log(1111,  cityid,
+      date,
+      districtid,
+      docUrl,
+      idCard,
+      name,
+      orgId,
+      payType,
+      phone,
+      area,
+      provinceid,
+      sourceId,
+      streetdesc,
+      userType,
+      entourageIdCard,
+      entourageName,
+      entouragePhone,
+      entourageRelation,);
+
     const _res = await user.loginByWeixin({ appid: Config.appid });
     if (_res.code === 200) {
       const { userId, wxid, unionid, sectionKey } = _res.data;
@@ -72,6 +92,7 @@ const Confirm = () => {
         docUrl,
         idCard,
         name,
+        addrHome:area,
         orgId,
         payType,
         phone,
@@ -86,7 +107,6 @@ const Confirm = () => {
         entourageRelation,
       })
       Taro.hideLoading();
-      console.log(1111, res);
       if (res.code === 200) {
         if (userType == 1) {
           Taro.navigateTo({

@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import {Image, ScrollView, Text, View} from '@tarojs/components'
 import './checkResult.scss'
-import {getResultQueryListApi} from "../../../services/result_query";
+import {getResultQueryListApi,getCheckResult} from "../../../services/result_query";
 import moment from 'moment'
 import React, {Component} from 'react'
 import * as user from "../../../utils/user";
@@ -86,23 +86,13 @@ class Check_Result extends Component {
     }
   }
 
-  _goToDetail = (item) => {
-    Taro.navigateTo({
-      url: `/pages/home/detail/detail?item=${JSON.stringify(item)}`,
-      events: {
-        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
-        },
-        someEvent: function (data) {
-          console.log(data)
-        }
-      },
-      success: function (res) {
-        // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit('acceptDataFromOpenerPage', {data: 'test'})
-      }
+  _goToDetail =async (item) => {
+    const res  = await  getCheckResult({
+      appointId:item.id
     })
+
+    Taro.navigateTo({
+      url: `/pages/home/detail/detail?item=${JSON.stringify(item)}`});
   }
   _getWeek = (date) => {
     let week = moment(date).day()

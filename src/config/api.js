@@ -4,8 +4,11 @@
 // 云平台部署时使用
 let WxApiRoot = 'https://hstest.youjiankang.net';
 export default {
+  defineConstants: {
+    LOCATION_APIKEY: JSON.stringify('4HCBZ-ERO6U-AQTVJ-BMVJH-FCJI6-WFB2T')
+  },
   tmplIds:['91F5vWCWIp9dYyUdS4QLFuIa33gfzDM8WAX9_1Aimog','fjL81130dgH97zF7kO5IRmRn6ZSGR0TQFISyT7bxRwM','DpSCCpT6AjjRQyGEW-a-g1tTcO3jw5P9eQy8w5ryfT8'],
-  imgUrl :'http://hstest.youjiankang.net/',
+  imgUrl :'https://hstest.youjiankang.net/ncov',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口
   AboutUrl: WxApiRoot + 'home/about', //介绍信息
   CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口
@@ -23,6 +26,7 @@ export default {
   UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息
   IssueList: WxApiRoot + 'issue/list', //帮助信息
   CheckResultQuery:WxApiRoot + '/ncov/BaAppointmentController/my/result',
+  checkResult:WxApiRoot + `/ncov/BaAppointmentController/result/get`,
   MyAppointApi:WxApiRoot + '/ncov/BaAppointmentController/getUserList',
   MyAuditRecord:WxApiRoot + '/ncov/BaAppointmentController/my/validate',
   queryOrgListByNameApi:WxApiRoot + '/ncov/baOrganization/getListByQueryName',
