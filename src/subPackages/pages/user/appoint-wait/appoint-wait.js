@@ -4,9 +4,9 @@ import {Button, Image, Text, View} from "@tarojs/components";
 import './appoint-wait.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
 import Wait from '@assets/wait.svg'
-import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
+import {fetchAppointSuccessQrCodeApi} from "../../../../services/combo";
 import {AtModal, AtModalAction} from "taro-ui";
-import GIF from '../../../subPackages/assets/a.gif'
+import GIF from '../../../assets/a.gif'
 let timer = null ,_animation=null,_interval;
 export default  class AppointWait extends Component {
   constructor() {

@@ -176,7 +176,7 @@ const Confirm = () => {
                       success: function (result) {
 
                         Taro.navigateTo({
-                          url: `/pages/user/appoint-wait/appoint-wait?id=${res.data}`
+                          url: `/subPackages/pages/user/appoint-wait/appoint-wait?id=${res.data}`
                         })
                       },
                       fail: function (res) {
