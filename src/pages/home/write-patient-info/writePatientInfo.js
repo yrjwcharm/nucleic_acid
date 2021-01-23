@@ -217,6 +217,7 @@ const WritePatientInfo = () => {
               let provinceId = res.adcode.substring(0,2)+'0000';
               let cityId =res.adcode.substring(0,4)+'00';
               let districtId = res.adcode;
+              console.log(333,cityId);
               setArea(address);
               setProvinceId(provinceId);
               setCityId(cityId);

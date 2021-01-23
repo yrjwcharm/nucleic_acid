@@ -3,14 +3,24 @@ import React, {useEffect, useState} from 'react'
 import './detail.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
 import moment from 'moment';
+import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 const Detail = (props) => {
   const [item,setItem]=useState({});
+  const [orgName,setOrgName]=useState('');
   const [result,setResult] =useState('');
   useEffect(()=>{
     let {item,result} = getCurrentInstance().router.params;
     setItem(JSON.parse(item))
     setResult(result);
+    _getOrgName(JSON.parse(item).id);
   },[])
+  const _getOrgName=async (id)=> {
+    const res = await fetchAppointSuccessQrCodeApi({appointId: id})
+    if (res.code === 200) {
+      const {orgName} = res.data;
+      setOrgName(orgName);
+    }
+  }
  const  _getWeek = (date) => {
     let week = moment(date).day()
     switch (week) {
@@ -45,7 +55,7 @@ const Detail = (props) => {
         </View>
         <View className='list-row-view '>
           <Text className='label'>检测人医院</Text>
-          <Text className='value'>{item.orgName}</Text>
+          <Text className='value'>{orgName}</Text>
         </View>
         <View className='list-row-view'>
         <Text className='label'>检测日期</Text>

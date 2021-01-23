@@ -90,7 +90,7 @@ class Check_Result extends Component {
     const res = await getCheckResult({
       appointId: item.id
     })
-    console.log(333, res);
+    console.log(111, res);
     if (res.code == 200) {
       const {result} = res.data;
       if (result) {
@@ -138,7 +138,7 @@ class Check_Result extends Component {
               <View className='listItem' key={item.id + ""} onClick={() => this._goToDetail(item)}>
                 <View className='listItem_left'>
                   <Text className='listItem_left_appoint'>预约人:{item.name}</Text>
-                  <Text className='listItem_left_date'>{date} {week}</Text>
+                  <Text className='listItem_left_date'>{date} {week} {item.timeType == 0 ? '上午' : item.timeType == 1 ? '下午' : '全天'}</Text>
                 </View>
                 <View className='listItem_right'>
                   <Text className='listItem_right_status'>{item.checkState == 1 ? '立即查看' : '结果正在生成中'}</Text>
