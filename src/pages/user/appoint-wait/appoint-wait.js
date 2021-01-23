@@ -13,10 +13,14 @@ export default  class AppointWait extends Component {
     super();
     this.state = {
       visible: false,
+      isIphoneX:false,
     }
   }
   componentDidMount() {
-    this.skip();
+    const isIphoneX = Taro.getStorageSync('isIphoneX');
+    this.setState({isIphoneX},()=>{
+      this.skip();
+    })
   }
   timer = null;
 
@@ -66,18 +70,17 @@ export default  class AppointWait extends Component {
   }
 
   render() {
+    const {isIphoneX}=this.state;
     return <View className='appoint-wait-box'>
       <View className='main'>
         <Image src={Wait} className='wait-img'/>
         <Text className='title'>预约处理中</Text>
         <Text className='reason'>预计需要2~10秒钟...</Text>
-        <View className='deal'>
-          <View className='index' onClick={this.back}>
-            <Text className='index-text'>返回首页</Text>
-          </View>
-          {/*<View className='wait' onClick={this.skip}>*/}
-          {/*  <Text className='wait-text'>继续等待</Text>*/}
-          {/*</View>*/}
+      </View>
+      <View className='footer'>
+        <View className='btn-submit-view' style={isIphoneX ? 'margin-bottom:34rpx' : 'margin-bottom:0rpx'}
+              onClick={this.back}>
+          <Text className='btn-submit-text'>返回首页</Text>
         </View>
       </View>
       <AtModal
