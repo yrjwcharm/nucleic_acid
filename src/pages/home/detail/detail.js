@@ -49,7 +49,7 @@ const Detail = (props) => {
         </View>
         <View className='list-row-view'>
         <Text className='label'>检测日期</Text>
-        <Text className='value'>{moment(item.date).format('YYYY-MM-DD')} {_getWeek(item.date)} </Text>
+        <Text className='value'>{moment(item.date).format('YYYY-MM-DD')} {_getWeek(item.date)} {item.timeType == 0 ? '上午' : item.timeType == 1 ? '下午' : '全天'} </Text>
       </View>
 
       </View>

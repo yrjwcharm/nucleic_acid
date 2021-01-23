@@ -205,20 +205,20 @@ const WritePatientInfo = () => {
         setArea(address);
       },
       complete: function (res) {
-        // console.log(333, res);
-        // const {address,latitude, longitude} =res;
-        // // https://restapi.amap.com/v3/geocode/geo?parameters
-        //   Taro.request({
-        //     url:`https://restapi.amap.com/v3/geocode/geo?output=json&key=${Api.key}&address=${'北京'}`,
-        //     data:{},
-        //     method:'GET',
-        //     header: {
-        //       'content-type': 'application/json' // 默认值
-        //     },
-        //     success:function (res){
-        //           console.log(3333,res);
-        //     }
-        //   })
+        console.log(333, res);
+        const {address,latitude, longitude} =res;
+    // let url =`https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all`
+    //       Taro.request({
+    //         url,
+    //         data:{},
+    //         method:'GET',
+    //         header: {
+    //           'content-type': 'application/json' // 默认值
+    //         },
+    //         success:function (res){
+    //               console.log(3333,res);
+    //         }
+    //       })
 
 
       },

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {Component, useEffect, useState} from 'react'
 import Taro from '@tarojs/taro'
 import {Button, Image, Text, View} from "@tarojs/components";
 import './appoint-wait.scss'
@@ -7,13 +7,20 @@ import Wait from '@assets/wait.svg'
 import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import {AtModal, AtModalAction} from "taro-ui";
 
-let timer = null;
-const AppointWait = () => {
-  const [visible, setVisible] = useState(false);
-  const skip = async () => {
-    Taro.showLoading({
-      title: '请稍等...',
-    });
+let timer = null ,_animation=null,_interval;
+export default  class AppointWait extends Component {
+  constructor() {
+    super();
+    this.state = {
+      visible: false,
+    }
+  }
+  componentDidMount() {
+    this.skip();
+  }
+  timer = null;
+
+  skip = async () => {
     if (timer == null) {
       timer = setInterval(async () => {
 
@@ -25,13 +32,11 @@ const AppointWait = () => {
             state
           } = res.data;
           if (state == 1) {
-            Taro.hideLoading();
             Taro.navigateTo({
               url: `/pages/user/payment-success/payment-success?id=${id}`
             })
             clearInterval(timer);
           } else if (state == 2) {
-            Taro.hideLoading();
             Taro.showToast({
               icon: 'none',
               title: res.msg
@@ -41,7 +46,6 @@ const AppointWait = () => {
           }
         } else {
           clearInterval(timer);
-          Taro.hideLoading();
           Taro.showToast({
             icon: 'none',
             title: res.msg
@@ -51,33 +55,34 @@ const AppointWait = () => {
     }
 
   }
-  const back = () => {
-    setVisible(true);
+  back = () => {
+    this.setState({visible: true})
   }
-  const _enter = () => {
-    setVisible(false)
+  _enter = () => {
+    this.setState({visible: false})
     Taro.navigateTo({
       url: '/pages/index/index'
     })
   }
-  return (
-    <View className='appoint-wait-box'>
+
+  render() {
+    return <View className='appoint-wait-box'>
       <View className='main'>
         <Image src={Wait} className='wait-img'/>
         <Text className='title'>预约处理中</Text>
         <Text className='reason'>预计需要2~10秒钟...</Text>
         <View className='deal'>
-          <View className='index' onClick={back}>
+          <View className='index' onClick={this.back}>
             <Text className='index-text'>返回首页</Text>
           </View>
-          <View className='wait' onClick={skip}>
-            <Text className='wait-text'>继续等待</Text>
-          </View>
+          {/*<View className='wait' onClick={this.skip}>*/}
+          {/*  <Text className='wait-text'>继续等待</Text>*/}
+          {/*</View>*/}
         </View>
       </View>
       <AtModal
         closeOnClickOverlay={false}
-        isOpened={visible}
+        isOpened={this.state.visible}
       >
         <View className='modal-view'>
           <View className='modal-wrap'>
@@ -86,10 +91,9 @@ const AppointWait = () => {
         </View>
         <AtModalAction>
           {/*<Button className={'btn'} onClick={() =>setVisible(false)}>取消</Button>*/}
-          <Button onClick={_enter}>确定</Button>
+          <Button onClick={this._enter}>确定</Button>
         </AtModalAction>
       </AtModal>
-    </View>
-  )
+    </View>;
+  }
 }
-export default AppointWait

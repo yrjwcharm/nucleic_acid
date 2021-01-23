@@ -3,6 +3,7 @@
 .appoint-wait-box{
   display: flex;
   flex:1;
+  position: relative;
   height: 100%;
   background: #fff;
   flex-direction: column;
@@ -49,6 +50,9 @@
 .wait-img{
   width: 160px;
   height: 160px;
+  //position: absolute;
+  //z-index: 2;
+  animation: headRotate 3s linear infinite
 }
 .wait{
   border-radius: 5rpx;
@@ -94,4 +98,11 @@
   width: 0 !important;
   height: 0 !important;
   background: transparent !important;
+}
+
+/* 头像旋转效果  */
+@keyframes headRotate{
+  0% {transform: rotate(0deg);}
+  50% {transform: rotate(180deg);}
+  100% {transform: rotate(360deg);}
 }
