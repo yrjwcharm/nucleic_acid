@@ -124,21 +124,32 @@ const AddPersonData = () => {
  const  _chooseLocation =()=>{
    Taro.chooseLocation({
      success:function (res){
-       console.log(333,res);
-       const {address}=res;
-       setArea(address);
+       const {address, latitude, longitude} = res;
+       let url = `https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all&roadlevel=1`
+       Taro.request({
+         url,
+         data: {},
+         method: 'GET',
+         header: {
+           'content-type': 'application/json' // 默认值
+         },
+         success: function (res) {
+           const data = res.data;
+           if (data.infocode == 10000) {
+             const res = data.regeocode.addressComponent
+             let provinceId = res.adcode.substring(0,2)+'0000';
+             let cityId =res.adcode.substring(0,4)+'00';
+             let districtId = res.adcode;
+             setArea(address);
+             setProvinceId(provinceId);
+             setCityId(cityId);
+             setDistrictId(districtId);
+           }
+         }
+       })
+
      },
      complete:function (res){
-       const data = res.data;
-       if (data.infocode == 10000) {
-         const res = data.regeocode.addressComponent
-         let provinceId = res.adcode.substring(0,2)+'0000';
-         let cityId =res.adcode.substring(0,4)+'00';
-         let districtId = res.adcode;
-         setProvinceId(provinceId);
-         setCityId(cityId);
-         setDistrictId(districtId);
-       }
 
      },
      fail:function (res){
