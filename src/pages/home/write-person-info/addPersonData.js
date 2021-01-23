@@ -113,7 +113,6 @@ const AddPersonData = () => {
           })
         }else{
           _chooseLocation();
-          console.log(333,'zoule');
         }
       },
       fail:function (res){
@@ -130,7 +129,16 @@ const AddPersonData = () => {
        setArea(address);
      },
      complete:function (res){
-       console.log(333,res);
+       const data = res.data;
+       if (data.infocode == 10000) {
+         const res = data.regeocode.addressComponent
+         let provinceId = res.adcode.substring(0,2)+'0000';
+         let cityId =res.adcode.substring(0,4)+'00';
+         let districtId = res.adcode;
+         setProvinceId(provinceId);
+         setCityId(cityId);
+         setDistrictId(districtId);
+       }
 
      },
      fail:function (res){
@@ -181,7 +189,7 @@ const AddPersonData = () => {
       })
       return;
     }
-    if (area==='请选择所属区域') {
+    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
         title: '请选择省市区',
         icon: 'none',

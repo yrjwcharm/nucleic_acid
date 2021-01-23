@@ -118,7 +118,7 @@ const Confirm = () => {
         docUrl,
         idCard,
         name,
-        addrHome: area,
+        addrHome:'',
         orgId,
         payType,
         phone,

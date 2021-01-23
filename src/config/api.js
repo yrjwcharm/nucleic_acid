@@ -7,7 +7,7 @@ export default {
   defineConstants: {
     LOCATION_APIKEY: JSON.stringify('4HCBZ-ERO6U-AQTVJ-BMVJH-FCJI6-WFB2T')
   },
-  key:'726d285794976443b2bbdced42f2e03a',
+  key:'89eea42f4b974fca16a9ee35f2acfd1e',
   tmplIds:['91F5vWCWIp9dYyUdS4QLFuIa33gfzDM8WAX9_1Aimog','fjL81130dgH97zF7kO5IRmRn6ZSGR0TQFISyT7bxRwM','DpSCCpT6AjjRQyGEW-a-g1tTcO3jw5P9eQy8w5ryfT8'],
   imgUrl :'https://hstest.youjiankang.net/ncov',
   IndexUrl: WxApiRoot + 'home/index', //首页数据接口

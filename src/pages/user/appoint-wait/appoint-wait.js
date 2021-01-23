@@ -7,7 +7,7 @@ import Wait from '@assets/wait.svg'
 import {fetchAppointSuccessQrCodeApi} from "../../../services/combo";
 import {AtModal, AtModalAction} from "taro-ui";
 import GIF from '../../../subPackages/assets/a.gif'
-let timer = null ,_animation=null,_interval;
+let timer = null;
 export default  class AppointWait extends Component {
   constructor() {
     super();

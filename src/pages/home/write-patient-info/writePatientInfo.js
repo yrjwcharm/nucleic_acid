@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
+import {Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
 import './writePatientInfo.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -7,7 +7,7 @@ import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Api from "../../../config/api";
-import {AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
+import {AtModal, AtModalContent} from "taro-ui";
 import Location from '@assets/location.png';
 
 const WritePatientInfo = () => {
@@ -130,7 +130,7 @@ const WritePatientInfo = () => {
       })
       return;
     }
-    if (area === '请选择所属区域') {
+    if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
         title: '请选择省市区',
         icon: 'none',
@@ -206,19 +206,28 @@ const WritePatientInfo = () => {
       },
       complete: function (res) {
         console.log(333, res);
-        const {address,latitude, longitude} =res;
-    // let url =`https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all`
-    //       Taro.request({
-    //         url,
-    //         data:{},
-    //         method:'GET',
-    //         header: {
-    //           'content-type': 'application/json' // 默认值
-    //         },
-    //         success:function (res){
-    //               console.log(3333,res);
-    //         }
-    //       })
+        const {address, latitude, longitude} = res;
+        let url = `https://restapi.amap.com/v3/geocode/regeo?output=json&location=${longitude},${latitude}&key=${Api.key}&radius=1000&extensions=all&roadlevel=1`
+        Taro.request({
+          url,
+          data: {},
+          method: 'GET',
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success: function (res) {
+            const data = res.data;
+            if (data.infocode == 10000) {
+              const res = data.regeocode.addressComponent
+              let provinceId = res.adcode.substring(0,2)+'0000';
+              let cityId =res.adcode.substring(0,4)+'00';
+              let districtId = res.adcode;
+              setProvinceId(provinceId);
+              setCityId(cityId);
+              setDistrictId(districtId);
+            }
+          }
+        })
 
 
       },
@@ -263,7 +272,8 @@ const WritePatientInfo = () => {
             <View className='address-info-view'>
               <View style='display:flex;alignItems:center'>
                 <Text className='dist-name-text'>地区信息</Text>
-                <Text className='select-city-text _list-row-input' style={area==='请选择所属区域'?'color:#999':'color:#666'}>{area}</Text>
+                <Text className='select-city-text _list-row-input'
+                      style={area === '请选择所属区域' ? 'color:#999' : 'color:#666'}>{area}</Text>
               </View>
               <Image src={Location} className='location'/>
             </View>
@@ -304,7 +314,7 @@ const WritePatientInfo = () => {
       <AtModal isOpened={visible} closeOnClickOverlay={false}>
         <AtModalContent className='modal-content'>
           <View className='title-view'>
-              <Text className='title-text'>预约提醒</Text>
+            <Text className='title-text'>预约提醒</Text>
           </View>
           <View className='notice-view'>
             <Text className='notice-text'>1.就诊人应保证提供真实、有效的个人信息；</Text>
@@ -316,13 +326,13 @@ const WritePatientInfo = () => {
             <Text className='notice-text'>3.地址必须为本人现住宅或办公真实地址，精确到门牌号；</Text>
           </View>
           <View className='notice-view'>
-          <Text className='notice-text'>4.核酸检测门诊仅面向无流行病学史，无任何症状的自愿进行新冠病素核酸检测人员；
-          </Text>
-        </View>
+            <Text className='notice-text'>4.核酸检测门诊仅面向无流行病学史，无任何症状的自愿进行新冠病素核酸检测人员；
+            </Text>
+          </View>
           <View className='notice-view'>
-          <Text className='notice-text'>5.发热患者请去最近医院的发热门诊就诊；</Text>
-        </View>
-          <View className='enter-view' onClick={()=>setVisible(false)}>
+            <Text className='notice-text'>5.发热患者请去最近医院的发热门诊就诊；</Text>
+          </View>
+          <View className='enter-view' onClick={() => setVisible(false)}>
             <View className='enter-wrap'>
               <Text className='enter-text'>知道了</Text>
             </View>
