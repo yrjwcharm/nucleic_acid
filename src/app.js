@@ -49,39 +49,6 @@ class App extends Component {
       // 新的版本下载失败
     })
   }
-
-  componentDidMount() {
-    Taro.getUserInfo({
-      success: function (res) {
-        let userInfo = res.userInfo
-        Taro.setStorageSync('userInfo', userInfo);
-      },
-      fail: function (res) {
-        // Taro.navigateTo({
-        //   url: '/pages/auth/login/login',
-        // })
-      }
-    })
-
-    Taro.requestSubscribeMessage({
-      tmplIds: Api.tmplIds,
-      success: function (res) {
-
-      }, fail: function (res) {
-        // Taro.redirectTo({
-        //   url: '/pages/auth/login/login',
-        // })
-      }
-    })
-  }
-
-  componentDidHide() {
-  }
-
-  componentDidCatchError() {
-  }
-
-  // this.props.children 是将要会渲染的页面
   render() {
     return this.props.children
   }

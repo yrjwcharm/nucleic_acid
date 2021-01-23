@@ -322,3 +322,19 @@
   height: 0 !important;
   background: transparent !important;
 }
+.modal-view{
+  height: 80PX;
+  width: 280PX;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+.modal-text{
+  //margin-top: 30PX;
+  font-family: PingFangSC-Medium;
+  font-size: 17PX;
+  color: #191F25;
+}

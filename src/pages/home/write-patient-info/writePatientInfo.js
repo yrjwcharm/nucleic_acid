@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {Image, Input, Text, Textarea, View} from '@tarojs/components'
+import {Button, Image, Input, Text, Textarea, View} from '@tarojs/components'
 import React, {useEffect, useState} from 'react';
 import './writePatientInfo.scss'
 import {getCurrentInstance} from "@tarojs/runtime";
@@ -7,11 +7,12 @@ import {isEmpty} from "../../../utils/EmptyUtil";
 import {isIdCard, isMobile} from "../../../utils/RegUtil";
 import AddressPicker from "../../../components/addressPicker";
 import Api from "../../../config/api";
-import {AtModal, AtModalContent} from "taro-ui";
+import {AtModal, AtModalAction, AtModalContent} from "taro-ui";
 import Location from '@assets/location.png';
 
 const WritePatientInfo = () => {
   const [visible, setVisible] = useState(true);
+  const [openSetting,setOpenSetting] =useState(false);
   const [isIphoneX, setIsIphoneX] = useState(false);
   const [imgCode, setImgCode] = useState('');
   const [orgName, setOrgName] = useState('');
@@ -132,7 +133,7 @@ const WritePatientInfo = () => {
     }
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
-        title: '请选择省市区',
+        title: '请选择所属区域',
         icon: 'none',
       })
       return;
@@ -184,19 +185,35 @@ const WritePatientInfo = () => {
     Taro.getSetting({
       success: function (res) {
         if (!res.authSetting['scope.userLocation']) {
-          Taro.authorize({
-            scope: 'scope.userLocation',
-            success: function () {
-              // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
-              _chooseLocation();
-            }
-          })
+            authorize();
         } else {
           _chooseLocation();
         }
-      }
+      },
     })
 
+  }
+  const authorize =()=>{
+    Taro.authorize({
+      scope: 'scope.userLocation',
+      success: function () {
+        // 用户已经同意小程序使用录音功能，后续调用 Taro.chooseLocation 接口不会弹窗询问
+        _chooseLocation();
+      },
+      fail:function (res){
+          setOpenSetting(true);
+      }
+    })
+  }
+  const _openSetting=()=>{
+    Taro.openSetting({
+      success: function (res) {
+        setOpenSetting(false)
+        if (!res.authSetting['scope.userLocation']) {
+
+        }
+      }
+    })
   }
   const _chooseLocation = () => {
     Taro.chooseLocation({
@@ -229,10 +246,10 @@ const WritePatientInfo = () => {
 
       },
       complete: function (res) {
-
+          console.log(333,res);
       },
       fail: function (res) {
-
+        console.log(1111,res);
       }
     })
   }
@@ -341,6 +358,21 @@ const WritePatientInfo = () => {
         {/*<AtModalAction className='modal-footer'>*/}
         {/*  <Button type='#fff' className='bt-ok' onClick={() => setVisible(false)}>确定</Button>*/}
         {/*</AtModalAction>*/}
+      </AtModal>
+
+
+
+      <AtModal
+        closeOnClickOverlay={false}
+        isOpened={openSetting}
+      >
+        <View className='modal-view'>
+          <Text className='modal-text'>请前往设置开启位置权限？</Text>
+        </View>
+        <AtModalAction>
+          <Button className={'btn'} onClick={() => setOpenSetting(false)}>取消</Button>
+          <Button onClick={_openSetting}>确定</Button>
+        </AtModalAction>
       </AtModal>
     </View>
   )

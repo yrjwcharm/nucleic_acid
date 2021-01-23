@@ -202,7 +202,7 @@ const AddPersonData = () => {
     }
     if (isEmpty(provinceid) && isEmpty(cityid) && isEmpty(districtid)) {
       Taro.showToast({
-        title: '请选择省市区',
+        title: '请选择所属区域',
         icon: 'none',
       })
       return;
